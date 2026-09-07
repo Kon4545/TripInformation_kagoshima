@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTitle">旅のしおり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e1016">
+<style>
+/* ── Page Nav ─────────────────────────────────────── */
+.page-nav { background: var(--navy-dark); padding: 40px 0; }
+.page-nav-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-decoration: none;
+  color: var(--gold-light);
+  transition: all .22s;
+  flex: 1; min-width: 220px;
+}
+.page-nav-btn:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.4); color: #fff; }
+.page-nav-btn.next { justify-content: flex-end; text-align: right; }
+.nav-label { font-size: .7rem; color: rgba(255,255,255,.75); display: block; margin-bottom: 2px; letter-spacing: .08em; font-weight: 700; }
+.nav-title { font-family: var(--font-serif); font-size: .95rem; font-weight: 700; }
+@media (max-width: 768px) {
+  .page-nav-inner { flex-direction: column; }
+  .page-nav-btn { min-width: unset; }
+  .page-nav-btn.next { justify-content: flex-start; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><i class="fa-solid fa-paper-plane"></i><span id="hCompanyName">MOTO TOURS JAPAN</span></a>
+    <nav class="nav-menu">
+      <a href="index.html" class="active" data-i18n="nav.home">ホーム</a>
+      <a href="route.html" data-i18n="nav.route">全体行程</a>
+      <a href="caution.html" data-i18n="nav.caution">注意事項</a>
+      <a href="company_information.html" data-i18n="nav.company">会社情報</a>
+      <a href="post_tour.html" data-i18n="nav.postTour">ツアー後</a>
+    </nav>
+    <div id="langSwitcherDesktop"></div>
+    <img src="MTJ_logo_color_RGB.jpg" alt="MOTO TOURS JAPAN" class="header-logo-img">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html" class="active"><i class="fa-solid fa-house"></i>&ensp;<span data-i18n="nav.home.mobile">ホーム</span></a>
+    <a href="route.html"><i class="fa-solid fa-map"></i>&ensp;<span data-i18n="nav.route.mobile">全体行程</span></a>
+    <a href="caution.html"><i class="fa-solid fa-circle-exclamation"></i>&ensp;<span data-i18n="nav.caution.mobile">注意事項</span></a>
+    <a href="company_information.html"><i class="fa-solid fa-building"></i>&ensp;<span data-i18n="nav.company.mobile">会社情報</span></a>
+    <a href="post_tour.html"><i class="fa-solid fa-camera-retro"></i>&ensp;<span data-i18n="nav.postTour.mobile">ツアー後</span></a>
+    <div id="langSwitcherMobile"></div>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="heroSection">
+  <div class="hero-bg-parallax" id="heroBgParallax"><div class="hero-bg-layer" id="heroBgLayer"></div></div>
+  <div class="hero-bg-overlay"></div>
+  <div class="hero-eyebrow"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="hero.eyebrow">旅のしおり</span></div>
+  <h1 id="heroTitle">—</h1>
+  <p class="hero-sub" id="heroSub">—</p>
+  <div class="hero-chips" id="heroChips"></div>
+  <div id="countdownBadge"></div>
+</section>
+
+<main>
+<div class="container">
+
+  <div id="digitalTicket"></div>
+  <div id="ticketModal" class="ticket-modal" onclick="if(event.target===this) closeTicketModal()"></div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 28px">
+    <a href="print.html" class="print-save-btn">
+      <i class="fa-solid fa-file-pdf"></i> <span data-i18n="print.cta">しおりをPDFで保存する</span>
+    </a>
+  </div>
+
+  <!-- Greeting（最初に表示） -->
+  <section class="section">
+    <h2 class="section-title"><i class="fa-solid fa-envelope-open-text"></i> <span data-i18n="section.greeting">担当添乗員からのご挨拶</span></h2>
+    <div class="greeting-box" id="greetingBox"></div>
+  </section>
+
+  <!-- Meeting info -->
+  <section class="section">
+    <h2 class="section-title"><i class="fa-solid fa-clock"></i> <span data-i18n="section.meetingInfo">集合・解散情報</span></h2>
+    <!-- 天気予報 -->
+    <div id="weatherBlock"></div>
+    <!-- マップを最初に表示 -->
+    <div class="meeting-maps" id="meetingMaps"></div>
+    <!-- 集合・解散カード -->
+    <div class="grid grid-3" id="meetingCards"></div>
+    <!-- 送迎 -->
+    <div id="shuttleBlock"></div>
+  </section>
+
+  <!-- Includes / Excludes -->
+  <section class="section">
+    <h2 class="section-title"><i class="fa-solid fa-list-check"></i> <span data-i18n="section.includeExclude">含まれるもの・含まれないもの</span></h2>
+    <div class="include-grid">
+      <div class="include-box yes">
+        <div class="include-box-header"><i class="fa-solid fa-circle-check"></i> <span data-i18n="include.included">含まれるもの</span></div>
+        <div id="includesList"></div>
+      </div>
+      <div class="include-box no">
+        <div class="include-box-header"><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="include.excluded">含まれないもの</span></div>
+        <div id="excludesList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick links -->
+  <section class="section">
+    <h2 class="section-title"><i class="fa-solid fa-compass"></i> <span data-i18n="quicklinks.title">しおりのコンテンツ</span></h2>
+    <div class="grid grid-3" id="quickLinksGrid"></div>
+  </section>
+
+  <!-- 車両情報 -->
+  <section class="section" id="vehiclesSection" style="display:none">
+    <h2 class="section-title"><i class="fa-solid fa-motorcycle"></i> <span data-i18n="vehicles.title">車両情報</span></h2>
+    <div id="vehicleCards"></div>
+  </section>
+
+</div>
+</main>
+
+<!-- ▼ Page Navigation -->
+<nav class="page-nav">
+  <div class="container page-nav-inner" style="justify-content:flex-end">
+    <a href="route.html" class="page-nav-btn next">
+      <div>
+        <span class="nav-label" data-i18n="pagenav.next">NEXT</span>
+        <span class="nav-title" data-i18n="pagenav.route">全体行程</span>
+      </div>
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
+  </div>
+</nav>
+
+<footer class="site-footer">
+  <p><i class="fa-solid fa-paper-plane"></i>&ensp;<span id="footerCompany">MOTO TOURS JAPAN株式会社</span></p>
+  <p id="footerCopy">&copy; 2026 MOTO TOURS JAPAN Co., Ltd. All Rights Reserved.</p>
+</footer>
+
+<script src="pwa.js"></script>
+<script src="i18n.js"></script>
+<script src="tour-data.js"></script>
+<script>
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+applyI18nStaticText();
+mountLangSwitcher('langSwitcherDesktop');
+mountLangSwitcher('langSwitcherMobile');
+const d = getData();
+// 「ツアー後」ページ：admin.htmlで公開がオンになるまでヘッダーメニューから隠す
+if (!d.postTour || !d.postTour.enabled) {
+  document.querySelectorAll('a[href="post_tour.html"]').forEach(function(a){
+    if (a.closest('.nav-menu') || a.closest('.mobile-nav')) a.style.display = 'none';
+  });
+}
+// Page title
+document.getElementById('pageTitle').textContent = t('title.index') + ' | ' + d.basic.tourTitle;
+document.getElementById('hCompanyName').textContent = d.company.name.toUpperCase() || 'MOTO TOURS JAPAN株式会社';
+// Hero
+document.getElementById('heroTitle').innerHTML = d.basic.tourTitle.replace('・','<span style="color:var(--white)">・</span>');
+// Hero background（動画が設定されていれば動画、なければ画像。ズーム演出＋スクロール連動のパララックス付き）
+if (d.basic.heroVideoUrl || d.basic.heroBgImage) {
+  const hero = document.getElementById('heroSection');
+  const bgLayer = document.getElementById('heroBgLayer');
+  if (d.basic.heroVideoUrl) {
+    bgLayer.innerHTML = `<video autoplay muted loop playsinline src="${esc(d.basic.heroVideoUrl)}"></video>`;
+  } else {
+    bgLayer.style.backgroundImage = 'url("' + d.basic.heroBgImage + '")';
+  }
+  hero.classList.add('has-bg-img');
+
+  // スクロール連動パララックス（動きを抑えたい設定の場合やスマホでは無効化）
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion && window.innerWidth > 768) {
+    const parallaxLayer = document.getElementById('heroBgParallax');
+    let ticking = false;
+    window.addEventListener('scroll', function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        const offset = Math.min(window.scrollY, hero.offsetHeight);
+        parallaxLayer.style.transform = 'translateY(' + (offset * 0.35) + 'px)';
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+}
+document.getElementById('heroSub').textContent = d.basic.tourSubtitle;
+document.getElementById('heroChips').innerHTML = [
+  ['fa-solid fa-calendar', d.basic.tourDates],
+  ['fa-solid fa-users', d.basic.participantCount],
+  ['fa-solid fa-location-dot', d.basic.area]
+].map(([ico,txt])=>`<span class="hero-chip"><i class="${ico}"></i>${txt}</span>`).join('');
+
+// 出発日カウントダウン（管理画面で集合日を設定している場合のみ表示）
+(function(){
+  const iso = d.meeting && d.meeting.meetDateISO;
+  if (!iso) return;
+  const meetDate = new Date(iso + 'T00:00:00');
+  if (isNaN(meetDate.getTime())) return;
+  const endIso = d.meeting.tourEndDateISO || iso;
+  const endDate = new Date(endIso + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diffDays = Math.round((meetDate - today) / 86400000);
+
+  let html, tier, icon;
+  if (diffDays > 7) {
+    tier = 'far';    icon = 'fa-hourglass-half';
+    html = t('countdown.days').replace('{n}', diffDays);
+  } else if (diffDays > 1) {
+    tier = 'week';    icon = 'fa-champagne-glasses';
+    html = t('countdown.week').replace('{n}', diffDays);
+  } else if (diffDays === 1) {
+    tier = 'tomorrow'; icon = 'fa-flag-checkered';
+    html = esc(t('countdown.tomorrow'));
+  } else if (diffDays === 0) {
+    tier = 'today';    icon = 'fa-motorcycle';
+    html = esc(t('countdown.today'));
+  } else if (!isNaN(endDate.getTime()) && today <= endDate) {
+    tier = 'ongoing';  icon = 'fa-route';
+    html = esc(t('countdown.ongoing'));
+  } else {
+    tier = 'done';     icon = 'fa-circle-check';
+    html = esc(t('countdown.done'));
+  }
+  document.getElementById('countdownBadge').innerHTML =
+    `<div class="countdown-badge tier-${tier}">
+      <i class="fa-solid ${icon}"></i> ${html}
+    </div>`;
+})();
+
+// 持ち物チェックリストの達成状況（caution.htmlと同じlocalStorageキー・ci-ii形式で判定）
+function getChecklistCompletion(){
+  try {
+    const all = JSON.parse(localStorage.getItem('MTJ_CHECKLIST_STATE_v1') || '{}');
+    const key = (d.basic && d.basic.tourDates) || 'default';
+    const state = all[key] || {};
+    let total = 0, checked = 0;
+    (d.checklist || []).forEach((cat, ci) => {
+      (cat.items || []).forEach((_, ii) => {
+        total++;
+        if (state[ci + '-' + ii]) checked++;
+      });
+    });
+    return total > 0 && checked === total;
+  } catch (e) { return false; }
+}
+
+// 搭乗券風デジタルチケット（admin.htmlのURLリンク生成ツールが付与する ?name= を読み取って表示）
+(function(){
+  const guestName = new URLSearchParams(location.search).get('name');
+  const dateTimeSub = [d.meeting.date, d.meeting.time].filter(Boolean).join(' ');
+  const stampHtml = getChecklistCompletion() ? `<div class="ticket-stamp">${esc(t('ticket.readyStamp'))}</div>` : '';
+  const ticketFieldsHtml = `
+    <div class="ticket-field">
+      <div class="ticket-field-label">${esc(t('ticket.date'))}</div>
+      <div class="ticket-field-value">${esc(dateTimeSub)}</div>
+    </div>
+    <div class="ticket-field">
+      <div class="ticket-field-label">${esc(t('ticket.place'))}</div>
+      <div class="ticket-field-value">${esc(d.meeting.place)}</div>
+    </div>
+    <div class="ticket-field">
+      <div class="ticket-field-label">${esc(t('ticket.area'))}</div>
+      <div class="ticket-field-value">${esc(d.basic.area)}</div>
+    </div>`;
+  document.getElementById('digitalTicket').innerHTML = `
+    <div class="ticket-card" onclick="openTicketModal()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openTicketModal()">
+      <i class="fa-solid fa-up-right-and-down-left-from-center ticket-expand-hint"></i>
+      <div class="ticket-main">
+        <div class="ticket-eyebrow"><i class="fa-solid fa-paper-plane"></i> ${esc(t('ticket.boardingPass'))}</div>
+        <div class="ticket-title">${esc(d.basic.tourTitle)}</div>
+        <div class="ticket-fields">${ticketFieldsHtml}</div>
+      </div>
+      <div class="ticket-stub">
+        ${stampHtml}
+        <i class="fa-solid fa-motorcycle ticket-stub-icon"></i>
+        <div class="ticket-field-label">${esc(t('ticket.passenger'))}</div>
+        <div class="ticket-stub-name">${esc(guestName || t('ticket.guestFallback'))}</div>
+      </div>
+    </div>`;
+  document.getElementById('ticketModal').innerHTML = `
+    <div class="ticket-modal-inner">
+      <button type="button" class="ticket-modal-close" onclick="closeTicketModal()" aria-label="閉じる"><i class="fa-solid fa-xmark"></i></button>
+      <div class="ticket-card ticket-card-lg">
+        <div class="ticket-main">
+          <div class="ticket-eyebrow"><i class="fa-solid fa-paper-plane"></i> ${esc(t('ticket.boardingPass'))}</div>
+          <div class="ticket-title">${esc(d.basic.tourTitle)}</div>
+          <div class="ticket-fields">${ticketFieldsHtml}</div>
+        </div>
+        <div class="ticket-stub">
+          ${stampHtml}
+          <i class="fa-solid fa-motorcycle ticket-stub-icon"></i>
+          <div class="ticket-field-label">${esc(t('ticket.passenger'))}</div>
+          <div class="ticket-stub-name">${esc(guestName || t('ticket.guestFallback'))}</div>
+        </div>
+      </div>
+    </div>`;
+})();
+function openTicketModal(){
+  document.getElementById('ticketModal').classList.add('open');
+  document.body.classList.add('ticket-modal-lock');
+}
+function closeTicketModal(){
+  document.getElementById('ticketModal').classList.remove('open');
+  document.body.classList.remove('ticket-modal-lock');
+}
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeTicketModal(); });
+
+// 天気予報（管理画面で緯度・経度・集合日を設定している場合のみ表示。Open-Meteo：APIキー不要・CORS対応の無料API）
+(function(){
+  const lat = parseFloat(d.meeting && d.meeting.meetLat);
+  const lng = parseFloat(d.meeting && d.meeting.meetLng);
+  const iso = d.meeting && d.meeting.meetDateISO;
+  if (!iso || isNaN(lat) || isNaN(lng)) return;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const meetDate = new Date(iso + 'T00:00:00');
+  if (isNaN(meetDate.getTime())) return;
+  const endIso = d.meeting.tourEndDateISO || iso;
+  let endDate = new Date(endIso + 'T00:00:00');
+  if (isNaN(endDate.getTime()) || endDate < meetDate) endDate = meetDate;
+
+  // Open-Meteo の無料予報は「今日を含め」最大16日分＝今日から15日先まで。範囲外なら「もうすぐ表示」の案内だけ出す
+  const maxForecastDate = new Date(today.getTime() + 15 * 86400000);
+  if (meetDate > maxForecastDate) {
+    document.getElementById('weatherBlock').innerHTML = `
+      <div class="weather-block" style="background:#EFF3FA;border:1px solid #C7D3E8;border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:.85rem;color:#5A5650;display:flex;align-items:center;gap:10px">
+        <i class="fa-solid fa-cloud" style="color:#2C3E6B"></i> ${esc(t('weather.unavailable'))}
+      </div>`;
+    return;
+  }
+  if (endDate < today) return; // ツアーは既に終了している
+
+  const startFetch = meetDate < today ? today : meetDate;
+  // 解散日が予報可能範囲を超える場合は、取得できる日数分だけにクランプする（全滅で失敗表示にしない）
+  const endFetch = endDate > maxForecastDate ? maxForecastDate : endDate;
+  const startStr = startFetch.toISOString().slice(0,10);
+  const endStr   = endFetch.toISOString().slice(0,10);
+
+  document.getElementById('weatherBlock').innerHTML = `
+    <div class="weather-block" id="weatherBlockInner" style="background:#EFF3FA;border:1px solid #C7D3E8;border-radius:12px;padding:18px 20px;margin-bottom:20px">
+      <div style="font-size:.78rem;font-weight:700;color:#2C3E6B;letter-spacing:.06em;margin-bottom:10px"><i class="fa-solid fa-cloud-sun"></i>&ensp;${esc(t('weather.title'))}</div>
+      <div style="font-size:.85rem;color:#5A5650">${esc(t('weather.loading'))}</div>
+    </div>`;
+
+  const WMO_ICON = {
+    0:['fa-sun','#F5A623'], 1:['fa-cloud-sun','#F5A623'], 2:['fa-cloud-sun','#8A8478'], 3:['fa-cloud','#8A8478'],
+    45:['fa-smog','#8A8478'], 48:['fa-smog','#8A8478'],
+    51:['fa-cloud-rain','#4A90D9'], 53:['fa-cloud-rain','#4A90D9'], 55:['fa-cloud-rain','#4A90D9'],
+    61:['fa-cloud-showers-heavy','#4A90D9'], 63:['fa-cloud-showers-heavy','#4A90D9'], 65:['fa-cloud-showers-heavy','#1A5FA8'],
+    71:['fa-snowflake','#7FB3E8'], 73:['fa-snowflake','#7FB3E8'], 75:['fa-snowflake','#4A90D9'],
+    80:['fa-cloud-showers-heavy','#4A90D9'], 81:['fa-cloud-showers-heavy','#4A90D9'], 82:['fa-cloud-showers-heavy','#1A5FA8'],
+    95:['fa-cloud-bolt','#9e1016'], 96:['fa-cloud-bolt','#9e1016'], 99:['fa-cloud-bolt','#9e1016']
+  };
+  const WEEKDAY = { ja:['日','月','火','水','木','金','土'], en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], zh:['日','一','二','三','四','五','六'] };
+
+  const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lng +
+    '&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo' +
+    '&start_date=' + startStr + '&end_date=' + endStr;
+
+  fetch(url).then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }).then(data => {
+    const daily = data && data.daily;
+    if (!daily || !daily.time || !daily.time.length) throw new Error('empty forecast');
+    const lang = getCurrentLang();
+    const cardsHtml = daily.time.map((dateStr, i) => {
+      const wc = daily.weathercode[i];
+      const [icon, color] = WMO_ICON[wc] || ['fa-cloud', '#8A8478'];
+      const dt = new Date(dateStr + 'T00:00:00');
+      const wLabel = (WEEKDAY[lang] || WEEKDAY.ja)[dt.getDay()];
+      const md = (dt.getMonth() + 1) + '/' + dt.getDate();
+      return `<div style="background:#fff;border-radius:10px;padding:12px 10px;text-align:center;min-width:76px;flex:1">
+        <div style="font-size:.72rem;color:#8A8478;font-weight:700">${md} (${wLabel})</div>
+        <i class="fa-solid ${icon}" style="color:${color};font-size:1.4rem;margin:6px 0;display:block"></i>
+        <div style="font-size:.82rem;font-weight:700;color:#1A1A2E">${Math.round(daily.temperature_2m_max[i])}°<span style="color:#8A8478;font-weight:500">/${Math.round(daily.temperature_2m_min[i])}°</span></div>
+      </div>`;
+    }).join('');
+    document.getElementById('weatherBlockInner').innerHTML = `
+      <div style="font-size:.78rem;font-weight:700;color:#2C3E6B;letter-spacing:.06em;margin-bottom:10px"><i class="fa-solid fa-cloud-sun"></i>&ensp;${esc(t('weather.title'))}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">${cardsHtml}</div>`;
+  }).catch(() => {
+    const el = document.getElementById('weatherBlockInner');
+    if (el) el.innerHTML = `
+      <div style="font-size:.78rem;font-weight:700;color:#2C3E6B;letter-spacing:.06em;margin-bottom:10px"><i class="fa-solid fa-cloud-sun"></i>&ensp;${esc(t('weather.title'))}</div>
+      <div style="font-size:.85rem;color:#9B1B1B"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(t('weather.error'))}</div>`;
+  });
+})();
+
+// 担当添乗員からのご挨拶（複数担当者対応）
+const guides = (d.guides && d.guides.length) ? d.guides : (d.guide ? [d.guide] : []);
+const primaryGuide = guides[0] || {};
+document.getElementById('greetingBox').innerHTML =
+  '<div class="greeting-from">' +
+  guides.map(g => `
+    <div class="greeting-from-item">
+      <div class="greeting-avatar"><i class="fa-solid fa-circle-user"></i></div>
+      <div>
+        <div class="greeting-from-name">${esc(g.name)}</div>
+        <div class="greeting-from-title">${esc(g.title)}</div>
+      </div>
+    </div>`).join('') +
+  '</div>' +
+  `<div class="greeting-text">${esc(primaryGuide.greeting || '')}</div>` +
+  `<div class="greeting-sign">${esc(d.company.name)}　${esc(t('greeting.signedBy'))} ${guides.map(g => g.name.split('（')[0]).join(' / ')}</div>`;
+
+// Meeting cards
+const mc = [
+  {icon: d.meeting.meetIcon || 'fa-solid fa-flag-checkered', color: d.meeting.meetIconColor || '', label:t('meeting.label.place'),    value:d.meeting.place,    sub:d.meeting.placeDetail},
+  {icon: d.meeting.dateIcon || 'fa-solid fa-clock',          color: d.meeting.dateIconColor || '', label:t('meeting.label.date'),     value:d.meeting.date,     sub:d.meeting.time},
+  {icon: d.meeting.endIcon  || 'fa-solid fa-circle-check',   color: d.meeting.endIconColor  || '', label:t('meeting.label.endPlace'), value:d.meeting.endPlace, sub:d.meeting.endTime}
+];
+document.getElementById('meetingCards').innerHTML = mc.map(c=>`
+<div class="info-card">
+  <div class="info-card-icon"${c.color ? ` style="background:${esc(c.color)}"` : ''}><i class="${c.icon}"></i></div>
+  <div class="info-card-body">
+    <div class="label">${c.label}</div>
+    <div class="value">${c.value}</div>
+    <div class="sub">${c.sub}</div>
+  </div>
+</div>`).join('');
+
+// Meeting maps（集合・解散が同じURLの場合は1枚だけ表示）
+(function(){
+  const maps = [];
+  const meetUrl = d.meeting.meetMapUrl;
+  const endUrl  = d.meeting.endMapUrl;
+  if (meetUrl && endUrl && meetUrl === endUrl) {
+    // 集合・解散が同じ場所 → マップ1枚
+    maps.push({
+      icon:  d.meeting.meetIcon || 'fa-solid fa-flag-checkered',
+      label: t('map.label.meetEnd') + ' &nbsp;' + d.meeting.place,
+      url:   meetUrl
+    });
+  } else {
+    if (meetUrl) maps.push({
+      icon:  d.meeting.meetIcon || 'fa-solid fa-flag-checkered',
+      label: t('map.label.meet') + ' &nbsp;' + d.meeting.place,
+      url:   meetUrl
+    });
+    if (endUrl) maps.push({
+      icon:  d.meeting.endIcon || 'fa-solid fa-circle-check',
+      label: t('map.label.end') + ' &nbsp;' + d.meeting.endPlace,
+      url:   endUrl
+    });
+  }
+  document.getElementById('meetingMaps').innerHTML = maps.map(m => `
+    <div class="meeting-map-block">
+      <div class="meeting-map-label"><i class="${m.icon}"></i>${m.label}</div>
+      <div class="meeting-map-frame">
+        <iframe src="${m.url}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>`).join('');
+})();
+
+// Shuttle info
+(function(){
+  const sh = d.meeting.shuttle || {};
+  if (!sh.enabled) return;
+  const pickupsHtml = (sh.pickups || []).map(p => `
+    <div class="shuttle-pickup-item" style="flex-direction:column;align-items:stretch">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <div class="shuttle-pickup-icon"><i class="fa-solid fa-bus"></i></div>
+        <div class="shuttle-pickup-body" style="flex:1">
+          <div class="shuttle-pickup-place"><i class="fa-solid fa-location-dot" style="color:#B86A00;margin-right:4px"></i>${esc(p.place)}</div>
+          ${p.time ? `<div class="shuttle-pickup-time"><i class="fa-solid fa-clock" style="margin-right:4px"></i>${esc(p.time)}</div>` : ''}
+          ${p.note ? `<div class="shuttle-pickup-note">${esc(p.note)}</div>` : ''}
+        </div>
+      </div>
+      ${p.mapUrl ? `<div class="shuttle-pickup-map"><iframe src="${esc(p.mapUrl)}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : ''}
+    </div>`).join('');
+  const metaHtml = [
+    sh.deadline ? `<div class="shuttle-meta-item"><i class="fa-solid fa-calendar-check"></i>${esc(t('shuttle.deadline'))}${esc(sh.deadline)}</div>` : '',
+    sh.contact  ? `<div class="shuttle-meta-item"><i class="fa-solid fa-phone"></i>${esc(sh.contact)}</div>` : ''
+  ].join('');
+  document.getElementById('shuttleBlock').innerHTML = `
+    <div class="shuttle-block">
+      <div class="shuttle-header"><i class="fa-solid fa-van-shuttle"></i>${esc(t('shuttle.header'))}</div>
+      <div style="background:#FFF8EC;border:1px solid #F5C97A;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;color:#7A4500;display:flex;align-items:center;gap:8px">
+        <i class="fa-solid fa-flag" style="color:#9e1016;flex-shrink:0"></i>
+        ${esc(t('shuttle.staffNote'))}
+      </div>
+      ${sh.note ? `<div class="shuttle-note">${esc(sh.note)}</div>` : ''}
+      ${pickupsHtml ? `<div class="shuttle-pickup-list">${pickupsHtml}</div>` : ''}
+      ${metaHtml   ? `<div class="shuttle-meta">${metaHtml}</div>` : ''}
+    </div>`;
+})();
+
+// Includes / Excludes
+function renderList(el, items, icon, cls){
+  el.innerHTML = items.map(i=>`<div class="include-item"><i class="${icon}"></i><span>${i}</span></div>`).join('');
+}
+renderList(document.getElementById('includesList'), d.includes, 'fa-solid fa-check', 'yes');
+renderList(document.getElementById('excludesList'), d.excludes, 'fa-solid fa-xmark', 'no');
+
+// Quick links
+document.getElementById('quickLinksGrid').innerHTML = (d.quickLinks || []).map(q => `
+  <a href="${q.url}" class="quick-link-card">
+    <div class="quick-link-img" style="background:linear-gradient(135deg,${q.color1},${q.color2})"><i class="${q.icon}"></i></div>
+    <div class="quick-link-body"><h3>${q.title}</h3><p>${q.desc}</p></div>
+  </a>`).join('');
+
+// 車両情報
+const vehicles = d.vehicles || [];
+if (vehicles.length) {
+  document.getElementById('vehiclesSection').style.display = '';
+  document.getElementById('vehicleCards').innerHTML = vehicles.map((v,i) => {
+    const imgHtml = v.image
+      ? `<div class="hotel-card-img vehicle-card-img" style="padding:0;overflow:hidden"><img src="${esc(v.image)}" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.style.display='none'"></div>`
+      : `<div class="hotel-card-img vehicle-card-img"><i class="fa-solid fa-motorcycle"></i></div>`;
+    const metaRows = [
+      ['fa-industry',        t('vehicle.maker'),        v.maker],
+      ['fa-calendar',        t('vehicle.year'),          v.year],
+      ['fa-gauge-high',      t('vehicle.displacement'),  v.displacement],
+      ['fa-weight-hanging',  t('vehicle.weight'),        v.weight],
+      ['fa-ruler-vertical',  t('vehicle.seatHeight'),    v.seatHeight],
+      ['fa-gas-pump',        t('vehicle.tankCapacity'),  v.tankCapacity],
+      ['fa-droplet',         t('vehicle.fuel'),          v.fuel],
+      ['fa-id-card',         t('vehicle.class'),         v.class]
+    ].filter(r => r[2]);
+    const metaHtml = metaRows.map(r =>
+      `<div class="hotel-meta-item"><i class="fa-solid ${r[0]}"></i>${esc(r[1])}${esc(r[2])}</div>`
+    ).join('');
+    return `<div class="hotel-card" style="${i > 0 ? 'margin-top:20px' : ''}">
+      ${imgHtml}
+      <div class="hotel-card-body">
+        <h3>${esc(v.name)}</h3>
+        <div class="hotel-meta">${metaHtml}</div>
+        ${v.equipment ? `<p class="desc"><strong>${esc(t('vehicle.equipment'))}</strong>${esc(v.equipment)}</p>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Footer
+document.getElementById('footerCompany').textContent = d.company.name;
+document.getElementById('footerCopy').innerHTML = '&copy; 2026 ' + d.company.nameEn + '. All Rights Reserved.';
+// Hamburger
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+</script>
+</body>
+</html>

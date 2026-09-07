@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>旅のしおり ワイヤーフレーム図解</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f2f5; color: #1a1a1a; font-size: 13px; }
+
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, #1a2a4a 0%, #ed1b23 100%);
+    color: #fff; text-align: center; padding: 60px 20px 50px;
+  }
+  .cover h1 { font-size: 2.2rem; font-weight: 900; letter-spacing: .08em; margin-bottom: 8px; }
+  .cover p  { font-size: 1rem; opacity: .8; margin-bottom: 4px; }
+  .cover .badge { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 20px; padding: 4px 16px; margin: 4px; font-size: .78rem; }
+
+  /* ── Section Wrapper ── */
+  .page-section { max-width: 1300px; margin: 0 auto; padding: 40px 20px; }
+  .section-title {
+    font-size: 1.3rem; font-weight: 800; color: #1a2a4a;
+    border-left: 5px solid #ed1b23; padding-left: 14px;
+    margin-bottom: 24px;
+  }
+  .section-sub { font-size: .8rem; color: #666; margin-left: 20px; font-weight: 400; }
+
+  /* ── Site Map ── */
+  .sitemap-wrap { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 2px 16px rgba(0,0,0,.08); margin-bottom: 20px; }
+  .sitemap-root { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .sm-admin-row { display: flex; justify-content: flex-end; margin-bottom: -20px; padding-right: 10px; }
+  .sm-node {
+    border: 2px solid #1a2a4a; background: #fff; border-radius: 10px;
+    padding: 10px 20px; text-align: center; min-width: 130px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    position: relative;
+  }
+  .sm-node .sm-icon { font-size: 1.3rem; display: block; margin-bottom: 2px; }
+  .sm-node .sm-label { font-size: .75rem; font-weight: 700; }
+  .sm-node .sm-file { font-size: .62rem; color: #999; margin-top: 2px; }
+  .sm-node.root-node { background: #1a2a4a; color: #fff; border-color: #1a2a4a; min-width: 180px; padding: 14px 24px; }
+  .sm-node.root-node .sm-file { color: rgba(255,255,255,.6); }
+  .sm-node.admin-node { background: #fff3cd; border-color: #e6a817; }
+  .sm-node.post-node { background: #e8f5e9; border-color: #2e7d32; }
+  .sm-connector-v { width: 2px; height: 24px; background: #1a2a4a; margin: 0 auto; }
+  .sm-branch-row { display: flex; gap: 12px; justify-content: center; align-items: flex-start; }
+  .sm-branch-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .sm-connector-h-wrap { display: flex; justify-content: center; height: 2px; }
+  .sm-h-line { height: 2px; background: #1a2a4a; }
+  .sm-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid #eee; }
+  .sm-legend-item { display: flex; align-items: center; gap: 6px; font-size: .72rem; color: #555; }
+  .sm-legend-box { width: 16px; height: 16px; border-radius: 4px; border: 2px solid; }
+
+  /* ── Device Frames ── */
+  .device-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  @media (max-width: 900px) { .device-row { grid-template-columns: 1fr; } }
+
+  .device-card { background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,.08); overflow: hidden; }
+  .device-card-header {
+    background: #1a2a4a; color: #fff; padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: .85rem;
+  }
+  .device-card-header .dh-icon { font-size: 1rem; }
+  .device-card-header .dh-name { flex: 1; }
+  .device-card-header .dh-badge { font-size: .65rem; background: rgba(255,255,255,.2); border-radius: 4px; padding: 2px 6px; }
+  .device-card-body { padding: 16px; }
+
+  /* ── PC Frame ── */
+  .pc-frame { border: 3px solid #1a2a4a; border-radius: 12px; overflow: hidden; width: 100%; }
+  .pc-titlebar { background: #e0e0e0; height: 22px; display: flex; align-items: center; gap: 5px; padding: 0 8px; }
+  .pc-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .pc-dot.r { background: #ff5f57; } .pc-dot.y { background: #febc2e; } .pc-dot.g { background: #28c840; }
+  .pc-urlbar { flex: 1; background: #fff; border-radius: 4px; height: 12px; margin: 0 8px; }
+  .pc-screen { background: #f8f8f8; padding: 0; }
+
+  /* ── Mobile Frame ── */
+  .mobile-outer { display: flex; justify-content: center; }
+  .mobile-frame { border: 4px solid #1a2a4a; border-radius: 28px; overflow: hidden; width: 200px; position: relative; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  .mobile-notch { background: #1a2a4a; height: 18px; display: flex; justify-content: center; align-items: center; }
+  .mobile-notch-inner { width: 50px; height: 8px; background: #000; border-radius: 4px; }
+  .mobile-screen { background: #f8f8f8; }
+  .mobile-home-bar { background: #1a2a4a; height: 12px; display: flex; justify-content: center; align-items: center; }
+  .mobile-home-pill { width: 40px; height: 4px; background: rgba(255,255,255,.4); border-radius: 2px; }
+
+  /* ── Wireframe Components ── */
+  /* Header */
+  .wf-header { background: #1a2a4a; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+  .wf-logo { background: rgba(255,255,255,.25); border-radius: 4px; height: 18px; width: 90px; }
+  .wf-nav { display: flex; gap: 4px; margin-left: auto; }
+  .wf-nav-item { background: rgba(255,255,255,.2); border-radius: 3px; height: 12px; width: 36px; }
+  .wf-hamburger { margin-left: auto; display: flex; flex-direction: column; gap: 2.5px; }
+  .wf-hamburger span { display: block; width: 18px; height: 2px; background: #fff; border-radius: 1px; }
+
+  /* Sections */
+  .wf-hero { background: linear-gradient(135deg, #1a2a4a, #ed1b23); padding: 20px 10px; text-align: center; }
+  .wf-hero-title { height: 12px; background: rgba(255,255,255,.6); border-radius: 3px; width: 70%; margin: 0 auto 6px; }
+  .wf-hero-sub { height: 8px; background: rgba(255,255,255,.35); border-radius: 3px; width: 50%; margin: 0 auto 4px; }
+  .wf-hero-chips { display: flex; gap: 4px; justify-content: center; margin-top: 6px; }
+  .wf-hero-chip { height: 14px; background: rgba(255,255,255,.2); border-radius: 10px; width: 40px; }
+
+  .wf-section { padding: 12px 10px; border-bottom: 1px solid #eee; }
+  .wf-section-title { height: 10px; background: #1a2a4a; border-radius: 2px; width: 40%; margin-bottom: 8px; }
+  .wf-section-subtitle { height: 7px; background: #ddd; border-radius: 2px; width: 60%; margin-bottom: 8px; }
+
+  .wf-cards { display: flex; gap: 6px; }
+  .wf-cards.col3 > * { flex: 1; }
+  .wf-cards.col2 > * { flex: 1; }
+  .wf-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 6px; }
+  .wf-card-icon { width: 24px; height: 24px; background: #ed1b23; border-radius: 6px; margin: 0 auto 4px; }
+  .wf-card-line { height: 6px; background: #eee; border-radius: 2px; margin: 2px 0; }
+  .wf-card-line.w60 { width: 60%; }
+  .wf-card-line.w80 { width: 80%; }
+  .wf-card-line.w40 { width: 40%; }
+
+  .wf-map { background: #d4e6f1; border: 1px dashed #7fb3d3; border-radius: 4px; height: 50px; display: flex; align-items: center; justify-content: center; color: #2980b9; font-size: .65rem; margin: 6px 0; }
+
+  .wf-table { border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; margin: 4px 0; }
+  .wf-table-row { display: flex; gap: 4px; padding: 4px 6px; border-bottom: 1px solid #f0f0f0; }
+  .wf-table-row:last-child { border-bottom: none; }
+  .wf-table-row:first-child { background: #1a2a4a; }
+  .wf-table-cell { height: 7px; background: #eee; border-radius: 2px; flex: 1; }
+  .wf-table-row:first-child .wf-table-cell { background: rgba(255,255,255,.4); }
+
+  .wf-timeline { padding: 4px 0; }
+  .wf-timeline-item { display: flex; gap: 6px; margin-bottom: 6px; }
+  .wf-tl-dot { width: 10px; height: 10px; border-radius: 50%; background: #ed1b23; flex-shrink: 0; margin-top: 2px; }
+  .wf-tl-line-wrap { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .wf-tl-line { height: 6px; background: #eee; border-radius: 2px; }
+
+  .wf-acc-item { border: 1px solid #e0e0e0; border-radius: 4px; margin-bottom: 3px; }
+  .wf-acc-header { background: #f5f5f5; padding: 5px 8px; display: flex; align-items: center; gap: 4px; }
+  .wf-acc-title { height: 7px; background: #ccc; border-radius: 2px; flex: 1; }
+  .wf-acc-arrow { width: 8px; height: 8px; border-right: 2px solid #999; border-bottom: 2px solid #999; transform: rotate(45deg); margin-right: 2px; }
+  .wf-acc-body { background: #fafafa; padding: 6px 8px; }
+  .wf-acc-text { height: 6px; background: #eee; border-radius: 2px; margin-bottom: 3px; }
+
+  .wf-step { display: flex; gap: 6px; margin-bottom: 6px; }
+  .wf-step-num { width: 18px; height: 18px; border-radius: 50%; background: #ed1b23; color: #fff; display: flex; align-items: center; justify-content: center; font-size: .6rem; font-weight: 700; flex-shrink: 0; }
+  .wf-step-body { flex: 1; }
+  .wf-step-line { height: 6px; background: #eee; border-radius: 2px; margin-bottom: 3px; }
+
+  .wf-progress-ring { width: 40px; height: 40px; border-radius: 50%; border: 4px solid #ed1b23; border-top-color: #ddd; margin: 0 auto 4px; }
+  .wf-progress-bar { background: #e0e0e0; border-radius: 10px; height: 5px; margin: 2px 0; overflow: hidden; }
+  .wf-progress-fill { height: 100%; background: #ed1b23; border-radius: 10px; width: 40%; }
+
+  .wf-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin: 4px 0; }
+  .wf-photo-cell { background: #dde; border-radius: 3px; aspect-ratio: 1; }
+
+  .wf-video-card { background: #000; border-radius: 4px; height: 40px; display: flex; align-items: center; justify-content: center; margin: 3px 0; }
+  .wf-play { width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 12px solid #ed1b23; }
+
+  .wf-btn { background: #ed1b23; color: #fff; border-radius: 4px; padding: 4px 8px; text-align: center; font-size: .6rem; height: 16px; display: flex; align-items: center; justify-content: center; width: fit-content; margin: 3px auto; }
+  .wf-btn-outline { border: 1px solid #1a2a4a; color: #1a2a4a; border-radius: 4px; padding: 3px 6px; font-size: .6rem; height: 14px; display: flex; align-items: center; justify-content: center; width: fit-content; }
+
+  .wf-footer { background: #1a2a4a; padding: 8px 10px; }
+  .wf-footer-line { height: 7px; background: rgba(255,255,255,.25); border-radius: 2px; width: 60%; margin: 3px 0; }
+  .wf-footer-small { height: 5px; background: rgba(255,255,255,.15); border-radius: 2px; width: 80%; margin: 2px 0; }
+
+  /* Page Nav */
+  .wf-pagenav { background: #1a2a4a; padding: 6px 10px; display: flex; gap: 4px; }
+  .wf-pagenav-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; flex: 1; height: 20px; display: flex; align-items: center; padding: 0 6px; gap: 3px; }
+  .wf-pagenav-text { height: 6px; background: rgba(255,255,255,.4); border-radius: 2px; flex: 1; }
+
+  /* Admin Frame */
+  .wf-admin-topbar { background: #2d2d2d; padding: 6px 10px; display: flex; align-items: center; gap: 4px; }
+  .wf-admin-topbar-title { height: 8px; background: rgba(255,255,255,.4); border-radius: 2px; width: 80px; }
+  .wf-admin-btn { height: 14px; border-radius: 3px; width: 44px; }
+  .wf-admin-btn.green { background: #2e7d32; }
+  .wf-admin-btn.blue  { background: #1565c0; }
+  .wf-admin-btn.gray  { background: #555; }
+
+  .wf-admin-main { display: flex; height: 200px; overflow: hidden; }
+  .wf-admin-sidebar { background: #1a1a2e; width: 120px; flex-shrink: 0; padding: 8px; }
+  .wf-sidebar-section { height: 8px; background: rgba(255,255,255,.25); border-radius: 2px; margin-bottom: 5px; }
+  .wf-sidebar-item { height: 14px; background: rgba(255,255,255,.1); border-radius: 3px; margin-bottom: 3px; display: flex; align-items: center; padding: 0 4px; gap: 3px; }
+  .wf-sidebar-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .wf-sidebar-line { height: 5px; flex: 1; background: rgba(255,255,255,.3); border-radius: 2px; }
+  .wf-sidebar-item.active { background: #ed1b23; }
+  .wf-admin-content { flex: 1; background: #f5f5f5; padding: 10px; overflow-y: auto; }
+  .wf-admin-field { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; height: 20px; margin-bottom: 6px; }
+  .wf-admin-label { height: 6px; background: #ccc; border-radius: 2px; width: 40%; margin-bottom: 3px; margin-top: 6px; }
+  .wf-admin-panel-title { height: 10px; background: #1a2a4a; border-radius: 2px; width: 50%; margin-bottom: 8px; }
+
+  /* Mobile-specific overrides */
+  .mobile-wf .wf-header { padding: 6px 8px; }
+  .mobile-wf .wf-logo { width: 70px; }
+  .mobile-wf .wf-section { padding: 10px 8px; }
+  .mobile-wf .wf-cards.col3 { flex-direction: column; }
+  .mobile-wf .wf-cards.col2 { flex-direction: column; }
+
+  /* Labels */
+  .label-wrap { margin-bottom: 32px; }
+  .label-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .label-item { display: flex; align-items: center; gap: 5px; font-size: .72rem; color: #555; }
+  .label-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* Annotation */
+  .annotation { font-size: .68rem; color: #888; font-style: italic; text-align: center; margin-top: 4px; }
+
+  /* Page divider */
+  .page-divider { border: none; border-top: 2px dashed #d0d0d0; margin: 40px 0; }
+
+  /* Scroll hint */
+  .scroll-hint { text-align: center; font-size: .72rem; color: #aaa; margin-bottom: 8px; }
+
+  /* Two-column pages grid */
+  .pages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 1100px) { .pages-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px)  { .pages-grid { grid-template-columns: 1fr; } }
+
+  .page-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.07); overflow: hidden; }
+  .page-card-header { padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+  .page-card-header .pc-num { width: 22px; height: 22px; border-radius: 50%; background: #ed1b23; color: #fff; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 800; flex-shrink: 0; }
+  .page-card-header .pc-title { font-weight: 700; font-size: .85rem; }
+  .page-card-header .pc-file { font-size: .65rem; color: #999; }
+  .page-card-body { padding: 10px 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pc-device-col label { font-size: .62rem; font-weight: 700; color: #888; display: block; text-align: center; margin-bottom: 4px; }
+
+  /* Admin special */
+  .admin-card { grid-column: 1 / -1; }
+
+  /* Responsive comparison */
+  .resp-comparison { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 16px rgba(0,0,0,.08); margin-bottom: 24px; }
+  .resp-row { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; align-items: start; }
+  @media (max-width: 800px) { .resp-row { grid-template-columns: 1fr; } }
+  .resp-col-label { font-size: .75rem; font-weight: 800; color: #1a2a4a; text-align: center; margin-bottom: 10px; background: #f0f4ff; border-radius: 6px; padding: 4px 0; }
+
+  /* Data flow */
+  .dataflow { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 2px 16px rgba(0,0,0,.08); margin-bottom: 20px; }
+  .df-row { display: flex; align-items: center; gap: 0; justify-content: center; flex-wrap: wrap; }
+  .df-node { border: 2px solid #1a2a4a; border-radius: 10px; padding: 10px 16px; text-align: center; min-width: 110px; }
+  .df-node .df-icon { font-size: 1.2rem; }
+  .df-node .df-label { font-size: .72rem; font-weight: 700; }
+  .df-node .df-sub { font-size: .6rem; color: #888; }
+  .df-node.highlight { background: #1a2a4a; color: #fff; }
+  .df-node.highlight .df-sub { color: rgba(255,255,255,.6); }
+  .df-arrow { font-size: 1.2rem; color: #ed1b23; font-weight: 700; padding: 0 6px; }
+  .df-desc { font-size: .72rem; color: #555; }
+
+  /* Print */
+  @media print {
+    body { background: #fff; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page-section { padding: 20px; }
+  }
+
+  /* Mobile screen wf */
+  .m-wf { background: #f8f8f8; }
+  .m-wf .wf-section { padding: 8px 8px; }
+</style>
+</head>
+<body>
+
+<!-- ══ Cover ══════════════════════════════════════════ -->
+<div class="cover">
+  <h1>🗺️ 旅のしおり</h1>
+  <p>サイト構造ワイヤーフレーム図解</p>
+  <p style="font-size:.8rem;opacity:.6;margin-bottom:16px">MOTO TOURS JAPAN — 社内共有用資料</p>
+  <span class="badge">💻 PC版</span>
+  <span class="badge">📱 スマホ版</span>
+  <span class="badge">全9ページ対応</span>
+</div>
+
+
+<!-- ══ 1. サイトマップ ══════════════════════════════════ -->
+<div class="page-section">
+  <h2 class="section-title">① サイト全体の構成マップ <span class="section-sub">— どんなページがあり、どう繋がっているか</span></h2>
+
+  <div class="sitemap-wrap">
+    <!-- Admin node (top right) -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <div class="sm-node admin-node" style="text-align:center;">
+        <span class="sm-icon">⚙️</span>
+        <div class="sm-label">管理者編集画面</div>
+        <div class="sm-file">admin.html</div>
+        <div style="font-size:.6rem;color:#888;margin-top:3px;">← データを入力・保存</div>
+      </div>
+    </div>
+
+    <!-- Arrow down to data -->
+    <div style="display:flex;justify-content:center;margin-bottom:4px;">
+      <div style="text-align:center;">
+        <div style="background:#e8f4fd;border:1px dashed #7fb3d3;border-radius:8px;padding:6px 16px;font-size:.72rem;color:#2980b9;display:inline-block;">
+          📄 tour-data.js（ツアーデータファイル）<br>
+          <span style="font-size:.6rem;">← 全ページがこのファイルのデータを読み込んで表示</span>
+        </div>
+        <div class="sm-connector-v"></div>
+      </div>
+    </div>
+
+    <!-- Root node -->
+    <div class="sitemap-root">
+      <div class="sm-node root-node">
+        <span class="sm-icon">🏠</span>
+        <div class="sm-label">ホーム（表紙）</div>
+        <div class="sm-file">index.html</div>
+      </div>
+      <div class="sm-connector-v"></div>
+
+      <!-- Branch -->
+      <div style="display:flex;gap:0;justify-content:center;position:relative;">
+        <!-- Horizontal line -->
+        <div style="position:absolute;top:0;left:50px;right:50px;height:2px;background:#1a2a4a;"></div>
+
+        <div class="sm-branch-row" style="position:relative;gap:8px;">
+          <!-- 全体行程 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">📋</span>
+              <div class="sm-label">全体行程</div>
+              <div class="sm-file">route.html</div>
+            </div>
+          </div>
+          <!-- Day1 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">📅</span>
+              <div class="sm-label">Day 1 詳細</div>
+              <div class="sm-file">itinerary_day1.html</div>
+            </div>
+          </div>
+          <!-- Day2 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">📅</span>
+              <div class="sm-label">Day 2 詳細</div>
+              <div class="sm-file">itinerary_day2.html</div>
+            </div>
+          </div>
+          <!-- Day3 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">📅</span>
+              <div class="sm-label">Day 3 詳細</div>
+              <div class="sm-file">itinerary_day3.html</div>
+            </div>
+          </div>
+          <!-- 注意事項 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">🧳</span>
+              <div class="sm-label">持ち物・注意</div>
+              <div class="sm-file">caution.html</div>
+            </div>
+          </div>
+          <!-- 会社情報 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node">
+              <span class="sm-icon">🏢</span>
+              <div class="sm-label">会社情報</div>
+              <div class="sm-file">company_information.html</div>
+            </div>
+          </div>
+          <!-- ツアー後 -->
+          <div class="sm-branch-col">
+            <div class="sm-connector-v" style="height:12px;"></div>
+            <div class="sm-node post-node">
+              <span class="sm-icon">📷</span>
+              <div class="sm-label">ツアー後</div>
+              <div class="sm-file">post_tour.html</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="sm-legend">
+      <div class="sm-legend-item"><div class="sm-legend-box" style="background:#1a2a4a;border-color:#1a2a4a;"></div>メインページ</div>
+      <div class="sm-legend-item"><div class="sm-legend-box" style="background:#fff3cd;border-color:#e6a817;"></div>管理者専用ページ</div>
+      <div class="sm-legend-item"><div class="sm-legend-box" style="background:#e8f5e9;border-color:#2e7d32;"></div>ツアー後公開ページ</div>
+      <div class="sm-legend-item"><div class="sm-legend-box" style="background:#e8f4fd;border-color:#7fb3d3;"></div>データファイル（JS）</div>
+      <div class="sm-legend-item">
+        <svg width="30" height="10"><line x1="0" y1="5" x2="30" y2="5" stroke="#1a2a4a" stroke-width="2"/></svg>
+        ナビゲーションリンク（ヘッダーメニュー）
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation order -->
+  <div style="background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 2px 12px rgba(0,0,0,.07);">
+    <div style="font-weight:700;font-size:.82rem;color:#1a2a4a;margin-bottom:10px;">📌 ページを順番に読む場合の流れ（ページ下部の「前へ/次へ」ボタン）</div>
+    <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:.72rem;">
+      <span style="background:#1a2a4a;color:#fff;padding:3px 8px;border-radius:4px;">ホーム</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">全体行程</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">Day 1</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">Day 2</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">Day 3</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">持ち物・注意</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#f0f0f0;padding:3px 8px;border-radius:4px;">会社情報</span>
+      <span style="color:#ed1b23;font-weight:700;font-size:1rem;">→</span>
+      <span style="background:#e8f5e9;padding:3px 8px;border-radius:4px;border:1px solid #2e7d32;">ツアー後</span>
+    </div>
+  </div>
+</div>
+
+<hr class="page-divider">
+
+<!-- ══ 2. データの流れ ══════════════════════════════════ -->
+<div class="page-section">
+  <h2 class="section-title">② データの仕組み <span class="section-sub">— どうやってページに情報が表示されるか</span></h2>
+  <div class="dataflow">
+    <div class="df-row" style="margin-bottom:16px;">
+      <div class="df-node highlight">
+        <div class="df-icon">⚙️</div>
+        <div class="df-label">admin.html</div>
+        <div class="df-sub">管理者が編集</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node" style="background:#fff3cd;border-color:#e6a817;">
+        <div class="df-icon">💾</div>
+        <div class="df-label">ブラウザの保存領域</div>
+        <div class="df-sub">localStorage</div>
+      </div>
+      <div class="df-arrow">or</div>
+      <div class="df-node" style="background:#e8f4fd;border-color:#7fb3d3;">
+        <div class="df-icon">📄</div>
+        <div class="df-label">tour-data.js</div>
+        <div class="df-sub">デフォルトデータ</div>
+      </div>
+      <div class="df-arrow">→</div>
+      <div class="df-node" style="background:#e8f5e9;border-color:#2e7d32;">
+        <div class="df-icon">🌐</div>
+        <div class="df-label">各ページ</div>
+        <div class="df-sub">自動で表示反映</div>
+      </div>
+    </div>
+    <div style="background:#f8f8f8;border-radius:8px;padding:12px 16px;font-size:.75rem;color:#555;line-height:1.8;">
+      <strong>📌 ポイント：</strong><br>
+      ① 管理者が admin.html でツアー情報を入力し「保存」すると、ブラウザのローカルストレージにデータが保存されます<br>
+      ② 各ページはそのデータを読み込み、ツアー名・日程・行程・写真などを自動で表示します<br>
+      ③ ローカルストレージにデータがない場合は、tour-data.js のデフォルトデータが表示されます<br>
+      ④ 「データをダウンロード」ボタンで tour-data.js を更新すれば、初回アクセス時から正しいデータが表示されます
+    </div>
+  </div>
+</div>
+
+<hr class="page-divider">
+
+<!-- ══ 3. 各ページワイヤーフレーム ══════════════════════ -->
+<div class="page-section">
+  <h2 class="section-title">③ 各ページのレイアウト <span class="section-sub">— PC版（左）とスマホ版（右）</span></h2>
+
+  <div class="pages-grid">
+
+    <!-- ── Page 1: index.html ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#1a2a4a;color:#fff;">
+        <div class="pc-num">1</div>
+        <div>
+          <div class="pc-title">ホーム（表紙）</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">index.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <!-- PC -->
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header">
+                <div class="wf-logo"></div>
+                <div class="wf-nav">
+                  <div class="wf-nav-item"></div><div class="wf-nav-item"></div><div class="wf-nav-item"></div>
+                  <div class="wf-nav-item"></div><div class="wf-nav-item"></div>
+                </div>
+              </div>
+              <div class="wf-hero">
+                <div style="height:7px;background:rgba(255,255,255,.5);border-radius:2px;width:30%;margin:0 auto 4px;"></div>
+                <div class="wf-hero-title"></div>
+                <div class="wf-hero-sub"></div>
+                <div class="wf-hero-chips"><div class="wf-hero-chip"></div><div class="wf-hero-chip"></div><div class="wf-hero-chip"></div></div>
+              </div>
+              <!-- 集合 -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">集合・解散情報</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-card-line w60"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-card-line w60"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-card-line w60"></div><div class="wf-card-line w80"></div></div>
+                </div>
+                <div class="wf-map">🗺️ Google Map</div>
+              </div>
+              <!-- 担当者 -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">担当添乗員</div>
+                <div class="wf-cards col2">
+                  <div class="wf-card"><div class="wf-card-line w60"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card"><div class="wf-card-line w60"></div><div class="wf-card-line w80"></div></div>
+                </div>
+              </div>
+              <!-- 含まれる -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">含まれるもの / 含まれないもの</div>
+                <div class="wf-cards col2">
+                  <div class="wf-card"><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                  <div class="wf-card"><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                </div>
+              </div>
+              <!-- クイックリンク -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">しおりのコンテンツ（クイックリンク）</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon"></div><div class="wf-card-line w80"></div></div>
+                </div>
+              </div>
+              <div class="wf-footer"><div class="wf-footer-line"></div><div class="wf-footer-small"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Mobile -->
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header">
+                  <div class="wf-logo" style="width:55px;height:14px;"></div>
+                  <div class="wf-hamburger"><span></span><span></span><span></span></div>
+                </div>
+                <div class="wf-hero" style="padding:14px 8px;">
+                  <div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;width:40%;margin:0 auto 3px;"></div>
+                  <div style="height:9px;background:rgba(255,255,255,.6);border-radius:2px;width:80%;margin:0 auto 3px;"></div>
+                  <div style="height:6px;background:rgba(255,255,255,.35);border-radius:2px;width:60%;margin:0 auto 3px;"></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">集合・解散情報（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="display:flex;align-items:center;gap:4px;"><div class="wf-card-icon" style="width:16px;height:16px;margin:0;flex-shrink:0;"></div><div style="flex:1;"><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div></div></div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="display:flex;align-items:center;gap:4px;"><div class="wf-card-icon" style="width:16px;height:16px;margin:0;flex-shrink:0;"></div><div style="flex:1;"><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div></div></div>
+                  <div class="wf-map" style="height:36px;font-size:.55rem;">🗺️ Google Map</div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">担当添乗員</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">クイックリンク（縦並び）</div>
+                  <div class="wf-card" style="display:flex;align-items:center;gap:4px;margin-bottom:3px;"><div class="wf-card-icon" style="width:14px;height:14px;margin:0;flex-shrink:0;"></div><div class="wf-card-line w80" style="margin:0;flex:1;"></div></div>
+                  <div class="wf-card" style="display:flex;align-items:center;gap:4px;margin-bottom:3px;"><div class="wf-card-icon" style="width:14px;height:14px;margin:0;flex-shrink:0;"></div><div class="wf-card-line w80" style="margin:0;flex:1;"></div></div>
+                </div>
+                <div class="wf-footer" style="padding:6px 8px;"><div class="wf-footer-line" style="width:80%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">3カラム→1カラムに変化</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Page 2: route.html ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#2c3e7a;color:#fff;">
+        <div class="pc-num">2</div>
+        <div>
+          <div class="pc-title">全体行程</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">route.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header"><div class="wf-logo"></div><div class="wf-nav"><div class="wf-nav-item"></div><div class="wf-nav-item"></div><div class="wf-nav-item"></div></div></div>
+              <div class="wf-section" style="background:#1a2a4a;padding:10px;">
+                <div style="height:8px;background:rgba(255,255,255,.4);border-radius:2px;width:40%;margin:0 auto;"></div>
+              </div>
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">行程表（3日間）</div>
+                <div class="wf-table">
+                  <div class="wf-table-row"><div class="wf-table-cell"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div></div>
+                  <div class="wf-table-row" style="background:#ffe8e8;"><div class="wf-table-cell" style="background:#ffcccc;"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div></div>
+                  <div class="wf-table-row"><div class="wf-table-cell" style="background:#ffcccc;"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div></div>
+                  <div class="wf-table-row" style="background:#e8eeff;"><div class="wf-table-cell" style="background:#c8d4ff;"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div><div class="wf-table-cell"></div></div>
+                </div>
+              </div>
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">ツアーハイライト</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card" style="text-align:center;"><div style="height:28px;background:#dde;border-radius:4px;margin-bottom:4px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div style="height:28px;background:#dde;border-radius:4px;margin-bottom:4px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div style="height:28px;background:#dde;border-radius:4px;margin-bottom:4px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                </div>
+              </div>
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">宿泊施設</div>
+                <div class="wf-cards col2">
+                  <div class="wf-card"><div style="height:24px;background:#dde;border-radius:3px;margin-bottom:4px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div><div class="wf-btn" style="margin:3px 0;">公式HP</div></div>
+                  <div class="wf-card"><div style="height:24px;background:#dde;border-radius:3px;margin-bottom:4px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div><div class="wf-btn" style="margin:3px 0;">公式HP</div></div>
+                </div>
+              </div>
+              <div class="wf-pagenav"><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div></div>
+              <div class="wf-footer"><div class="wf-footer-line"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header"><div class="wf-logo" style="width:55px;height:14px;"></div><div class="wf-hamburger"><span></span><span></span><span></span></div></div>
+                <div class="wf-section" style="background:#1a2a4a;padding:8px;"><div style="height:7px;background:rgba(255,255,255,.4);border-radius:2px;width:50%;margin:0 auto;"></div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">行程表（横スクロール）</div>
+                  <div style="overflow-x:auto;font-size:.5rem;color:#888;background:#f0f0f0;padding:4px;border-radius:3px;">← スワイプで横スクロール →</div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">ハイライト（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="height:20px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="height:20px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">宿泊施設（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="height:22px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div><div class="wf-btn" style="margin:2px 0;font-size:.5rem;height:12px;">公式HP</div></div>
+                </div>
+                <div class="wf-footer" style="padding:5px 8px;"><div class="wf-footer-line" style="width:70%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">表は横スクロール対応</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Page 3: Day 1/2/3 ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#1565c0;color:#fff;">
+        <div class="pc-num">3</div>
+        <div>
+          <div class="pc-title">Day 1 / 2 / 3 詳細行程</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">itinerary_day1〜3.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header"><div class="wf-logo"></div><div class="wf-nav"><div class="wf-nav-item"></div><div class="wf-nav-item"></div></div></div>
+              <div class="wf-section" style="background:#1a2a4a;padding:10px;text-align:center;">
+                <div style="font-size:.55rem;color:rgba(255,255,255,.6);">DAY 1</div>
+                <div style="height:8px;background:rgba(255,255,255,.5);border-radius:2px;width:50%;margin:3px auto;"></div>
+              </div>
+              <!-- Day strip -->
+              <div style="background:#ed1b23;padding:5px 10px;display:flex;gap:6px;align-items:center;">
+                <div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;width:60px;"></div>
+                <div style="height:6px;background:rgba(255,255,255,.3);border-radius:2px;width:40px;"></div>
+              </div>
+              <!-- Timeline -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">タイムライン</div>
+                <div class="wf-timeline">
+                  <div class="wf-timeline-item"><div class="wf-tl-dot"></div><div class="wf-tl-line-wrap"><div class="wf-tl-line" style="width:80%;"></div><div class="wf-tl-line" style="width:60%;"></div><div class="wf-tl-line" style="width:90%;"></div></div></div>
+                  <div class="wf-timeline-item"><div class="wf-tl-dot" style="background:#1565c0;"></div><div class="wf-tl-line-wrap"><div class="wf-tl-line" style="width:70%;"></div><div class="wf-tl-line" style="width:50%;"></div></div></div>
+                  <div class="wf-timeline-item"><div class="wf-tl-dot"></div><div class="wf-tl-line-wrap"><div class="wf-tl-line" style="width:80%;"></div><div class="wf-tl-line" style="width:65%;"></div></div></div>
+                </div>
+              </div>
+              <!-- Map -->
+              <div class="wf-section">
+                <div class="wf-map" style="height:40px;">🗺️ Day 1 訪問スポット マップ</div>
+              </div>
+              <!-- Spots grid -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">スポット情報グリッド</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card"><div style="font-size:.55rem;font-weight:700;color:#ed1b23;margin-bottom:2px;">① スポット名</div><div class="wf-card-line w80"></div><div class="wf-card-line w60"></div></div>
+                  <div class="wf-card"><div style="font-size:.55rem;font-weight:700;color:#ed1b23;margin-bottom:2px;">② スポット名</div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card"><div style="font-size:.55rem;font-weight:700;color:#ed1b23;margin-bottom:2px;">③ スポット名</div><div class="wf-card-line w60"></div></div>
+                </div>
+              </div>
+              <div class="wf-pagenav"><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div></div>
+              <div class="wf-footer"><div class="wf-footer-line"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header"><div class="wf-logo" style="width:55px;height:14px;"></div><div class="wf-hamburger"><span></span><span></span><span></span></div></div>
+                <div class="wf-section" style="background:#1a2a4a;padding:8px;"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;width:60%;margin:0 auto;"></div></div>
+                <div style="background:#ed1b23;padding:4px 8px;"><div style="height:5px;background:rgba(255,255,255,.4);border-radius:2px;width:70%;"></div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">タイムライン（縦1列）</div>
+                  <div class="wf-timeline">
+                    <div class="wf-timeline-item"><div class="wf-tl-dot"></div><div class="wf-tl-line-wrap"><div class="wf-tl-line" style="width:90%;"></div><div class="wf-tl-line" style="width:70%;"></div></div></div>
+                    <div class="wf-timeline-item"><div class="wf-tl-dot" style="background:#1565c0;"></div><div class="wf-tl-line-wrap"><div class="wf-tl-line" style="width:80%;"></div></div></div>
+                  </div>
+                </div>
+                <div class="wf-section"><div class="wf-map" style="height:32px;font-size:.5rem;">🗺️ スポットマップ</div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">スポット（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="font-size:.5rem;color:#ed1b23;">①</div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="font-size:.5rem;color:#ed1b23;">②</div><div class="wf-card-line w60"></div></div>
+                </div>
+                <div class="wf-footer" style="padding:5px 8px;"><div class="wf-footer-line" style="width:60%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">3ページ共通レイアウト</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Page 4: caution.html ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#6d4c41;color:#fff;">
+        <div class="pc-num">4</div>
+        <div>
+          <div class="pc-title">持ち物・注意事項</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">caution.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header"><div class="wf-logo"></div><div class="wf-nav"><div class="wf-nav-item"></div><div class="wf-nav-item"></div></div></div>
+              <!-- Progress -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">チェックリスト進捗</div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <div><div class="wf-progress-ring"></div><div style="font-size:.5rem;text-align:center;color:#888;">0%</div></div>
+                  <div style="flex:1;"><div class="wf-progress-bar"><div class="wf-progress-fill"></div></div><div class="wf-progress-bar" style="margin-top:3px;"><div class="wf-progress-fill" style="width:20%;"></div></div></div>
+                </div>
+              </div>
+              <!-- Checklist groups -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">チェックリスト（グループ別）</div>
+                <div class="wf-card" style="margin-bottom:4px;">
+                  <div style="display:flex;align-items:center;gap:3px;margin-bottom:4px;"><div class="wf-card-icon" style="width:14px;height:14px;"></div><div style="height:6px;background:#ccc;border-radius:2px;flex:1;"></div></div>
+                  <div style="display:flex;align-items:center;gap:3px;margin-bottom:2px;"><div style="width:10px;height:10px;border:2px solid #ccc;border-radius:2px;flex-shrink:0;"></div><div style="height:5px;background:#eee;border-radius:2px;flex:1;"></div></div>
+                  <div style="display:flex;align-items:center;gap:3px;"><div style="width:10px;height:10px;border:2px solid #ccc;border-radius:2px;flex-shrink:0;"></div><div style="height:5px;background:#eee;border-radius:2px;flex:1;"></div></div>
+                </div>
+              </div>
+              <!-- Tips Accordion -->
+              <div class="wf-section" style="background:#1a2a4a;padding:10px;">
+                <div style="font-size:.55rem;color:rgba(255,255,255,.7);margin-bottom:4px;font-weight:700;">旅のヒント（アコーディオン）</div>
+                <div class="wf-acc-item"><div class="wf-acc-header"><div class="wf-acc-title" style="background:#555;"></div><div class="wf-acc-arrow" style="border-color:#888;"></div></div></div>
+                <div class="wf-acc-item" style="background:#2a3a5a;border-color:#3a4a6a;"><div class="wf-acc-header" style="background:#2a3a5a;"><div class="wf-acc-title" style="background:#667;"></div><div class="wf-acc-arrow" style="transform:rotate(-45deg);border-color:#aaa;"></div></div><div class="wf-acc-body" style="background:#2a3a5a;"><div class="wf-acc-text" style="background:#3a4a6a;"></div><div class="wf-acc-text" style="background:#3a4a6a;width:80%;"></div></div></div>
+              </div>
+              <!-- Emergency -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:4px;font-weight:700;">事故・緊急時の対応手順</div>
+                <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:4px 6px;font-size:.5rem;color:#856404;margin-bottom:5px;">⚠️ アラートメッセージ</div>
+                <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-body"><div class="wf-step-line"></div><div class="wf-step-line" style="width:70%;"></div></div></div>
+                <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-body"><div class="wf-step-line"></div><div class="wf-step-line" style="width:80%;"></div></div></div>
+                <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-body"><div class="wf-step-line"></div></div></div>
+              </div>
+              <div class="wf-pagenav"><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div></div>
+              <div class="wf-footer"><div class="wf-footer-line"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header"><div class="wf-logo" style="width:55px;height:14px;"></div><div class="wf-hamburger"><span></span><span></span><span></span></div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">進捗（中央表示）</div>
+                  <div class="wf-progress-ring" style="width:30px;height:30px;border-width:3px;"></div>
+                  <div class="wf-progress-bar" style="margin-top:4px;"><div class="wf-progress-fill"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">チェックリスト</div>
+                  <div class="wf-card" style="margin-bottom:3px;">
+                    <div style="display:flex;gap:3px;align-items:center;"><div style="width:9px;height:9px;border:2px solid #ccc;border-radius:2px;flex-shrink:0;"></div><div style="height:5px;background:#eee;border-radius:2px;flex:1;"></div></div>
+                  </div>
+                </div>
+                <div class="wf-section" style="background:#1a2a4a;padding:8px;">
+                  <div style="font-size:.5rem;color:rgba(255,255,255,.7);margin-bottom:3px;font-weight:700;">旅のヒント</div>
+                  <div class="wf-acc-item" style="border-color:#3a4a6a;background:#2a3a5a;"><div class="wf-acc-header" style="background:#2a3a5a;"><div class="wf-acc-title" style="background:#555;"></div><div class="wf-acc-arrow" style="border-color:#888;"></div></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">緊急手順</div>
+                  <div style="background:#fff3cd;padding:3px;border-radius:3px;font-size:.45rem;color:#856404;margin-bottom:3px;">⚠️ アラート</div>
+                  <div class="wf-step" style="margin-bottom:3px;"><div class="wf-step-num" style="width:14px;height:14px;font-size:.5rem;">1</div><div class="wf-step-body"><div class="wf-step-line"></div></div></div>
+                  <div class="wf-step" style="margin-bottom:3px;"><div class="wf-step-num" style="width:14px;height:14px;font-size:.5rem;">2</div><div class="wf-step-body"><div class="wf-step-line"></div></div></div>
+                </div>
+                <div class="wf-footer" style="padding:5px 8px;"><div class="wf-footer-line" style="width:70%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">アコーディオンで節約</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Page 5: company_information.html ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#4a148c;color:#fff;">
+        <div class="pc-num">5</div>
+        <div>
+          <div class="pc-title">会社情報・連絡先</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">company_information.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header"><div class="wf-logo"></div><div class="wf-nav"><div class="wf-nav-item"></div><div class="wf-nav-item"></div></div></div>
+              <!-- Goods -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">オリジナルグッズ</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card" style="text-align:center;"><div style="height:20px;background:#dde;border-radius:4px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div><div class="wf-card-line w40"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div style="height:20px;background:#dde;border-radius:4px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div style="height:20px;background:#dde;border-radius:4px;margin-bottom:3px;"></div><div class="wf-card-line w60"></div></div>
+                </div>
+              </div>
+              <!-- SNS -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">公式 SNS</div>
+                <div class="wf-cards col3">
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon" style="background:#1da1f2;"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon" style="background:#e1306c;"></div><div class="wf-card-line w80"></div></div>
+                  <div class="wf-card" style="text-align:center;"><div class="wf-card-icon" style="background:#ff0000;"></div><div class="wf-card-line w80"></div></div>
+                </div>
+              </div>
+              <!-- Emergency contacts -->
+              <div class="wf-section" style="background:#1a2a4a;padding:10px;">
+                <div style="font-size:.55rem;color:rgba(255,255,255,.7);margin-bottom:3px;font-weight:700;">緊急連絡先</div>
+                <div class="wf-cards col2">
+                  <div class="wf-card" style="background:#2a3a5a;border-color:#3a4a6a;"><div class="wf-card-line w80" style="background:#667;"></div><div class="wf-card-line w60" style="background:#555;"></div></div>
+                  <div class="wf-card" style="background:#2a3a5a;border-color:#3a4a6a;"><div class="wf-card-line w80" style="background:#667;"></div><div class="wf-card-line w60" style="background:#555;"></div></div>
+                </div>
+              </div>
+              <!-- Company info -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">会社概要テーブル</div>
+                <div class="wf-table">
+                  <div class="wf-table-row"><div class="wf-table-cell" style="background:#e8e8e8;max-width:40%;"></div><div class="wf-table-cell"></div></div>
+                  <div class="wf-table-row"><div class="wf-table-cell" style="background:#e8e8e8;max-width:40%;"></div><div class="wf-table-cell"></div></div>
+                  <div class="wf-table-row"><div class="wf-table-cell" style="background:#e8e8e8;max-width:40%;"></div><div class="wf-table-cell"></div></div>
+                </div>
+              </div>
+              <div class="wf-pagenav"><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div></div>
+              <div class="wf-footer"><div class="wf-footer-line"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header"><div class="wf-logo" style="width:55px;height:14px;"></div><div class="wf-hamburger"><span></span><span></span><span></span></div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">グッズ（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="height:18px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">SNS</div>
+                  <div style="display:flex;gap:3px;">
+                    <div class="wf-card" style="flex:1;text-align:center;padding:4px;"><div class="wf-card-icon" style="width:14px;height:14px;margin:0 auto;background:#1da1f2;"></div></div>
+                    <div class="wf-card" style="flex:1;text-align:center;padding:4px;"><div class="wf-card-icon" style="width:14px;height:14px;margin:0 auto;background:#e1306c;"></div></div>
+                  </div>
+                </div>
+                <div class="wf-section" style="background:#1a2a4a;padding:8px;">
+                  <div style="font-size:.5rem;color:rgba(255,255,255,.7);margin-bottom:3px;font-weight:700;">緊急連絡先</div>
+                  <div class="wf-card" style="background:#2a3a5a;border-color:#3a4a6a;margin-bottom:3px;"><div class="wf-card-line w80" style="background:#667;"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">会社概要</div>
+                  <div class="wf-table"><div class="wf-table-row"><div class="wf-table-cell" style="background:#e8e8e8;"></div><div class="wf-table-cell"></div></div><div class="wf-table-row"><div class="wf-table-cell" style="background:#e8e8e8;"></div><div class="wf-table-cell"></div></div></div>
+                </div>
+                <div class="wf-footer" style="padding:5px 8px;"><div class="wf-footer-line" style="width:70%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">全項目縦並び表示</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Page 6: post_tour.html ── -->
+    <div class="page-card">
+      <div class="page-card-header" style="background:#2e7d32;color:#fff;">
+        <div class="pc-num">6</div>
+        <div>
+          <div class="pc-title">ツアー後</div>
+          <div class="pc-file" style="color:rgba(255,255,255,.6);">post_tour.html</div>
+        </div>
+      </div>
+      <div class="page-card-body">
+        <div>
+          <label>💻 PC版</label>
+          <div class="pc-frame">
+            <div class="pc-titlebar"><div class="pc-dot r"></div><div class="pc-dot y"></div><div class="pc-dot g"></div><div class="pc-urlbar"></div></div>
+            <div class="pc-screen">
+              <div class="wf-header"><div class="wf-logo"></div><div class="wf-nav"><div class="wf-nav-item"></div><div class="wf-nav-item"></div></div></div>
+              <!-- Photos -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">フォトギャラリー</div>
+                <div class="wf-btn" style="margin-bottom:4px;background:#4caf50;">📁 アルバムを見る（Google Drive）</div>
+                <div class="wf-photo-grid">
+                  <div class="wf-photo-cell"></div><div class="wf-photo-cell"></div><div class="wf-photo-cell"></div>
+                  <div class="wf-photo-cell"></div><div class="wf-photo-cell"></div><div class="wf-photo-cell"></div>
+                </div>
+              </div>
+              <!-- Videos -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">ツアー動画（YouTube）</div>
+                <div class="wf-cards col2">
+                  <div class="wf-video-card"><div class="wf-play"></div></div>
+                  <div class="wf-video-card"><div class="wf-play"></div></div>
+                </div>
+              </div>
+              <!-- Survey -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">アンケート</div>
+                <div class="wf-card" style="text-align:center;"><div class="wf-card-line w60" style="margin:0 auto 4px;"></div><div class="wf-btn" style="margin:2px auto;">アンケートに答える</div></div>
+              </div>
+              <!-- Next tour -->
+              <div class="wf-section">
+                <div style="font-size:.55rem;color:#888;margin-bottom:3px;font-weight:700;">次のツアーのご案内</div>
+                <div class="wf-cards col2">
+                  <div class="wf-card"><div style="height:22px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div><div class="wf-btn" style="margin:2px 0;">詳細を見る</div></div>
+                  <div class="wf-card"><div style="height:22px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div><div class="wf-btn" style="margin:2px 0;">詳細を見る</div></div>
+                </div>
+              </div>
+              <div class="wf-pagenav"><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div><div class="wf-pagenav-btn"><div class="wf-pagenav-text"></div></div></div>
+              <div class="wf-footer"><div class="wf-footer-line"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>📱 スマホ版</label>
+          <div class="mobile-outer">
+            <div class="mobile-frame">
+              <div class="mobile-notch"><div class="mobile-notch-inner"></div></div>
+              <div class="mobile-screen m-wf">
+                <div class="wf-header"><div class="wf-logo" style="width:55px;height:14px;"></div><div class="wf-hamburger"><span></span><span></span><span></span></div></div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">フォトギャラリー</div>
+                  <div class="wf-btn" style="background:#4caf50;font-size:.5rem;height:13px;margin-bottom:3px;">📁 アルバムを見る</div>
+                  <div class="wf-photo-grid" style="grid-template-columns:repeat(3,1fr);gap:2px;">
+                    <div class="wf-photo-cell" style="aspect-ratio:1;"></div><div class="wf-photo-cell" style="aspect-ratio:1;"></div><div class="wf-photo-cell" style="aspect-ratio:1;"></div>
+                  </div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">ツアー動画</div>
+                  <div class="wf-video-card" style="height:28px;"><div class="wf-play" style="border-top-width:5px;border-bottom-width:5px;border-left-width:9px;"></div></div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">アンケート</div>
+                  <div class="wf-btn" style="font-size:.5rem;height:13px;">アンケートへ</div>
+                </div>
+                <div class="wf-section">
+                  <div style="font-size:.5rem;color:#888;margin-bottom:3px;font-weight:700;">次のツアー（縦並び）</div>
+                  <div class="wf-card" style="margin-bottom:3px;"><div style="height:18px;background:#dde;border-radius:3px;margin-bottom:3px;"></div><div class="wf-card-line w80"></div></div>
+                </div>
+                <div class="wf-footer" style="padding:5px 8px;"><div class="wf-footer-line" style="width:60%;"></div></div>
+              </div>
+              <div class="mobile-home-bar"><div class="mobile-home-pill"></div></div>
+            </div>
+          </div>
+          <p class="annotation">ツアー終了後に公開</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pages-grid -->
+</div>
+
+<hr class="page-divider">
+
+<!-- ══ 4. 管理者画面ワイヤーフレーム ════════════════════ -->
+<div class="page-section">
+  <h2 class="section-title">④ 管理者編集画面（admin.html） <span class="section-sub">— スタッフがツアー情報を入力・編集する画面</span></h2>
+  <div style="background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);overflow:hidden;margin-bottom:16px;">
+    <!-- Login -->
+    <div style="background:#1a1a2e;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+      <div style="background:#fff;border-radius:12px;padding:16px;width:200px;flex-shrink:0;">
+        <div style="font-size:.65rem;font-weight:700;color:#1a2a4a;text-align:center;margin-bottom:8px;">🔐 ログイン画面</div>
+        <div style="background:#ed1b23;height:20px;border-radius:4px;margin-bottom:8px;"></div>
+        <div style="height:14px;background:#f0f0f0;border-radius:4px;margin-bottom:6px;"></div>
+        <div style="height:24px;background:#1a2a4a;border-radius:4px;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;">パスワードで入る</span></div>
+      </div>
+      <div style="color:rgba(255,255,255,.5);font-size:.7rem;display:flex;align-items:center;gap:6px;">
+        <span style="font-size:1.2rem;">→</span>
+        <span>認証成功後</span>
+      </div>
+      <div style="flex:1;background:#fff;border-radius:12px;overflow:hidden;">
+        <!-- Top bar -->
+        <div class="wf-admin-topbar">
+          <div class="wf-admin-topbar-title"></div>
+          <div style="margin-left:auto;display:flex;gap:4px;">
+            <div class="wf-admin-btn blue"></div>
+            <div class="wf-admin-btn green"></div>
+            <div class="wf-admin-btn gray"></div>
+            <div class="wf-admin-btn gray"></div>
+          </div>
+        </div>
+        <!-- Main layout -->
+        <div class="wf-admin-main">
+          <!-- Sidebar -->
+          <div class="wf-admin-sidebar">
+            <div class="wf-sidebar-section"></div>
+            <div class="wf-sidebar-item active"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-section" style="margin-top:6px;"></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-section" style="margin-top:6px;"></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-section" style="margin-top:6px;"></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+            <div class="wf-sidebar-item"><div class="wf-sidebar-dot"></div><div class="wf-sidebar-line"></div></div>
+          </div>
+          <!-- Content -->
+          <div class="wf-admin-content">
+            <div class="wf-admin-panel-title"></div>
+            <div class="wf-admin-label"></div>
+            <div class="wf-admin-field"></div>
+            <div class="wf-admin-label"></div>
+            <div class="wf-admin-field"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div><div class="wf-admin-label"></div><div class="wf-admin-field"></div></div>
+              <div><div class="wf-admin-label"></div><div class="wf-admin-field"></div></div>
+            </div>
+            <div class="wf-admin-label"></div>
+            <div style="height:32px;background:#fff;border:1px solid #e0e0e0;border-radius:4px;"></div>
+            <div style="margin-top:6px;display:flex;gap:4px;">
+              <div style="height:18px;background:#4caf50;border-radius:4px;width:60px;"></div>
+              <div style="height:18px;background:#2196f3;border-radius:4px;width:60px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar categories -->
+  <div style="background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 2px 12px rgba(0,0,0,.07);">
+    <div style="font-weight:700;font-size:.82rem;color:#1a2a4a;margin-bottom:12px;">📌 サイドバーの編集タブ一覧</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #ed1b23;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">🏠 基本設定</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">基本情報<br>集合・解散<br>添乗員<br>含まれるもの<br>コンテンツリンク</div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #1565c0;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">📋 行程</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">Day 1〜3 行程<br>宿泊施設<br>ハイライト</div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #6d4c41;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">🧳 注意事項</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">持ち物リスト<br>Travel Tips<br>緊急対応手順</div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #4a148c;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">🏢 会社情報</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">緊急連絡先<br>グッズ<br>会社概要<br>SNS</div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #2e7d32;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">📷 ツアー後</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">写真・アルバム<br>ツアー動画<br>アンケート<br>次ツアー案内</div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid #e6a817;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:6px;">🔧 ツール</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">URLリンク生成<br>プレビュー</div>
+      </div>
+      <div style="background:#e8f5e9;border-radius:8px;padding:10px;border-left:3px solid #2e7d32;grid-column:span 2;">
+        <div style="font-size:.72rem;font-weight:700;margin-bottom:4px;">💾 データ保存の仕組み</div>
+        <div style="font-size:.65rem;color:#555;line-height:1.8;">
+          「保存」ボタン → ブラウザのローカルストレージに保存<br>
+          「ダウンロード」ボタン → tour-data.js ファイルとして書き出し → サーバーに上書きで本番反映
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="page-divider">
+
+<!-- ══ 5. レスポンシブ比較 ══════════════════════════════ -->
+<div class="page-section">
+  <h2 class="section-title">⑤ PC版 vs スマホ版 レイアウト変化まとめ</h2>
+  <div class="resp-comparison">
+    <table style="width:100%;border-collapse:collapse;font-size:.78rem;">
+      <thead>
+        <tr style="background:#1a2a4a;color:#fff;">
+          <th style="padding:8px 12px;text-align:left;border-radius:8px 0 0 0;">要素</th>
+          <th style="padding:8px 12px;text-align:center;">💻 PC版（横幅 1080px 以上）</th>
+          <th style="padding:8px 12px;text-align:center;border-radius:0 8px 0 0;">📱 スマホ版（横幅 768px 以下）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f8f8f8;">
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">ヘッダー</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">ロゴ ＋ ナビメニュー（横並び）</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">ロゴ ＋ ハンバーガーメニュー（☰）</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">カード類</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">3カラム または 2カラム横並び</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">1カラム縦並び</td>
+        </tr>
+        <tr style="background:#f8f8f8;">
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">行程表</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">横幅いっぱいに全カラム表示</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">横スクロール対応（スワイプ）</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">Googleマップ</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">横幅広め（400〜600px）</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">全幅表示</td>
+        </tr>
+        <tr style="background:#f8f8f8;">
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">管理者画面</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">サイドバー ＋ コンテンツ（2カラム）</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">コンテンツのみ（サイドバー折りたたみ）</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;font-weight:700;border-bottom:1px solid #eee;">フォントサイズ</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">14〜16px（通常）</td>
+          <td style="padding:8px 12px;text-align:center;border-bottom:1px solid #eee;">13〜15px（少し小さめ）</td>
+        </tr>
+        <tr style="background:#f8f8f8;">
+          <td style="padding:8px 12px;font-weight:700;">アコーディオン（Tips）</td>
+          <td style="padding:8px 12px;text-align:center;">常に全幅（開閉式）</td>
+          <td style="padding:8px 12px;text-align:center;">全幅（スペース節約）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:#1a2a4a;color:rgba(255,255,255,.6);text-align:center;padding:20px;font-size:.72rem;">
+  旅のしおり ワイヤーフレーム資料 — MOTO TOURS JAPAN 社内共有用 — 作成日: 2026年3月
+</div>
+
+</body>
+</html>

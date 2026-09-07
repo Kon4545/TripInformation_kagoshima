@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTitle">旅のしおり（印刷用）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e1016">
+<style>
+/* このページは共通ヘッダー（.site-header）を使わないため、
+   共通スタイルのbody上部余白（固定ヘッダー用）を打ち消す */
+body { padding-top: 0; }
+
+/* ── 画面表示用ツールバー（印刷時は非表示） ─────────────────── */
+.print-toolbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--navy-dark);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 20px;
+  flex-wrap: wrap;
+}
+.print-toolbar a.back-link {
+  color: rgba(255,255,255,.85); text-decoration: none; font-size: .85rem; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.print-toolbar .toolbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.print-save-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: var(--navy); border: none;
+  padding: 9px 20px; border-radius: 99px;
+  font-size: .85rem; font-weight: 700; font-family: inherit; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.print-save-btn:hover { background: var(--gold-pale); }
+
+/* ── 印刷用ページ本体（画面表示でもプレビューとして概ね同じ見た目） ── */
+.print-page { max-width: 820px; margin: 0 auto; padding: 32px 28px 60px; color: #1A1A2E; }
+.print-cover {
+  text-align: center; padding: 32px 20px; margin-bottom: 32px;
+  border-bottom: 3px solid var(--gold);
+}
+.print-cover-logo { height: 30px; margin-bottom: 12px; }
+.print-cover-img { width: 100%; max-height: 240px; object-fit: cover; border-radius: 12px; margin: 6px 0 20px; }
+.print-cover .company { font-size: .8rem; font-weight: 700; color: var(--navy); letter-spacing: .08em; margin-bottom: 10px; }
+.print-cover h1 { font-family: var(--font-serif); font-size: 1.7rem; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
+.print-cover .sub { font-size: .92rem; color: var(--text-mid); margin-bottom: 14px; }
+.print-cover .chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; font-size: .82rem; color: var(--navy); }
+.print-cover .chips span { border: 1px solid var(--border); border-radius: 99px; padding: 4px 14px; }
+
+.print-section { margin-bottom: 34px; page-break-inside: avoid; }
+.print-section h2 {
+  font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy);
+  border-left: 5px solid var(--gold); padding-left: 12px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.print-section h2 i { color: var(--gold); }
+
+.print-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.print-kv { border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+.print-kv .k { font-size: .72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .05em; text-transform: uppercase; margin-bottom: 3px; }
+.print-kv .v { font-size: .95rem; font-weight: 700; color: #1A1A2E; }
+.print-kv .sub { font-size: .8rem; color: var(--text-mid); margin-top: 2px; }
+
+.print-incl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.print-incl-box { border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+.print-incl-box h3 { font-size: .82rem; margin-bottom: 8px; }
+.print-incl-box ul { list-style: none; font-size: .85rem; line-height: 1.9; }
+.print-incl-box li i { width: 16px; margin-right: 6px; }
+
+.print-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.print-table th, .print-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+.print-table thead th { background: var(--cream-mid); }
+.print-table .day-row td { background: var(--navy); color: #fff; font-weight: 700; font-size: .82rem; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.print-table .desc { font-size: .78rem; color: var(--text-mid); margin-top: 2px; }
+
+.print-hotel { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+.print-hotel h3 { font-size: .95rem; margin-bottom: 6px; }
+.print-hotel .meta { font-size: .82rem; color: var(--text-mid); line-height: 1.8; }
+
+.print-checklist-group { margin-bottom: 16px; }
+.print-checklist-group h3 { font-size: .88rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.print-checklist-group ul { list-style: none; columns: 2; column-gap: 24px; }
+.print-checklist-group li { font-size: .84rem; line-height: 2; break-inside: avoid; display: flex; align-items: center; gap: 8px; }
+.print-checkbox { display: inline-block; width: 13px; height: 13px; border: 1.5px solid #5A5650; border-radius: 3px; flex-shrink: 0; }
+
+.print-tip { margin-bottom: 12px; }
+.print-tip h3 { font-size: .88rem; margin-bottom: 4px; }
+.print-tip p { font-size: .82rem; color: var(--text-mid); line-height: 1.7; white-space: pre-line; }
+
+.print-alert { background: #FFF5F5; border: 1.5px solid #F5C6C6; border-radius: 10px; padding: 12px 16px; font-size: .84rem; color: #5A1A1A; margin-bottom: 14px; }
+.print-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: .84rem; }
+.print-step .num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.print-step .body b { color: var(--navy); }
+.print-step .body p { color: var(--text-mid); margin-top: 2px; }
+
+.print-emg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.print-emg-card { border: 2px solid var(--navy); border-radius: 10px; padding: 14px 16px; }
+.print-emg-card .label { font-size: .72rem; font-weight: 700; color: var(--navy); letter-spacing: .05em; margin-bottom: 4px; }
+.print-emg-card .name { font-weight: 700; margin-bottom: 4px; }
+.print-emg-card .phone { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+.print-emg-others { display: flex; flex-wrap: wrap; gap: 10px; }
+.print-emg-other { border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: .8rem; }
+
+.print-company-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.print-company-table th { width: 110px; text-align: left; padding: 8px 0; color: var(--text-muted); font-weight: 700; font-size: .78rem; vertical-align: top; }
+.print-company-table td { padding: 8px 0; }
+
+.print-footer-note { display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; font-size: .74rem; color: var(--text-muted); margin-top: 40px; }
+.print-footer-logo { height: 16px; }
+
+@media (max-width: 640px) {
+  .print-grid-2, .print-incl-grid, .print-emg-grid { grid-template-columns: 1fr; }
+  .print-checklist-group ul { columns: 1; }
+}
+
+/* ── 印刷時 ─────────────────────────────────────────────── */
+@media print {
+  .print-toolbar { display: none !important; }
+  body { background: #fff; }
+  .print-page { max-width: none; padding: 0; }
+  .print-section { page-break-inside: avoid; }
+  a[href]::after { content: ''; }
+  .print-hotel, .print-kv, .print-incl-box, .print-emg-card, .print-emg-other { break-inside: avoid; }
+}
+@page { margin: 16mm 14mm; }
+</style>
+</head>
+<body>
+
+<div class="print-toolbar">
+  <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="print.backToSite">サイトに戻る</span></a>
+  <div class="toolbar-actions">
+    <div id="langSwitcherDesktop"></div>
+    <button class="print-save-btn" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> <span data-i18n="print.saveBtn">PDFで保存 / 印刷する</span></button>
+  </div>
+</div>
+
+<div class="print-page" id="printPage"></div>
+
+<script src="pwa.js"></script>
+<script src="i18n.js"></script>
+<script src="tour-data.js"></script>
+<script>
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+applyI18nStaticText();
+mountLangSwitcher('langSwitcherDesktop');
+const d = getData();
+document.getElementById('pageTitle').textContent = t('print.pageTitle') + ' | ' + d.basic.tourTitle;
+
+function getAllDays(){
+  return Object.keys(d)
+    .filter(k => /^day\d+$/.test(k))
+    .sort((a,b) => Number(a.slice(3)) - Number(b.slice(3)))
+    .map(k => d[k])
+    .filter(Boolean);
+}
+
+function buildCover(){
+  const heroImg = d.basic.heroBgImage;
+  return `
+  <div class="print-cover">
+    <img src="MTJ_logo_color_RGB.jpg" alt="" class="print-cover-logo" onerror="this.remove()">
+    <div class="company"><i class="fa-solid fa-paper-plane"></i>&ensp;${esc(d.company.name)}</div>
+    ${heroImg ? `<img src="${esc(heroImg)}" alt="" class="print-cover-img" onerror="this.remove()">` : ''}
+    <h1>${esc(d.basic.tourTitle)}</h1>
+    <div class="sub">${esc(d.basic.tourSubtitle)}</div>
+    <div class="chips">
+      <span><i class="fa-solid fa-calendar"></i>&ensp;${esc(d.basic.tourDates)}</span>
+      <span><i class="fa-solid fa-users"></i>&ensp;${esc(d.basic.participantCount)}</span>
+      <span><i class="fa-solid fa-location-dot"></i>&ensp;${esc(d.basic.area)}</span>
+    </div>
+  </div>`;
+}
+
+function buildMeeting(){
+  const guide = (d.guides && d.guides[0]) || d.guide || {};
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-clock"></i>${esc(t('section.meetingInfo'))}</h2>
+    <div class="print-grid-2">
+      <div class="print-kv">
+        <div class="k">${esc(t('meeting.label.place'))}</div>
+        <div class="v">${esc(d.meeting.place)}</div>
+        ${d.meeting.placeDetail ? `<div class="sub">${esc(d.meeting.placeDetail)}</div>` : ''}
+      </div>
+      <div class="print-kv">
+        <div class="k">${esc(t('meeting.label.date'))}</div>
+        <div class="v">${esc(d.meeting.date)}</div>
+        ${d.meeting.time ? `<div class="sub">${esc(d.meeting.time)}</div>` : ''}
+      </div>
+      <div class="print-kv">
+        <div class="k">${esc(t('meeting.label.endPlace'))}</div>
+        <div class="v">${esc(d.meeting.endPlace)}</div>
+        ${d.meeting.endTime ? `<div class="sub">${esc(d.meeting.endTime)}</div>` : ''}
+      </div>
+      <div class="print-kv">
+        <div class="k">${esc(t('print.guideLabel'))}</div>
+        <div class="v">${esc(guide.name || '')}</div>
+        ${guide.phone ? `<div class="sub"><i class="fa-solid fa-phone"></i>&ensp;${esc(guide.phone)}</div>` : ''}
+      </div>
+    </div>
+    ${d.meeting.note ? `<p style="font-size:.82rem;color:var(--text-mid);margin-top:10px">${esc(d.meeting.note)}</p>` : ''}
+  </div>`;
+}
+
+function buildIncludes(){
+  const yes = (d.includes||[]).map(i => `<li><i class="fa-solid fa-check" style="color:#2D6A4F"></i>${esc(i)}</li>`).join('');
+  const no  = (d.excludes||[]).map(i => `<li><i class="fa-solid fa-xmark" style="color:#9B1B1B"></i>${esc(i)}</li>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-list-check"></i>${esc(t('section.includeExclude'))}</h2>
+    <div class="print-incl-grid">
+      <div class="print-incl-box"><h3>${esc(t('include.included'))}</h3><ul>${yes}</ul></div>
+      <div class="print-incl-box"><h3>${esc(t('include.excluded'))}</h3><ul>${no}</ul></div>
+    </div>
+  </div>`;
+}
+
+function buildItinerary(){
+  const days = getAllDays();
+  let rows = '';
+  days.forEach((day, idx) => {
+    rows += `<tr class="day-row"><td colspan="3"><i class="fa-solid fa-calendar-day"></i>&ensp;${esc(day.date)}${day.theme ? '　' + esc(day.theme) : ''}</td></tr>`;
+    (day.items||[]).forEach(item => {
+      rows += `<tr>
+        <td style="width:70px"><strong>${esc(item.time||'')}</strong></td>
+        <td><strong>${esc(item.title||'')}</strong>${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ''}</td>
+        <td style="width:80px">${esc(item.badge||'')}</td>
+      </tr>`;
+    });
+  });
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-calendar-days"></i>${esc(t('route.tableTitle'))}</h2>
+    <table class="print-table">
+      <thead><tr><th>${esc(t('table.time'))}</th><th>${esc(t('table.content'))}</th><th>${esc(t('table.note'))}</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+function buildHotels(){
+  const hotels = d.hotels || (d.hotel ? [d.hotel] : []);
+  if (!hotels.length) return '';
+  const html = hotels.map(h => `
+    <div class="print-hotel">
+      ${h.image ? `<img src="${esc(h.image)}" alt="" style="max-width:160px;max-height:110px;object-fit:cover;border-radius:8px;float:right;margin:0 0 8px 12px" onerror="this.remove()">` : ''}
+      <h3>${esc(h.name)}</h3>
+      <div class="meta">
+        ${h.address  ? `<div><i class="fa-solid fa-location-dot"></i>&ensp;${esc(h.address)}</div>` : ''}
+        ${h.phone    ? `<div><i class="fa-solid fa-phone"></i>&ensp;${esc(h.phone)}</div>` : ''}
+        ${h.checkin  ? `<div><i class="fa-solid fa-right-to-bracket"></i>&ensp;${esc(t('hotel.checkin'))}${esc(h.checkin)}</div>` : ''}
+        ${h.checkout ? `<div><i class="fa-solid fa-right-from-bracket"></i>&ensp;${esc(t('hotel.checkout'))}${esc(h.checkout)}</div>` : ''}
+      </div>
+    </div>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-hotel"></i>${esc(t('hotels.title'))}</h2>
+    ${html}
+  </div>`;
+}
+
+function buildVehicles(){
+  const vehicles = d.vehicles || [];
+  if (!vehicles.length) return '';
+  const html = vehicles.map(v => `
+    <div class="print-hotel">
+      ${v.image ? `<img src="${esc(v.image)}" alt="" style="max-width:160px;max-height:110px;object-fit:contain;border-radius:8px;float:right;margin:0 0 8px 12px" onerror="this.remove()">` : ''}
+      <h3>${esc(v.name)}</h3>
+      <div class="meta" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;line-height:1.6">
+        ${v.maker        ? `<div><i class="fa-solid fa-industry"></i>&ensp;${esc(t('vehicle.maker'))}${esc(v.maker)}</div>` : ''}
+        ${v.year         ? `<div><i class="fa-solid fa-calendar"></i>&ensp;${esc(t('vehicle.year'))}${esc(v.year)}</div>` : ''}
+        ${v.displacement ? `<div><i class="fa-solid fa-gauge-high"></i>&ensp;${esc(t('vehicle.displacement'))}${esc(v.displacement)}</div>` : ''}
+        ${v.weight       ? `<div><i class="fa-solid fa-weight-hanging"></i>&ensp;${esc(t('vehicle.weight'))}${esc(v.weight)}</div>` : ''}
+        ${v.seatHeight   ? `<div><i class="fa-solid fa-ruler-vertical"></i>&ensp;${esc(t('vehicle.seatHeight'))}${esc(v.seatHeight)}</div>` : ''}
+        ${v.tankCapacity ? `<div><i class="fa-solid fa-gas-pump"></i>&ensp;${esc(t('vehicle.tankCapacity'))}${esc(v.tankCapacity)}</div>` : ''}
+        ${v.fuel         ? `<div><i class="fa-solid fa-droplet"></i>&ensp;${esc(t('vehicle.fuel'))}${esc(v.fuel)}</div>` : ''}
+        ${v.class        ? `<div><i class="fa-solid fa-id-card"></i>&ensp;${esc(t('vehicle.class'))}${esc(v.class)}</div>` : ''}
+      </div>
+      ${v.equipment ? `<div style="font-size:.8rem;color:var(--text-mid);margin-top:8px;clear:both">${esc(t('vehicle.equipment'))}${esc(v.equipment)}</div>` : ''}
+    </div>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-motorcycle"></i>${esc(t('vehicles.title'))}</h2>
+    ${html}
+  </div>`;
+}
+
+function buildChecklist(){
+  if (!d.checklist || !d.checklist.length) return '';
+  const groups = d.checklist.map(cat => `
+    <div class="print-checklist-group">
+      <h3><i class="${esc(cat.icon)}" style="color:${esc(cat.color)}"></i>${esc(cat.title)}</h3>
+      <ul>${(cat.items||[]).map(it => `<li><span class="print-checkbox"></span>${esc(it)}</li>`).join('')}</ul>
+    </div>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-suitcase-rolling"></i>${esc(t('packing.title'))}</h2>
+    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:12px">${esc(t('print.checklistNote'))}</p>
+    ${groups}
+  </div>`;
+}
+
+function buildTips(){
+  if (!d.tips || !d.tips.length) return '';
+  const html = d.tips.map(tip => `
+    <div class="print-tip">
+      <h3><i class="${esc(tip.icon)}" style="color:${esc(tip.iconColor)}"></i>&ensp;${esc(tip.title)}</h3>
+      <p>${esc(tip.content)}</p>
+    </div>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-lightbulb"></i>${esc(t('tips.title'))}</h2>
+    ${html}
+  </div>`;
+}
+
+function buildEmergency(){
+  const em = d.emergency || {};
+  const guide = (d.guides && d.guides[0]) || d.guide || {};
+  const stepsHtml = (em.steps||[]).map((s,i) => `
+    <div class="print-step">
+      <div class="num">${i+1}</div>
+      <div class="body"><b>${esc(s.title)}</b><p>${esc(s.desc)}</p></div>
+    </div>`).join('');
+  const othersHtml = (em.others||[]).map(o => `
+    <div class="print-emg-other"><strong>${esc(o.name)}</strong>　${esc(o.phone)}${o.note ? `　<span style="color:var(--text-muted)">${esc(o.note)}</span>` : ''}</div>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-phone-volume"></i>${esc(t('emergency.contacts.title')||'緊急連絡先')}</h2>
+    <div class="print-emg-grid">
+      <div class="print-emg-card">
+        <div class="label">${esc(t('emg.label.company'))}</div>
+        <div class="name">${esc(d.company.name)}</div>
+        <div class="phone">${esc(em.companyPhone)}</div>
+        ${em.companyHours ? `<div style="font-size:.8rem;color:var(--text-mid);margin-top:4px">${esc(em.companyHours)}</div>` : ''}
+      </div>
+      <div class="print-emg-card">
+        <div class="label">${esc(t('emg.label.guide'))}</div>
+        <div class="name">${esc(guide.name || '')}</div>
+        <div class="phone">${esc(guide.phone || '')}</div>
+      </div>
+    </div>
+    ${othersHtml ? `<div class="print-emg-others">${othersHtml}</div>` : ''}
+  </div>
+  <div class="print-section">
+    <h2><i class="fa-solid fa-triangle-exclamation"></i>${esc(t('emergency.title'))}</h2>
+    ${em.alert ? `<div class="print-alert">${esc(em.alert)}</div>` : ''}
+    ${stepsHtml}
+  </div>`;
+}
+
+function buildCompany(){
+  const c = d.company;
+  const rows = [
+    [t('company.table.name'), c.name],
+    [t('company.table.address'), c.address],
+    [t('company.table.phone'), c.phone],
+    [t('company.table.email'), c.email]
+  ].filter(r => r[1]).map(r => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join('');
+  return `
+  <div class="print-section">
+    <h2><i class="fa-solid fa-building"></i>${esc(t('company.title'))}</h2>
+    <table class="print-company-table">${rows}</table>
+  </div>`;
+}
+
+document.getElementById('printPage').innerHTML =
+  buildCover() +
+  buildMeeting() +
+  buildIncludes() +
+  buildItinerary() +
+  buildHotels() +
+  buildVehicles() +
+  buildChecklist() +
+  buildTips() +
+  buildEmergency() +
+  buildCompany() +
+  `<div class="print-footer-note"><img src="MTJ_logo_color_RGB.jpg" alt="" class="print-footer-logo" onerror="this.remove()">${esc(t('print.generatedAt'))}${new Date().toLocaleDateString()} — ${esc(d.company.name)}</div>`;
+</script>
+</body>
+</html>

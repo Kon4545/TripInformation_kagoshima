@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTitle">持ち物・注意事項 | 旅のしおり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e1016">
+<style>
+/* ── Progress Panel ───────────────────────────────── */
+.checklist-section { background: var(--cream); padding: 64px 0; }
+.progress-panel {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(26,26,26,.08);
+  padding: 36px 40px;
+  margin-bottom: 40px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ring-wrap {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ring-wrap-inner { position: relative; width: 176px; height: 176px; }
+.ring-svg { width: 176px; height: 176px; overflow: visible; }
+.ring-bg {
+  fill: none;
+  stroke: var(--cream-mid);
+  stroke-width: 14;
+}
+.ring-fill {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 439.82;
+  stroke-dashoffset: 439.82;
+  transform: rotate(-90deg);
+  transform-origin: 88px 88px;
+  transition: stroke-dashoffset .7s cubic-bezier(.4,0,.2,1), stroke .4s ease;
+}
+.ring-inner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  pointer-events: none;
+  width: 120px;
+}
+.ring-percent {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  display: block;
+}
+.ring-label {
+  font-size: .68rem;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: .1em;
+  display: block;
+  margin-top: 5px;
+}
+.ring-count {
+  font-size: .72rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 4px;
+}
+.progress-cats { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 14px; }
+.progress-cats-title {
+  font-family: var(--font-serif);
+  font-size: .9rem;
+  color: var(--navy);
+  font-weight: 700;
+  margin-bottom: 2px;
+  letter-spacing: .04em;
+}
+.cat-bar-wrap { display: flex; flex-direction: column; gap: 5px; }
+.cat-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .78rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+.cat-icon { margin-right: 5px; font-size: .75rem; }
+.cat-ratio { color: var(--text-muted); font-size: .72rem; font-weight: 400; }
+.cat-bar-track {
+  width: 100%;
+  height: 7px;
+  background: var(--cream-mid);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cat-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--gold);
+  transition: width .6s cubic-bezier(.4,0,.2,1), background .4s ease;
+  width: 0%;
+}
+
+/* ── Checklist Box ────────────────────────────────── */
+.checklist-groups { display: flex; flex-direction: column; gap: 24px; }
+.checklist-box {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(26,26,26,.07);
+  overflow: hidden;
+}
+.cl-box-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.cl-box-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cl-box-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  flex: 1;
+}
+.cl-box-count {
+  font-size: .78rem;
+  color: var(--text-muted);
+  background: var(--cream);
+  padding: 3px 10px;
+  border-radius: 99px;
+  min-width: 60px;
+  text-align: center;
+}
+.cl-items { list-style: none; padding: 8px 0; }
+.cl-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: background .18s;
+  border-bottom: 1px solid var(--cream-mid);
+  user-select: none;
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-item:hover { background: var(--gold-pale); }
+.cl-check {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .22s;
+  color: transparent;
+  font-size: .75rem;
+}
+.cl-item.checked .cl-check {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
+.cl-text {
+  font-size: .9rem;
+  color: var(--text-main);
+  flex: 1;
+  transition: color .22s;
+  line-height: 1.5;
+}
+.cl-item.checked .cl-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* ── Tips Accordion ───────────────────────────────── */
+.tips-section { background: var(--navy-dark); padding: 64px 0; }
+.acc-list { display: flex; flex-direction: column; gap: 12px; }
+.acc-item {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: background .2s;
+}
+.acc-item.open { background: rgba(255,255,255,.10); border-color: rgba(204,0,0,.4); }
+.acc-item:not(.open):hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.25); }
+.acc-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+.acc-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  background: rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+.acc-title {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.acc-arrow {
+  color: var(--gold-light);
+  font-size: .85rem;
+  transition: transform .3s;
+  flex-shrink: 0;
+}
+.acc-item.open .acc-arrow { transform: rotate(180deg); }
+/* style.css の .acc-body より高い specificity で上書き (0,2,0 vs 0,1,0) */
+.tips-section .acc-body {
+  display: none;
+  padding: 0;
+}
+/* open 時は 0,4,0 で display:none をすべて上書き */
+.tips-section .acc-item.open .acc-body {
+  display: block;
+}
+.acc-body-inner {
+  padding: 0 22px 22px 76px;
+  font-size: .875rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,.78);
+}
+
+/* ── Accident Steps ───────────────────────────────── */
+.accident-section { background: var(--white); padding: 64px 0; }
+.alert-box {
+  background: #FFF5F5;
+  border: 1.5px solid #F5C6C6;
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 36px;
+}
+.alert-box i { color: #C0392B; font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+.alert-box p { font-size: .875rem; line-height: 1.8; color: #5A1A1A; }
+.step-list { display: flex; flex-direction: column; }
+.step-item { display: flex; gap: 20px; }
+.step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.step-line {
+  flex: 1;
+  width: 2px;
+  background: linear-gradient(180deg, var(--navy-mid), var(--border));
+  margin: 4px 0;
+  min-height: 24px;
+}
+.step-item:last-child .step-line { display: none; }
+.step-body { padding-bottom: 36px; flex: 1; }
+.step-item:last-child .step-body { padding-bottom: 0; }
+.step-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  padding-top: 10px;
+}
+.step-desc {
+  font-size: .875rem;
+  line-height: 1.85;
+  color: var(--text-sub);
+}
+.step-tag {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 99px;
+  margin-left: 8px;
+  vertical-align: middle;
+  letter-spacing: .04em;
+}
+.tag-red  { background: #FDE8E8; color: #9B1B1B; }
+.tag-gold { background: var(--gold-pale); color: var(--gold-dark); }
+
+/* ── Page Nav ─────────────────────────────────────── */
+.page-nav { background: var(--navy-dark); padding: 40px 0; }
+.page-nav-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-decoration: none;
+  color: var(--gold-light);
+  transition: all .22s;
+  flex: 1; min-width: 220px;
+}
+.page-nav-btn:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.4); color: #fff; }
+.page-nav-btn.next { justify-content: flex-end; text-align: right; }
+.nav-label { font-size: .7rem; color: rgba(255,255,255,.75); display: block; margin-bottom: 2px; letter-spacing: .08em; font-weight: 700; }
+.nav-title { font-family: var(--font-serif); font-size: .95rem; font-weight: 700; }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .progress-panel { flex-direction: column; padding: 24px 18px; gap: 24px; }
+  .ring-wrap { align-self: center; }
+  .cl-item { padding: 12px 16px; }
+  .cl-box-header { padding: 16px; }
+  .acc-body-inner { padding: 0 16px 18px 16px; }
+  .page-nav-inner { flex-direction: column; }
+  .page-nav-btn { min-width: unset; }
+  .page-nav-btn.next { justify-content: flex-start; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- ▼ Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span id="hCompanyName">MOTO TOURS JAPAN</span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html" data-i18n="nav.home">ホーム</a>
+      <a href="route.html" data-i18n="nav.route">全体行程</a>
+      <a href="caution.html" class="active" data-i18n="nav.caution">注意事項</a>
+      <a href="company_information.html" data-i18n="nav.company">会社情報</a>
+      <a href="post_tour.html" data-i18n="nav.postTour">ツアー後</a>
+    </nav>
+    <div id="langSwitcherDesktop"></div>
+    <img src="MTJ_logo_color_RGB.jpg" alt="MOTO TOURS JAPAN" class="header-logo-img">
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-i18n="nav.home.mobile">ホーム</a>
+    <a href="route.html" data-i18n="nav.route.mobile">全体行程</a>
+    <a href="caution.html" class="active" data-i18n="nav.caution.mobile">注意事項</a>
+    <a href="company_information.html" data-i18n="nav.company.mobile">会社情報</a>
+    <a href="post_tour.html"><i class="fa-solid fa-camera-retro"></i>&ensp;<span data-i18n="nav.postTour.mobile">ツアー後</span></a>
+    <div id="langSwitcherMobile"></div>
+  </nav>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ▼ Page Banner -->
+<section class="page-banner" style="background:linear-gradient(135deg,#ed1b23 0%,#c5151b 60%,#9e1016 100%)">
+  <div class="container">
+    <p class="banner-eyebrow"><i class="fa-solid fa-suitcase-rolling"></i>&nbsp; PACKING &amp; TIPS</p>
+    <h1 class="banner-title" data-i18n="banner.title.caution">持ち物・注意事項</h1>
+    <p class="banner-subtitle" data-i18n="banner.subtitle.caution">チェックリストで準備を整え、安心・安全な旅を</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ 持ち物チェックリスト
+═════════════════════════════════════════════════ -->
+<section class="checklist-section">
+  <div class="container">
+
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">PACKING LIST</p>
+      <h2 class="section-title" data-i18n="packing.title">持ち物チェックリスト</h2>
+      <p class="section-subtitle" id="clSubtitle" data-i18n="packing.subtitle.default">チェックを入れながら準備を進めましょう</p>
+    </div>
+
+    <!-- Progress Panel -->
+    <div class="progress-panel">
+      <!-- Ring -->
+      <div class="ring-wrap">
+        <div class="ring-wrap-inner">
+          <svg class="ring-svg" viewBox="0 0 176 176">
+            <circle class="ring-bg"   cx="88" cy="88" r="70"/>
+            <circle class="ring-fill" cx="88" cy="88" r="70" id="ringFill"/>
+          </svg>
+          <div class="ring-inner">
+            <span class="ring-percent" id="ringPercent">0<small style="font-size:.85rem;font-weight:400">%</small></span>
+            <span class="ring-label" id="ringLabel">COMPLETE</span>
+            <span class="ring-count"  id="ringCount">0 / 0 アイテム</span>
+          </div>
+        </div>
+      </div>
+      <!-- Category Bars -->
+      <div class="progress-cats">
+        <p class="progress-cats-title" data-i18n="packing.categoryProgress">カテゴリ別進捗</p>
+        <div id="catBars"></div>
+      </div>
+    </div>
+
+    <!-- Checklist Groups -->
+    <div class="checklist-groups" id="checklistGroups"></div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ Travel Tips
+═════════════════════════════════════════════════ -->
+<section class="tips-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow" style="color:var(--gold-light)">TRAVEL TIPS</p>
+      <h2 class="section-title" style="color:var(--gold-light)" data-i18n="tips.title">旅のヒント</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,.5)" data-i18n="tips.subtitle">快適な旅のためのアドバイス</p>
+    </div>
+    <div class="acc-list" id="tipsAccordion"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ 事故・緊急時対応
+═════════════════════════════════════════════════ -->
+<section class="accident-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">EMERGENCY</p>
+      <h2 class="section-title" data-i18n="emergency.title">事故・緊急時の対応手順</h2>
+      <p class="section-subtitle" data-i18n="emergency.subtitle">万が一の場合は落ち着いて以下の手順に従ってください</p>
+    </div>
+
+    <div class="alert-box">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <p id="emgAlertText"></p>
+    </div>
+
+    <div class="step-list" id="emgStepList"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ よくある質問
+═════════════════════════════════════════════════ -->
+<section class="faq-section" id="faqSection" style="background:var(--cream);padding:64px 0;display:none">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">FAQ</p>
+      <h2 class="section-title" data-i18n="faq.title">よくある質問</h2>
+      <p class="section-subtitle" data-i18n="faq.subtitle">気になることがあれば事前にご確認ください</p>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<!-- ▼ Page Navigation -->
+<nav class="page-nav">
+  <div class="container page-nav-inner">
+    <a href="route.html" class="page-nav-btn prev">
+      <i class="fa-solid fa-chevron-left"></i>
+      <div>
+        <span class="nav-label" data-i18n="pagenav.prev">PREV</span>
+        <span class="nav-title" data-i18n="pagenav.route">全体行程</span>
+      </div>
+    </a>
+    <a href="company_information.html" class="page-nav-btn next">
+      <div>
+        <span class="nav-label" data-i18n="pagenav.next">NEXT</span>
+        <span class="nav-title" data-i18n="pagenav.companyInfo">会社情報・連絡先</span>
+      </div>
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- ▼ Footer -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span id="fCompanyName">MOTO TOURS JAPAN</span>
+    </div>
+    <p class="footer-copy">&copy; <span id="fYear"></span> <span id="fCompanyNameEn">MOTO TOURS JAPAN Co., Ltd.</span></p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════
+     ▼ Scripts
+═════════════════════════════════════════════════ -->
+<script src="pwa.js"></script>
+<script src="i18n.js"></script>
+<script src="tour-data.js"></script>
+<script>
+applyI18nStaticText();
+mountLangSwitcher('langSwitcherDesktop');
+mountLangSwitcher('langSwitcherMobile');
+/* ─────────────────────────────────────────────
+   定数
+───────────────────────────────────────────── */
+const CIRCUMFERENCE = 439.82; // 2π × 70
+
+/* ─────────────────────────────────────────────
+   チェック状態  { "ci-ii": true/false }
+   ツアー（tourDates）ごとに localStorage へ保存し、
+   再訪問時に復元する。ツアー内容が変われば自動的に
+   別枠として扱われる。
+───────────────────────────────────────────── */
+const CHECK_STORAGE_KEY = 'MTJ_CHECKLIST_STATE_v1';
+function checklistTourKey() {
+  var d = getData();
+  return (d.basic && d.basic.tourDates) || 'default';
+}
+function loadCheckState() {
+  try {
+    var all = JSON.parse(localStorage.getItem(CHECK_STORAGE_KEY) || '{}');
+    return all[checklistTourKey()] || {};
+  } catch (e) { return {}; }
+}
+function saveCheckState() {
+  try {
+    var all = JSON.parse(localStorage.getItem(CHECK_STORAGE_KEY) || '{}');
+    all[checklistTourKey()] = checkState;
+    localStorage.setItem(CHECK_STORAGE_KEY, JSON.stringify(all));
+  } catch (e) {}
+}
+const checkState = loadCheckState();
+
+/* ─────────────────────────────────────────────
+   HTMLエスケープ
+───────────────────────────────────────────── */
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* ─────────────────────────────────────────────
+   進捗カラー
+   0-33% 赤 → 34-66% 橙 → 67-99% 緑 → 100% 金
+───────────────────────────────────────────── */
+function progressColor(pct) {
+  if (pct === 100)  return '#ed1b23';
+  if (pct >= 67)    return '#2ecc71';
+  if (pct >= 34)    return '#f39c12';
+  return '#e74c3c';
+}
+
+/* ─────────────────────────────────────────────
+   Ring & カテゴリバー 更新
+───────────────────────────────────────────── */
+function updateProgress() {
+  const d = getData();
+  let total = 0, done = 0;
+
+  d.checklist.forEach(function(cat, ci) {
+    total += cat.items.length;
+    cat.items.forEach(function(_, ii) {
+      if (checkState[ci + '-' + ii]) done++;
+    });
+  });
+
+  const pct   = total === 0 ? 0 : Math.round(done / total * 100);
+  const color = progressColor(pct);
+  const offset = CIRCUMFERENCE * (1 - pct / 100);
+
+  // Ring 更新
+  var fill = document.getElementById('ringFill');
+  fill.style.strokeDashoffset = offset;
+  fill.style.stroke = color;
+
+  document.getElementById('ringPercent').innerHTML =
+    pct + '<small style="font-size:.85rem;font-weight:400">%</small>';
+  document.getElementById('ringCount').textContent =
+    done + ' / ' + total + ' ' + t('packing.items');
+  document.getElementById('ringLabel').style.color = color;
+
+  // カテゴリバー更新
+  d.checklist.forEach(function(cat, ci) {
+    var cDone = 0;
+    cat.items.forEach(function(_, ii) {
+      if (checkState[ci + '-' + ii]) cDone++;
+    });
+    var cp = cat.items.length === 0 ? 0 : Math.round(cDone / cat.items.length * 100);
+    var barFill  = document.getElementById('catFill-'  + ci);
+    var barRatio = document.getElementById('catRatio-' + ci);
+    if (barFill)  { barFill.style.width = cp + '%'; barFill.style.background = progressColor(cp); }
+    if (barRatio) { barRatio.textContent = cDone + '/' + cat.items.length; }
+  });
+
+  // サブタイトル
+  var msg = t('packing.subtitle.default');
+  if      (pct === 100) msg = t('packing.subtitle.complete');
+  else if (pct >= 67)   msg = t('packing.subtitle.almost');
+  else if (pct >= 34)   msg = t('packing.subtitle.good');
+  else if (pct >  0)    msg = t('packing.subtitle.start');
+  document.getElementById('clSubtitle').textContent = msg;
+}
+
+/* ─────────────────────────────────────────────
+   チェックリスト描画
+───────────────────────────────────────────── */
+function renderChecklist() {
+  var d = getData();
+  if (!d.checklist || !d.checklist.length) return;
+
+  // カテゴリバー DOM 生成
+  var barsHTML = '';
+  d.checklist.forEach(function(cat, ci) {
+    barsHTML +=
+      '<div class="cat-bar-wrap">' +
+        '<div class="cat-bar-label">' +
+          '<span><i class="' + esc(cat.icon) + ' cat-icon" style="color:' + esc(cat.color) + '"></i>' + esc(cat.title) + '</span>' +
+          '<span class="cat-ratio" id="catRatio-' + ci + '">0/' + cat.items.length + '</span>' +
+        '</div>' +
+        '<div class="cat-bar-track">' +
+          '<div class="cat-bar-fill" id="catFill-' + ci + '"></div>' +
+        '</div>' +
+      '</div>';
+  });
+  document.getElementById('catBars').innerHTML = barsHTML;
+
+  // チェックリストグループ DOM 生成
+  var groupsHTML = '';
+  d.checklist.forEach(function(cat, ci) {
+    var itemsHTML = '';
+    cat.items.forEach(function(item, ii) {
+      itemsHTML +=
+        '<li class="cl-item" data-ci="' + ci + '" data-ii="' + ii + '" onclick="toggleCheck(' + ci + ',' + ii + ')">' +
+          '<div class="cl-check"><i class="fa-solid fa-check"></i></div>' +
+          '<span class="cl-text">' + esc(item) + '</span>' +
+        '</li>';
+    });
+    groupsHTML +=
+      '<div class="checklist-box">' +
+        '<div class="cl-box-header">' +
+          '<div class="cl-box-icon" style="background:' + esc(cat.color) + '">' +
+            '<i class="' + esc(cat.icon) + '"></i>' +
+          '</div>' +
+          '<span class="cl-box-title">' + esc(cat.title) + '</span>' +
+          '<span class="cl-box-count" id="clBoxCount-' + ci + '">0 / ' + cat.items.length + '</span>' +
+        '</div>' +
+        '<ul class="cl-items">' + itemsHTML + '</ul>' +
+      '</div>';
+  });
+  document.getElementById('checklistGroups').innerHTML = groupsHTML;
+
+  // 保存済みのチェック状態を反映
+  d.checklist.forEach(function(cat, ci) {
+    var boxDone = 0;
+    cat.items.forEach(function(_, ii) {
+      if (checkState[ci + '-' + ii]) {
+        var item = document.querySelector('.cl-item[data-ci="' + ci + '"][data-ii="' + ii + '"]');
+        if (item) item.classList.add('checked');
+        boxDone++;
+      }
+    });
+    var countEl = document.getElementById('clBoxCount-' + ci);
+    if (countEl) countEl.textContent = boxDone + ' / ' + cat.items.length;
+  });
+
+  updateProgress();
+}
+
+/* ─────────────────────────────────────────────
+   チェックトグル
+───────────────────────────────────────────── */
+function toggleCheck(ci, ii) {
+  var key = ci + '-' + ii;
+  checkState[key] = !checkState[key];
+  saveCheckState();
+
+  var item = document.querySelector('.cl-item[data-ci="' + ci + '"][data-ii="' + ii + '"]');
+  if (item) item.classList.toggle('checked', checkState[key]);
+
+  // ボックス件数更新
+  var d = getData();
+  var cat = d.checklist[ci];
+  var boxDone = 0;
+  cat.items.forEach(function(_, i) { if (checkState[ci + '-' + i]) boxDone++; });
+  var countEl = document.getElementById('clBoxCount-' + ci);
+  if (countEl) countEl.textContent = boxDone + ' / ' + cat.items.length;
+
+  updateProgress();
+}
+
+/* ─────────────────────────────────────────────
+   Travel Tips アコーディオン描画
+───────────────────────────────────────────── */
+function renderTips() {
+  var d = getData();
+  if (!d.tips || !d.tips.length) return;
+
+  var html = '';
+  d.tips.forEach(function(tip, i) {
+    html +=
+      '<div class="acc-item" id="acc-' + i + '">' +
+        '<button class="acc-trigger" onclick="toggleAcc(' + i + ')">' +
+          '<div class="acc-icon">' +
+            '<i class="' + esc(tip.icon) + '" style="color:' + esc(tip.iconColor) + '"></i>' +
+          '</div>' +
+          '<span class="acc-title">' + esc(tip.title) + '</span>' +
+          '<i class="fa-solid fa-chevron-down acc-arrow"></i>' +
+        '</button>' +
+        '<div class="acc-body" id="accBody-' + i + '">' +
+          '<div class="acc-body-inner">' + esc(tip.content) + '</div>' +
+        '</div>' +
+      '</div>';
+  });
+  document.getElementById('tipsAccordion').innerHTML = html;
+}
+
+/* ─────────────────────────────────────────────
+   アコーディオン開閉
+───────────────────────────────────────────── */
+function toggleAcc(i) {
+  var item = document.getElementById('acc-' + i);
+  item.classList.toggle('open');
+}
+
+/* ─────────────────────────────────────────────
+   ページ共通情報
+───────────────────────────────────────────── */
+function renderCommon() {
+  var d = getData();
+  document.getElementById('hCompanyName').textContent    = d.company.name.toUpperCase() || 'MOTO TOURS JAPAN株式会社';
+  document.getElementById('fCompanyName').textContent    = d.company.name;
+  document.getElementById('fCompanyNameEn').textContent  = d.company.nameEn;
+  document.getElementById('fYear').textContent           = new Date().getFullYear();
+  document.title = t('title.caution') + ' | ' + d.basic.tourTitle;
+  // 「ツアー後」ページ：admin.htmlで公開がオンになるまでヘッダーメニューから隠す
+  if (!d.postTour || !d.postTour.enabled) {
+    var ptLinks = document.querySelectorAll('a[href="post_tour.html"]');
+    for (var i = 0; i < ptLinks.length; i++) {
+      if (ptLinks[i].closest('.nav-menu') || ptLinks[i].closest('.mobile-nav')) ptLinks[i].style.display = 'none';
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────
+   ハンバーガーメニュー
+───────────────────────────────────────────── */
+(function() {
+  var btn     = document.getElementById('hamburger');
+  var nav     = document.getElementById('mobileNav');
+  var overlay = document.getElementById('navOverlay');
+  function closeMenu() {
+    btn.classList.remove('open');
+    nav.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+  btn.addEventListener('click', function() {
+    var opening = !nav.classList.contains('open');
+    btn.classList.toggle('open', opening);
+    nav.classList.toggle('open', opening);
+    overlay.classList.toggle('show', opening);
+  });
+  overlay.addEventListener('click', closeMenu);
+})();
+
+/* ─────────────────────────────────────────────
+   事故・緊急時の対応手順 描画
+───────────────────────────────────────────── */
+function renderEmergencySteps() {
+  var d = getData();
+  var emg = d.emergency || {};
+  // アラートテキスト
+  var alertEl = document.getElementById('emgAlertText');
+  if (alertEl) alertEl.textContent = emg.alert || '';
+  // 手順リスト
+  var steps = emg.steps || [];
+  var listEl = document.getElementById('emgStepList');
+  if (!listEl) return;
+  listEl.innerHTML = steps.map(function(s, i) {
+    var tagHtml = s.tag
+      ? '<span class="step-tag tag-' + esc(s.tagType || 'red') + '">' + esc(s.tag) + '</span>'
+      : '';
+    var iconHtml = s.icon
+      ? '<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ed1b23,#9e1016);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(158,16,22,.28);flex-shrink:0;margin-top:10px">' +
+          '<i class="' + esc(s.icon) + '" style="color:#fff;font-size:1.1rem"></i>' +
+        '</div>'
+      : '';
+    var isLast = (i === steps.length - 1);
+    var bodyInner = iconHtml
+      ? '<div style="display:flex;align-items:flex-start;gap:14px">' + iconHtml +
+          '<div style="flex:1"><p class="step-title">' + esc(s.title) + ' ' + tagHtml + '</p>' +
+          '<p class="step-desc">' + esc(s.desc) + '</p></div>' +
+        '</div>'
+      : '<p class="step-title">' + esc(s.title) + ' ' + tagHtml + '</p>' +
+        '<p class="step-desc">' + esc(s.desc) + '</p>';
+    return '<div class="step-item">' +
+      '<div class="step-left">' +
+        '<div class="step-num">' + (i + 1) + '</div>' +
+        (isLast ? '' : '<div class="step-line"></div>') +
+      '</div>' +
+      '<div class="step-body">' + bodyInner + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────
+   よくある質問 描画
+───────────────────────────────────────────── */
+function renderFaq() {
+  var d = getData();
+  var faqs = d.faq || [];
+  if (!faqs.length) return;
+  document.getElementById('faqSection').style.display = '';
+  document.getElementById('faqList').innerHTML = faqs.map(function(item) {
+    return '<div style="background:#fff;border:1px solid #E8E2D8;border-radius:12px;padding:18px 20px;margin-bottom:12px">' +
+      '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">' +
+        '<i class="fa-solid fa-circle-question" style="color:#9e1016;font-size:1.1rem;flex-shrink:0;margin-top:2px"></i>' +
+        '<span style="font-weight:700;color:var(--navy);font-size:.96rem;line-height:1.6">' + esc(item.q) + '</span>' +
+      '</div>' +
+      '<div style="display:flex;align-items:flex-start;gap:10px;padding-left:2px">' +
+        '<i class="fa-solid fa-comment-dots" style="color:var(--text-mid);font-size:1rem;flex-shrink:0;margin-top:3px;margin-left:2px"></i>' +
+        '<span style="color:var(--text-mid);font-size:.92rem;line-height:1.7;white-space:pre-line">' + esc(item.a) + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────
+   初期化
+───────────────────────────────────────────── */
+renderCommon();
+renderChecklist();
+renderTips();
+renderEmergencySteps();
+renderFaq();
+</script>
+</body>
+</html>

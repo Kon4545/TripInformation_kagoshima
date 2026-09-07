@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTitle">ツアー後 | 旅のしおり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e1016">
+<style>
+/* 共通セクション */
+.pt-section { padding: 64px 0; }
+.pt-section:nth-child(odd) { background: var(--cream); }
+.pt-section:nth-child(even) { background: var(--white); }
+
+/* 写真ギャラリー */
+.pt-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.pt-photo-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.1);
+  background: var(--navy);
+  cursor: pointer;
+  transition: transform .22s, box-shadow .22s;
+}
+.pt-photo-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+.pt-album-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px;
+  background: #1a73e8; color: #fff;
+  font-size: 1rem; font-weight: 700;
+  border-radius: 99px; text-decoration: none;
+  box-shadow: 0 4px 18px rgba(26,115,232,.35);
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.pt-album-btn:hover { background: #1558b0; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,115,232,.45); }
+.pt-photo-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.pt-photo-caption {
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: rgba(255,255,255,.75);
+  line-height: 1.5;
+}
+
+/* ライトボックスオーバーレイ */
+.pt-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.pt-lightbox.open { opacity: 1; pointer-events: all; }
+.pt-lightbox-inner { position: relative; max-width: 90vw; max-height: 90vh; }
+.pt-lightbox-inner img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 8px; display: block; }
+.pt-lightbox-caption { color: rgba(255,255,255,.7); font-size: .85rem; text-align: center; margin-top: 10px; }
+.pt-lightbox-close {
+  position: absolute; top: -36px; right: 0;
+  background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; line-height: 1;
+}
+.pt-lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,.15); border: none; color: #fff;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem; transition: background .2s;
+}
+.pt-lightbox-nav:hover { background: rgba(255,255,255,.3); }
+.pt-lightbox-nav.prev { left: -52px; }
+.pt-lightbox-nav.next { right: -52px; }
+
+/* 動画グリッド */
+.pt-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  gap: 24px;
+}
+.pt-video-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.1);
+  background: var(--navy);
+}
+.pt-video-card .pt-video-title {
+  padding: 14px 18px;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.pt-video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+.pt-video-embed iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* 次のツアーグリッド */
+.pt-nexttour-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.pt-nexttour-card {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.08);
+  background: var(--white);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: transform .22s, box-shadow .22s;
+}
+.pt-nexttour-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,.13); }
+.pt-nexttour-img {
+  height: 180px;
+  background: linear-gradient(135deg, var(--primary), var(--gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; color: rgba(255,255,255,.4);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pt-nexttour-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pt-nexttour-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.pt-nexttour-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.pt-nexttour-desc { font-size: .85rem; color: var(--text-mid); line-height: 1.7; flex: 1; }
+.pt-nexttour-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px; padding: 9px 20px;
+  background: var(--navy-dark); color: #fff;
+  font-size: .82rem; font-weight: 700;
+  border-radius: 99px; text-decoration: none;
+  box-shadow: 0 3px 10px rgba(237,27,35,.3);
+  transition: background .2s, transform .2s, box-shadow .2s;
+  align-self: flex-start;
+}
+.pt-nexttour-btn:hover { background: var(--navy-mid); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(237,27,35,.35); }
+
+/* survey-card */
+.survey-card {
+  background: var(--navy);
+  border-radius: 18px;
+  padding: 36px 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.survey-eyebrow { font-size:.7rem; font-weight:700; letter-spacing:.12em; color:var(--gold-light); text-transform:uppercase; }
+.survey-title { font-family:var(--font-serif); font-size:1.3rem; font-weight:700; color:var(--gold-light); line-height:1.4; }
+.survey-icon-wrap { width:60px; height:60px; border-radius:50%; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--gold-light); }
+.survey-desc { font-size:.875rem; line-height:1.85; color:rgba(255,255,255,.72); }
+.survey-btn { display:inline-flex; align-items:center; gap:10px; padding:12px 28px; background:#fff; color:var(--navy); font-size:.88rem; font-weight:700; border-radius:99px; text-decoration:none; border:2px solid #fff; transition:background .2s, color .2s, transform .2s; align-self:flex-start; box-shadow:0 2px 8px rgba(0,0,0,.2); }
+.survey-btn:hover { background:transparent; color:#fff; border-color:#fff; transform:translateY(-2px); }
+.survey-note { font-size:.76rem; color:rgba(255,255,255,.45); line-height:1.6; }
+
+/* page-nav */
+.page-nav { background:var(--navy-dark); padding:40px 0; }
+.page-nav-inner { display:flex; gap:16px; align-items:stretch; }
+.page-nav-btn { display:flex; align-items:center; gap:14px; flex:1; min-width:0; padding:18px 24px; border-radius:12px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); text-decoration:none; color:#fff; transition:background .2s; }
+.page-nav-btn:hover { background:rgba(255,255,255,.13); }
+.page-nav-btn.next { justify-content:flex-end; text-align:right; }
+.nav-label { font-size:.7rem; color:rgba(255,255,255,.75); display:block; margin-bottom:2px; letter-spacing:.08em; font-weight:700; }
+.nav-title { font-family:var(--font-serif); font-size:.95rem; font-weight:700; }
+
+@media (max-width: 768px) {
+  .pt-video-grid { grid-template-columns: 1fr; }
+  .pt-lightbox-nav.prev { left: -8px; }
+  .pt-lightbox-nav.next { right: -8px; }
+  .page-nav-inner { flex-direction: column; }
+  .page-nav-btn.next { justify-content: flex-start; text-align: left; }
+}
+@media (max-width: 480px) {
+  .pt-photo-grid { grid-template-columns: 1fr 1fr; }
+  .pt-nexttour-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ▼ Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span id="hCompanyName">MOTO TOURS JAPAN</span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html" data-i18n="nav.home">ホーム</a>
+      <a href="route.html" data-i18n="nav.route">全体行程</a>
+      <a href="caution.html" data-i18n="nav.caution">注意事項</a>
+      <a href="company_information.html" data-i18n="nav.company">会社情報</a>
+      <a href="post_tour.html" class="active" data-i18n="nav.postTour">ツアー後</a>
+    </nav>
+    <div id="langSwitcherDesktop"></div>
+    <img src="MTJ_logo_color_RGB.jpg" alt="MOTO TOURS JAPAN" class="header-logo-img">
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html"><i class="fa-solid fa-house"></i>&ensp;<span data-i18n="nav.home.mobile">ホーム</span></a>
+    <a href="route.html"><i class="fa-solid fa-map"></i>&ensp;<span data-i18n="nav.route.mobile">全体行程</span></a>
+    <a href="caution.html"><i class="fa-solid fa-circle-exclamation"></i>&ensp;<span data-i18n="nav.caution.mobile">注意事項</span></a>
+    <a href="company_information.html"><i class="fa-solid fa-building"></i>&ensp;<span data-i18n="nav.company.mobile">会社情報</span></a>
+    <a href="post_tour.html" class="active"><i class="fa-solid fa-camera-retro"></i>&ensp;<span data-i18n="nav.postTour.mobile">ツアー後</span></a>
+    <div id="langSwitcherMobile"></div>
+  </nav>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ▼ Page Banner -->
+<section class="page-banner" style="background:linear-gradient(135deg,#1A1A2E 0%,#2D2D5E 60%,#1A1A2E 100%)">
+  <div class="container">
+    <p class="banner-eyebrow"><i class="fa-solid fa-camera-retro"></i>&nbsp; AFTER THE TOUR</p>
+    <h1 class="banner-title" data-i18n="banner.title.postTour">ツアー後</h1>
+    <p class="banner-subtitle" data-i18n="banner.subtitle.postTour">思い出の写真・動画・次のツアーのご案内</p>
+  </div>
+</section>
+
+<!-- ① 写真ギャラリーセクション -->
+<section class="pt-section pt-photos-section" id="photosSection" style="display:none">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">PHOTO GALLERY</p>
+      <h2 class="section-title"><i class="fa-solid fa-camera-retro"></i> <span data-i18n="photos.title">ツアーフォトギャラリー</span></h2>
+      <p class="section-subtitle" data-i18n="photos.subtitle">スタッフが撮影したツアーの思い出をお楽しみください</p>
+    </div>
+    <!-- アルバムリンクボタン -->
+    <div id="albumLinkWrap" style="display:none;margin-bottom:32px;text-align:center">
+      <a id="albumLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="pt-album-btn">
+        <i class="fa-brands fa-google-drive"></i>&ensp;<span data-i18n="photos.albumBtn">写真アルバムを見る</span>
+      </a>
+      <p style="margin-top:12px;font-size:.8rem;color:var(--text-sub)">
+        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem"></i>&ensp;<span data-i18n="photos.albumNote">Googleドライブ / Googleフォトのアルバムが別タブで開きます</span>
+      </p>
+    </div>
+    <div class="pt-photo-grid" id="photoGrid"></div>
+  </div>
+</section>
+
+<!-- ② 動画セクション -->
+<section class="pt-section pt-videos-section" id="videosSection" style="display:none">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">TOUR MOVIE</p>
+      <h2 class="section-title"><i class="fa-brands fa-youtube"></i> <span data-i18n="videos.title">ツアー動画</span></h2>
+      <p class="section-subtitle" data-i18n="videos.subtitle">ツアーをまとめた動画です。ぜひご覧ください</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:#1A1A2E;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 18px;margin-bottom:22px">
+      <i class="fa-solid fa-lock" style="color:var(--gold);font-size:.95rem;flex-shrink:0"></i>
+      <span style="font-size:.83rem;color:rgba(255,255,255,.75)" data-i18n="videos.unlistedNotice" data-i18n-html>この動画はツアー参加者のみに共有されている<strong style="color:var(--gold)">限定公開</strong>動画です。URLの第三者への共有はご遠慮ください。</span>
+    </div>
+    <div class="pt-video-grid" id="videoGrid"></div>
+  </div>
+</section>
+
+<!-- ③ アンケートセクション -->
+<section class="pt-section" id="surveySection" style="display:none">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">QUESTIONNAIRE</p>
+      <h2 class="section-title"><i class="fa-solid fa-clipboard-list"></i> <span data-i18n="survey.title">アンケート・口コミ</span></h2>
+      <p class="section-subtitle" data-i18n="survey.subtitle">ご感想・評価をお聞かせください</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center">
+      <div class="survey-card" id="surveyCard" style="flex:1;min-width:280px;max-width:540px"></div>
+      <div class="survey-card" id="gmapReviewCard" style="flex:1;min-width:280px;max-width:540px;display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 次のツアー案内セクション -->
+<section class="pt-section pt-nexttours-section" id="nextToursSection" style="display:none">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">NEXT ADVENTURE</p>
+      <h2 class="section-title"><i class="fa-solid fa-compass"></i> <span data-i18n="nextTours.title">次のツアーのご案内</span></h2>
+      <p class="section-subtitle" data-i18n="nextTours.subtitle">次の旅もMOTO TOURS JAPANと一緒に</p>
+    </div>
+    <div class="pt-nexttour-grid" id="nextTourGrid"></div>
+  </div>
+</section>
+
+<!-- ▼ Page Navigation -->
+<nav class="page-nav">
+  <div class="container page-nav-inner">
+    <a href="company_information.html" class="page-nav-btn prev">
+      <i class="fa-solid fa-chevron-left"></i>
+      <div><span class="nav-label" data-i18n="pagenav.prev">PREV</span><span class="nav-title" data-i18n="pagenav.companyShort">会社情報</span></div>
+    </a>
+    <a href="index.html" class="page-nav-btn next">
+      <div><span class="nav-label" data-i18n="pagenav.top">TOP</span><span class="nav-title" data-i18n="pagenav.backHome">ホームへ戻る</span></div>
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- ▼ Footer -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo"><i class="fa-solid fa-paper-plane"></i><span id="fCompanyName">MOTO TOURS JAPAN</span></div>
+    <p class="footer-copy">&copy; <span id="fYear"></span> <span id="fCompanyNameEn">MOTO TOURS JAPAN Co., Ltd.</span></p>
+  </div>
+</footer>
+
+<!-- ライトボックス -->
+<div class="pt-lightbox" id="ptLightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="pt-lightbox-inner">
+    <button class="pt-lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+    <button class="pt-lightbox-nav prev" onclick="lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <img id="lbImg" src="" alt="">
+    <button class="pt-lightbox-nav next" onclick="lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="pt-lightbox-caption" id="lbCaption"></div>
+  </div>
+</div>
+
+<script src="pwa.js"></script>
+<script src="i18n.js"></script>
+<script src="tour-data.js"></script>
+<script>
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+applyI18nStaticText();
+mountLangSwitcher('langSwitcherDesktop');
+mountLangSwitcher('langSwitcherMobile');
+
+function ytEmbedUrl(raw){
+  if(!raw) return '';
+  const trimmed = raw.trim();
+  // URL欄にHTMLの埋め込みコードがそのまま貼られた場合は、中の src="..." だけを取り出す
+  const srcMatch = trimmed.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+  const target = srcMatch ? srcMatch[1] : trimmed;
+  const m = target.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/))([A-Za-z0-9_-]{11})/);
+  if(m) return 'https://www.youtube.com/embed/' + m[1];
+  return target;
+}
+
+function render(){
+  const d = getData();
+  const pt = d.postTour || {};
+  // admin.htmlで公開がオンになるまでは、URLへの直接アクセスもホームへ転送する
+  if (!pt.enabled) { location.replace('index.html'); return; }
+  document.title = t('title.postTour') + ' | ' + (d.basic.tourTitle || t('title.index'));
+  document.getElementById('hCompanyName').textContent = d.company.name.toUpperCase() || 'MOTO TOURS JAPAN株式会社';
+  document.getElementById('fCompanyName').textContent = d.company.name;
+  document.getElementById('fCompanyNameEn').textContent = d.company.nameEn;
+  document.getElementById('fYear').textContent = new Date().getFullYear();
+
+  // ① 写真
+  const photos   = pt.photos   || [];
+  const albumUrl = pt.albumUrl || '';
+  if(photos.length || albumUrl){
+    document.getElementById('photosSection').style.display = '';
+    // アルバムリンクボタン
+    if(albumUrl){
+      const wrap = document.getElementById('albumLinkWrap');
+      const btn  = document.getElementById('albumLinkBtn');
+      wrap.style.display = '';
+      btn.href = albumUrl;
+    }
+    // 個別写真グリッド
+    if(photos.length){
+      document.getElementById('photoGrid').innerHTML = photos.map((p,i)=>`
+        <div class="pt-photo-card" onclick="openLightbox(${i})">
+          <img src="${esc(p.src)}" alt="${esc(p.caption||'ツアー写真')}">
+          ${p.caption ? `<div class="pt-photo-caption">${esc(p.caption)}</div>` : ''}
+        </div>`).join('');
+    }
+  }
+
+  // ② 動画
+  const videos = pt.videos || [];
+  if(videos.length){
+    document.getElementById('videosSection').style.display = '';
+    document.getElementById('videoGrid').innerHTML = videos.map(v=>`
+      <div class="pt-video-card">
+        ${v.title ? `<div class="pt-video-title">${esc(v.title)}</div>` : ''}
+        <div class="pt-video-embed">${
+          v.embedCode
+            ? v.embedCode
+            : `<iframe src="${esc(ytEmbedUrl(v.url))}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
+        }</div>
+      </div>`).join('');
+  }
+
+  // ③ アンケート＋Googleマップ口コミ
+  const sv = d.survey || {};
+  if(sv.url || sv.mapReviewUrl){
+    document.getElementById('surveySection').style.display = '';
+  }
+  if(sv.url){
+    document.getElementById('surveyCard').innerHTML =
+      '<span class="survey-eyebrow"><i class="fa-solid fa-clipboard-list" style="margin-right:6px"></i>QUESTIONNAIRE</span>' +
+      '<div class="survey-icon-wrap"><i class="fa-solid fa-star-half-stroke"></i></div>' +
+      '<p class="survey-title">' + esc(sv.title || t('survey.defaultTitle')) + '</p>' +
+      '<p class="survey-desc">' + esc(sv.desc || t('survey.defaultDesc')) + '</p>' +
+      '<a href="' + esc(sv.url) + '" target="_blank" rel="noopener" class="survey-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> ' + esc(t('survey.answerBtn')) + '</a>' +
+      '<p class="survey-note">' + t('survey.note') + '</p>';
+  }
+  if(sv.mapReviewUrl){
+    var gmapCard = document.getElementById('gmapReviewCard');
+    gmapCard.style.display = '';
+    gmapCard.innerHTML =
+      '<span class="survey-eyebrow" style="color:#FBBC04"><i class="fa-brands fa-google" style="margin-right:6px"></i>GOOGLE MAPS REVIEW</span>' +
+      '<div class="survey-icon-wrap" style="background:rgba(251,188,4,.15);border:2px solid rgba(251,188,4,.35)">' +
+        '<i class="fa-solid fa-star" style="color:#FBBC04;font-size:1.5rem"></i>' +
+      '</div>' +
+      '<p class="survey-title">' + esc(t('gmap.title')) + '</p>' +
+      '<p class="survey-desc">' + esc(t('gmap.desc')) + '</p>' +
+      '<a href="' + esc(sv.mapReviewUrl) + '" target="_blank" rel="noopener" class="survey-btn" style="background:#fff;color:var(--navy);border:2px solid #fff">' +
+        '<i class="fa-brands fa-google" style="color:#EA4335"></i>&ensp;' + esc(t('gmap.btn')) +
+      '</a>' +
+      '<p class="survey-note">' + t('gmap.note') + '</p>';
+  }
+
+  // ④ 次のツアー
+  const nextTours = pt.nextTours || [];
+  if(nextTours.length){
+    document.getElementById('nextToursSection').style.display = '';
+    document.getElementById('nextTourGrid').innerHTML = nextTours.map(t=>`
+      <div class="pt-nexttour-card">
+        <div class="pt-nexttour-img">${t.image ? `<img src="${esc(t.image)}" alt="${esc(t.title)}">` : '<i class="fa-solid fa-motorcycle"></i>'}</div>
+        <div class="pt-nexttour-body">
+          <div class="pt-nexttour-title">${esc(t.title)}</div>
+          <div class="pt-nexttour-desc">${esc(t.desc)}</div>
+          ${t.url ? `<a href="${esc(t.url)}" target="_blank" rel="noopener" class="pt-nexttour-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> ${esc(window.t('nextTours.detailBtn'))}</a>` : ''}
+        </div>
+      </div>`).join('');
+  }
+}
+
+// ライトボックス
+let _lbPhotos = [], _lbIdx = 0;
+function openLightbox(idx){
+  const d = getData();
+  _lbPhotos = (d.postTour||{}).photos || [];
+  _lbIdx = idx;
+  updateLightbox();
+  document.getElementById('ptLightbox').classList.add('open');
+}
+function closeLightbox(){ document.getElementById('ptLightbox').classList.remove('open'); }
+function lbNav(dir){ _lbIdx = (_lbIdx + dir + _lbPhotos.length) % _lbPhotos.length; updateLightbox(); }
+function updateLightbox(){
+  const p = _lbPhotos[_lbIdx];
+  if(!p) return;
+  document.getElementById('lbImg').src = p.src;
+  document.getElementById('lbCaption').textContent = p.caption || '';
+}
+
+(function(){
+  var btn=document.getElementById('hamburger'), nav=document.getElementById('mobileNav'), overlay=document.getElementById('navOverlay');
+  function closeMenu(){ btn.classList.remove('open'); nav.classList.remove('open'); overlay.classList.remove('show'); }
+  btn.addEventListener('click',function(){ var o=!nav.classList.contains('open'); btn.classList.toggle('open',o); nav.classList.toggle('open',o); overlay.classList.toggle('show',o); });
+  overlay.addEventListener('click',closeMenu);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowLeft') lbNav(-1); if(e.key==='ArrowRight') lbNav(1); });
+})();
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "MOTO TOURS JAPAN 旅のしおり",
+  "short_name": "旅のしおり",
+  "description": "MOTO TOURS JAPAN ツアー参加者向けデジタル旅のしおり",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#F5F3EF",
+  "theme_color": "#9e1016",
+  "lang": "ja",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "images/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

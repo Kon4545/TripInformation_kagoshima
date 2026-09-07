@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="pageTitle">会社情報・連絡先 | 旅のしおり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e1016">
+<style>
+/* ── Goods Section ──────────────────────────────── */
+.goods-section { background: var(--cream); padding: 64px 0; }
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+.goods-card {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(26,26,26,.07);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .22s, box-shadow .22s;
+}
+.goods-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(26,26,26,.13); }
+.goods-img { width: 100%; height: 180px; border-radius: 12px; overflow: hidden; margin-bottom: 4px; }
+.goods-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+.goods-card:hover .goods-img img { transform: scale(1.04); }
+.goods-icon-wrap {
+  width: 54px; height: 54px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.goods-card-top { display: flex; align-items: center; gap: 14px; }
+.goods-name {
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--navy);
+  flex: 1;
+}
+.goods-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  font-family: var(--font-serif);
+}
+.goods-desc {
+  font-size: .82rem;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+.goods-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+.badge {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: .05em;
+}
+.badge-green { background: #E6F7EE; color: #1A6B3A; }
+.badge-gold  { background: var(--gold-pale); color: var(--gold-dark); }
+.badge-red   { background: #FDE8E8; color: #9B1B1B; }
+.badge-blue  { background: #EBF2FC; color: #1B4D8A; }
+
+/* ── SNS Section ────────────────────────────────── */
+.sns-section { background: var(--navy-dark); padding: 64px 0; }
+.sns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.sns-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  transition: all .22s;
+}
+.sns-card:hover {
+  background: rgba(255,255,255,.13);
+  transform: translateY(-4px);
+  border-color: rgba(204,0,0,.5);
+}
+.sns-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+}
+.sns-platform {
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.sns-handle {
+  font-size: .78rem;
+  color: rgba(255,255,255,.55);
+}
+.sns-desc {
+  font-size: .8rem;
+  color: rgba(255,255,255,.65);
+  line-height: 1.6;
+}
+.sns-follow-btn {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 6px 18px;
+  border-radius: 99px;
+  font-size: .75rem;
+  font-weight: 700;
+  background: rgba(204,0,0,.25);
+  color: var(--gold-light);
+  border: 1px solid rgba(204,0,0,.4);
+  transition: background .2s;
+}
+.sns-card:hover .sns-follow-btn { background: rgba(204,0,0,.45); }
+
+/* ── Emergency Section ──────────────────────────── */
+.emergency-section { background: var(--white); padding: 64px 0; }
+.emg-main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.emg-card {
+  border-radius: 18px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.emg-card.company {
+  background: var(--navy);
+  color: #fff;
+  grid-column: 1 / -1;
+}
+.emg-card.guide {
+  background: linear-gradient(135deg, #2D6A4F, #1A4D2E);
+  color: #fff;
+}
+.emg-card-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.emg-card.guide .emg-card-label { color: #a8e6c5; }
+.emg-card-name {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.emg-phone {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: .04em;
+}
+.emg-card.guide .emg-phone { color: #a8e6c5; }
+.emg-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .82rem;
+  opacity: .8;
+}
+.emg-info-row i { width: 16px; text-align: center; flex-shrink: 0; color: var(--gold-light); }
+.emg-card.guide .emg-info-row i { color: #a8e6c5; }
+
+.emg-others-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.emg-other-card {
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.emg-other-name {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.emg-other-phone {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy-mid);
+}
+.emg-other-note {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+/* ── Company Info Section ───────────────────────── */
+.company-section { background: var(--cream); padding: 64px 0; }
+.company-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.company-table-wrap {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(26,26,26,.07);
+  overflow: hidden;
+}
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+}
+.company-table th,
+.company-table td {
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.company-table tr:last-child th,
+.company-table tr:last-child td { border-bottom: none; }
+.company-table th {
+  width: 110px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  background: var(--gold-pale);
+  white-space: nowrap;
+  letter-spacing: .04em;
+}
+.company-table td { color: var(--text-main); line-height: 1.6; }
+
+.survey-card {
+  background: var(--navy);
+  border-radius: 18px;
+  padding: 36px 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.survey-eyebrow {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.survey-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.4;
+}
+.survey-icon-wrap {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: rgba(204,0,0,.2);
+  border: 2px solid rgba(204,0,0,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+.survey-desc {
+  font-size: .875rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,.72);
+}
+.survey-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: #fff;
+  color: var(--gold);
+  border: 2px solid #fff;
+  border-radius: 12px;
+  font-size: .95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, color .2s, transform .2s;
+  align-self: flex-start;
+}
+.survey-btn:hover { background: transparent; color: #fff; border-color: #fff; transform: translateY(-2px); }
+.survey-note { font-size: .76rem; color: rgba(255,255,255,.45); line-height: 1.6; }
+
+/* ── After Tour Button ───────────────────────────── */
+.after-tour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #fff;
+  color: var(--navy);
+  font-size: .85rem;
+  font-weight: 700;
+  border-radius: 99px;
+  text-decoration: none;
+  border: 1.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  transition: background .2s, color .2s, transform .2s, box-shadow .2s;
+}
+.after-tour-btn:hover {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}
+
+/* ── Goods CTA ──────────────────────────────────── */
+.goods-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 16px;
+  background: #ed1b23;
+  color: #fff;
+  border-radius: 10px;
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s, transform .18s;
+  margin-top: 6px;
+  letter-spacing: .02em;
+}
+.goods-cta-btn:hover { background: #9e1016; transform: translateY(-2px); }
+
+/* ── Page Nav ─────────────────────────────────────── */
+.page-nav { background: var(--navy-dark); padding: 40px 0; }
+.page-nav-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-decoration: none;
+  color: var(--gold-light);
+  transition: all .22s;
+  flex: 1; min-width: 220px;
+}
+.page-nav-btn:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.4); color: #fff; }
+.page-nav-btn.next { justify-content: flex-end; text-align: right; }
+.nav-label { font-size: .7rem; color: rgba(255,255,255,.75); display: block; margin-bottom: 2px; letter-spacing: .08em; font-weight: 700; }
+.nav-title { font-family: var(--font-serif); font-size: .95rem; font-weight: 700; }
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 900px) {
+  .company-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .goods-grid    { grid-template-columns: 1fr 1fr; }
+  .sns-grid      { grid-template-columns: 1fr 1fr; }
+  .emergency-grid { grid-template-columns: 1fr 1fr; }
+  .emg-main-grid { grid-template-columns: 1fr; }
+  .emg-card.company { grid-column: auto; }
+  .page-nav-inner { flex-direction: column; }
+  .page-nav-btn  { min-width: unset; }
+  .page-nav-btn.next { justify-content: flex-start; text-align: left; }
+}
+@media (max-width: 480px) {
+  .goods-grid    { grid-template-columns: 1fr; }
+  .sns-grid      { grid-template-columns: 1fr; }
+  .emergency-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ▼ Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span id="hCompanyName">MOTO TOURS JAPAN</span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html" data-i18n="nav.home">ホーム</a>
+      <a href="route.html" data-i18n="nav.route">全体行程</a>
+      <a href="caution.html" data-i18n="nav.caution">注意事項</a>
+      <a href="company_information.html" class="active" data-i18n="nav.company">会社情報</a>
+      <a href="post_tour.html" data-i18n="nav.postTour">ツアー後</a>
+    </nav>
+    <div id="langSwitcherDesktop"></div>
+    <img src="MTJ_logo_color_RGB.jpg" alt="MOTO TOURS JAPAN" class="header-logo-img">
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-i18n="nav.home.mobile">ホーム</a>
+    <a href="route.html" data-i18n="nav.route.mobile">全体行程</a>
+    <a href="caution.html" data-i18n="nav.caution.mobile">注意事項</a>
+    <a href="company_information.html" class="active" data-i18n="nav.company.mobile">会社情報</a>
+    <a href="post_tour.html"><i class="fa-solid fa-camera-retro"></i>&ensp;<span data-i18n="nav.postTour.mobile">ツアー後</span></a>
+    <div id="langSwitcherMobile"></div>
+  </nav>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ▼ Page Banner -->
+<section class="page-banner" style="background:linear-gradient(135deg,#ed1b23 0%,#c5151b 60%,#9e1016 100%)">
+  <div class="container">
+    <p class="banner-eyebrow"><i class="fa-solid fa-building"></i>&nbsp; COMPANY INFO</p>
+    <h1 class="banner-title" data-i18n="banner.title.company">会社情報・連絡先</h1>
+    <p class="banner-subtitle" data-i18n="banner.subtitle.company">緊急連絡先・オリジナルグッズ・公式SNS</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ 緊急連絡先
+═════════════════════════════════════════════════ -->
+<section class="emergency-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">EMERGENCY CONTACTS</p>
+      <h2 class="section-title" data-i18n="emergency.contacts.title">緊急連絡先</h2>
+      <p class="section-subtitle" data-i18n="emergency.contacts.subtitle">困ったことがあればいつでもご連絡ください</p>
+    </div>
+
+    <!-- 会社・添乗員 -->
+    <div class="emg-main-grid" id="emgMainGrid"></div>
+
+    <!-- その他緊急連絡先 -->
+    <p class="emg-others-title"><i class="fa-solid fa-phone-volume" style="color:var(--gold);margin-right:8px"></i><span data-i18n="emergency.others.title">その他の緊急連絡先</span></p>
+    <div class="emergency-grid" id="emergencyGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ オリジナルグッズ
+═════════════════════════════════════════════════ -->
+<section class="goods-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">ORIGINAL GOODS</p>
+      <h2 class="section-title" data-i18n="goods.title">オリジナルグッズ</h2>
+      <p class="section-subtitle" data-i18n="goods.subtitle">旅の記念にMOTO TOURS JAPANオリジナルグッズはいかがでしょうか</p>
+    </div>
+    <div class="goods-grid" id="goodsGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ SNS
+═════════════════════════════════════════════════ -->
+<section class="sns-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow" style="color:var(--gold-light)">FOLLOW US</p>
+      <h2 class="section-title" style="color:var(--gold-light)" data-i18n="sns.title">公式 SNS</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,.5)" data-i18n="sns.subtitle">旅の情報・キャンペーンを発信中！フォローして最新情報をチェック</p>
+    </div>
+    <div class="sns-grid" id="snsGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ▼ 会社概要
+═════════════════════════════════════════════════ -->
+<section class="company-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <p class="section-eyebrow">ABOUT US</p>
+      <h2 class="section-title" data-i18n="company.title">会社概要</h2>
+      <p class="section-subtitle" data-i18n="company.subtitle">お問い合わせはお気軽にどうぞ</p>
+    </div>
+    <div class="company-inner">
+      <div class="company-table-wrap">
+        <table class="company-table" id="companyTable"></table>
+      </div>
+      <div id="afterTourCard" style="background:var(--navy);border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+        <span style="font-size:.7rem;font-weight:700;letter-spacing:.12em;color:var(--gold-light);text-transform:uppercase"><i class="fa-solid fa-camera-retro" style="margin-right:6px"></i>AFTER THE TOUR</span>
+        <p style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;color:var(--gold-light)" data-i18n="company.afterTour.title">ツアー後のコンテンツ</p>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.7" data-i18n="company.afterTour.desc" data-i18n-html>ツアー写真・動画・アンケート・次のツアーのご案内は<br>「ツアー後」タブからご覧いただけます。</p>
+        <a href="post_tour.html" class="after-tour-btn">
+          <i class="fa-solid fa-arrow-right"></i> <span data-i18n="company.afterTour.btn">ツアー後ページへ</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ▼ Page Navigation -->
+<nav class="page-nav">
+  <div class="container page-nav-inner">
+    <a href="caution.html" class="page-nav-btn prev">
+      <i class="fa-solid fa-chevron-left"></i>
+      <div>
+        <span class="nav-label" data-i18n="pagenav.prev">PREV</span>
+        <span class="nav-title" data-i18n="pagenav.caution">持ち物・注意事項</span>
+      </div>
+    </a>
+    <a href="index.html" class="page-nav-btn next">
+      <div>
+        <span class="nav-label" data-i18n="pagenav.top">TOP</span>
+        <span class="nav-title" data-i18n="pagenav.backHome">ホームへ戻る</span>
+      </div>
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- ▼ Footer -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span id="fCompanyName">MOTO TOURS JAPAN</span>
+    </div>
+    <p class="footer-copy">&copy; <span id="fYear"></span> <span id="fCompanyNameEn">MOTO TOURS JAPAN Co., Ltd.</span></p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════
+     ▼ Scripts
+═════════════════════════════════════════════════ -->
+<script src="pwa.js"></script>
+<script src="i18n.js"></script>
+<script src="tour-data.js"></script>
+<script>
+applyI18nStaticText();
+mountLangSwitcher('langSwitcherDesktop');
+mountLangSwitcher('langSwitcherMobile');
+/* ─────────────────────────────────────────────
+   HTMLエスケープ
+───────────────────────────────────────────── */
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* ─────────────────────────────────────────────
+   バッジ HTML
+───────────────────────────────────────────── */
+function badgeHtml(text, type) {
+  if (!text) return '';
+  var cls = 'badge-' + (type || 'green');
+  return '<span class="badge ' + cls + '">' + esc(text) + '</span>';
+}
+
+/* ─────────────────────────────────────────────
+   オリジナルグッズ
+───────────────────────────────────────────── */
+function renderGoods() {
+  var d = getData();
+  if (!d.goods || !d.goods.length) return;
+
+  var html = '';
+  d.goods.forEach(function(g) {
+    var imgHtml = g.image
+      ? '<div class="goods-img"><img src="' + esc(g.image) + '" alt="' + esc(g.name) + '"></div>'
+      : '';
+    var priceHtml = g.price
+      ? '<span class="goods-price">' + esc(g.price) +
+          '<span style="font-size:.68rem;font-weight:400;color:var(--text-muted);margin-left:4px">' + esc(t('goods.taxIncluded')) + '</span>' +
+        '</span>'
+      : '';
+    var ctaHtml = g.buyUrl
+      ? '<a href="' + esc(g.buyUrl) + '" target="_blank" rel="noopener noreferrer" class="goods-cta-btn">' +
+          '<i class="fa-solid fa-cart-shopping"></i> ' + esc(t('goods.buyNow')) +
+        '</a>'
+      : '';
+    html +=
+      '<div class="goods-card">' +
+        imgHtml +
+        '<div class="goods-card-top">' +
+          '<div class="goods-icon-wrap" style="background:' + esc(g.iconBg) + '">' +
+            '<i class="' + esc(g.icon) + '"></i>' +
+          '</div>' +
+          '<span class="goods-name">' + esc(g.name) + '</span>' +
+        '</div>' +
+        '<p class="goods-desc">' + esc(g.desc) + '</p>' +
+        '<div class="goods-footer">' +
+          badgeHtml(g.badge, g.badgeType) +
+          priceHtml +
+        '</div>' +
+        ctaHtml +
+      '</div>';
+  });
+  document.getElementById('goodsGrid').innerHTML = html;
+}
+
+/* ─────────────────────────────────────────────
+   SNS
+───────────────────────────────────────────── */
+function renderSns() {
+  var d = getData();
+  if (!d.sns || !d.sns.length) return;
+
+  var html = '';
+  d.sns.forEach(function(s) {
+    html +=
+      '<a href="' + esc(s.url) + '" target="_blank" rel="noopener" class="sns-card">' +
+        '<div class="sns-icon-wrap" style="background:' + esc(s.color) + '">' +
+          '<i class="' + esc(s.icon) + '"></i>' +
+        '</div>' +
+        '<span class="sns-platform">' + esc(s.platform) + '</span>' +
+        '<span class="sns-handle">'   + esc(s.handle)   + '</span>' +
+        '<span class="sns-desc">'     + esc(s.desc)     + '</span>' +
+        '<span class="sns-follow-btn">' + esc(t('sns.followBtn')) + '</span>' +
+      '</a>';
+  });
+  document.getElementById('snsGrid').innerHTML = html;
+}
+
+/* ─────────────────────────────────────────────
+   緊急連絡先
+───────────────────────────────────────────── */
+function renderEmergency() {
+  var d  = getData();
+  var em = d.emergency;
+  var g  = d.guide;
+
+  // 会社カード
+  var mainHtml =
+    '<div class="emg-card company">' +
+      '<span class="emg-card-label"><i class="fa-solid fa-building" style="margin-right:6px"></i>' + esc(t('emg.label.company')) + '</span>' +
+      '<span class="emg-card-name">' + esc(d.company.name) + '</span>' +
+      '<span class="emg-phone">' + esc(em.companyPhone) + '</span>' +
+      '<div class="emg-info-row"><i class="fa-solid fa-clock"></i>' + esc(em.companyHours) + '</div>' +
+      '<div class="emg-info-row"><i class="fa-solid fa-location-dot"></i>' + esc(em.companyAddress) + '</div>' +
+      '<div class="emg-info-row"><i class="fa-solid fa-envelope"></i>' + esc(em.companyEmail) + '</div>' +
+    '</div>';
+
+  // 添乗員カード
+  mainHtml +=
+    '<div class="emg-card guide">' +
+      '<span class="emg-card-label"><i class="fa-solid fa-user-tie" style="margin-right:6px"></i>' + esc(t('emg.label.guide')) + '</span>' +
+      '<span class="emg-card-name">' + esc(g.name) + '</span>' +
+      '<span class="emg-phone">' + esc(g.phone) + '</span>' +
+      '<div class="emg-info-row"><i class="fa-solid fa-envelope"></i>' + esc(g.email) + '</div>' +
+      '<div class="emg-info-row"><i class="fa-brands fa-line"></i>' + esc(t('emg.label.lineId')) + esc(g.lineId) + '</div>' +
+    '</div>';
+
+  document.getElementById('emgMainGrid').innerHTML = mainHtml;
+
+  // その他
+  if (!em.others || !em.others.length) return;
+  var othersHtml = '';
+  em.others.forEach(function(o) {
+    othersHtml +=
+      '<div class="emg-other-card">' +
+        '<span class="emg-other-name">' + esc(o.name) + '</span>' +
+        '<span class="emg-other-phone">' + esc(o.phone) + '</span>' +
+        '<span class="emg-other-note">' + esc(o.note) + '</span>' +
+      '</div>';
+  });
+  document.getElementById('emergencyGrid').innerHTML = othersHtml;
+}
+
+/* ─────────────────────────────────────────────
+   会社概要テーブル
+───────────────────────────────────────────── */
+function renderCompany() {
+  var d = getData();
+  var c = d.company;
+
+  var rows = [
+    [t('company.table.name'),         c.name],
+    [t('company.table.nameEn'),       c.nameEn],
+    [t('company.table.address'),      c.address],
+    [t('company.table.phone'),        c.phone],
+    [t('company.table.fax'),          c.fax],
+    [t('company.table.hours'),        c.hours],
+    [t('company.table.email'),        c.email],
+    [t('company.table.registration'), c.registration],
+    [t('company.table.association'),  c.association]
+  ];
+
+  var tableHtml = rows.map(function(r) {
+    return '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>';
+  }).join('');
+  document.getElementById('companyTable').innerHTML = tableHtml;
+}
+
+/* ─────────────────────────────────────────────
+   ページ共通情報
+───────────────────────────────────────────── */
+function renderCommon() {
+  var d = getData();
+  document.getElementById('hCompanyName').textContent   = d.company.name.toUpperCase() || 'MOTO TOURS JAPAN株式会社';
+  document.getElementById('fCompanyName').textContent   = d.company.name;
+  document.getElementById('fCompanyNameEn').textContent = d.company.nameEn;
+  document.getElementById('fYear').textContent          = new Date().getFullYear();
+  document.title = t('title.company') + ' | ' + d.basic.tourTitle;
+  // 「ツアー後」ページ：admin.htmlで公開がオンになるまでヘッダーメニュー・案内カードを隠す
+  if (!d.postTour || !d.postTour.enabled) {
+    var ptLinks = document.querySelectorAll('a[href="post_tour.html"]');
+    for (var i = 0; i < ptLinks.length; i++) {
+      if (ptLinks[i].closest('.nav-menu') || ptLinks[i].closest('.mobile-nav')) ptLinks[i].style.display = 'none';
+    }
+    var afterTourCard = document.getElementById('afterTourCard');
+    if (afterTourCard) afterTourCard.style.display = 'none';
+  }
+}
+
+/* ─────────────────────────────────────────────
+   ハンバーガーメニュー
+───────────────────────────────────────────── */
+(function() {
+  var btn     = document.getElementById('hamburger');
+  var nav     = document.getElementById('mobileNav');
+  var overlay = document.getElementById('navOverlay');
+  function closeMenu() {
+    btn.classList.remove('open');
+    nav.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+  btn.addEventListener('click', function() {
+    var opening = !nav.classList.contains('open');
+    btn.classList.toggle('open', opening);
+    nav.classList.toggle('open', opening);
+    overlay.classList.toggle('show', opening);
+  });
+  overlay.addEventListener('click', closeMenu);
+})();
+
+/* ─────────────────────────────────────────────
+   初期化
+───────────────────────────────────────────── */
+renderCommon();
+renderEmergency();
+renderGoods();
+renderSns();
+renderCompany();
+</script>
+</body>
+</html>
