@@ -2465,8 +2465,10 @@ function isAutoTranslatable(prevVal, prevAuto, lang){
   if (!prevAuto || prevAuto[lang] === undefined) return false;
   return prevVal === prevAuto[lang];
 }
-async function autoTranslateQueue(queue){
-  showToast('自動翻訳を実行中…（' + queue.length + '件）');
+// 翻訳の実行だけを行い、結果の反映先（保存データ／書き出し中のデータ）には関与しない。
+// saveData()経由の自動翻訳と、exportFile()が未保存の変更を書き出す際の即時翻訳の
+// 両方から共通で使うための切り出し。
+async function computeTranslationPatches(queue){
   let okEn = 0, okZh = 0, failCount = 0;
   // 翻訳の判断（する／しない）はキュー登録時点の値で行うが、実際に書き込む際は
   // 「判断した時点の値から変わっていないか」を再確認してから反映する（変わっていれば
@@ -2493,17 +2495,26 @@ async function autoTranslateQueue(queue){
       }
     }
   }
-  // 翻訳完了後、最新の保存データに対して対象項目だけを反映する
-  // （翻訳中に同じ項目が直接編集されていた場合は、その編集を優先して上書きしない）
-  const finalRaw = getRawData();
+  return {patches, okEn, okZh, failCount};
+}
+// 翻訳結果パッチを対象データへ反映する（対象は保存データ／書き出し中のデータのどちらでも可）。
+function applyTranslationPatches(rootObj, patches){
   for (const p of patches) {
-    const node = getNodeAtPath(finalRaw, p.path);
+    const node = getNodeAtPath(rootObj, p.path);
     if (!node || typeof node !== 'object') continue;
     if (node[p.lang] !== p.prevVal) continue; // 翻訳中に手動編集された → スキップ
     node[p.lang] = p.newVal;
     if (!node._auto) node._auto = {};
     node._auto[p.lang] = p.newVal;
   }
+}
+async function autoTranslateQueue(queue){
+  showToast('自動翻訳を実行中…（' + queue.length + '件）');
+  const {patches, okEn, okZh, failCount} = await computeTranslationPatches(queue);
+  // 翻訳完了後、最新の保存データに対して対象項目だけを反映する
+  // （翻訳中に同じ項目が直接編集されていた場合は、その編集を優先して上書きしない）
+  const finalRaw = getRawData();
+  applyTranslationPatches(finalRaw, patches);
   if (!writeRawOverride(finalRaw)) return;
   if (ADMIN_LANG === 'en' || ADMIN_LANG === 'zh') initForms();
   if (failCount) {
@@ -2525,8 +2536,24 @@ async function exportFile(){
     showToast('自動翻訳の完了を待っています…');
     await _pendingTranslation;
   }
-  const raw    = getRawData();
+  const raw = getRawData();
+  // 「保存」を押さずに直接「書き出す」を押した場合でも、日本語タブでの
+  // 未保存の変更が英語・繁體中文へ翻訳されないまま書き出されることが無いよう、
+  // ここでも保存時と同じ翻訳キューを組み立てて実行する。
+  _xlatQueue = (ADMIN_LANG === 'ja') ? [] : null;
   const merged = mergeIntoRaw(raw, collectData(), ADMIN_LANG);
+  const queue = _xlatQueue;
+  _xlatQueue = null;
+  if (queue && queue.length) {
+    showToast('自動翻訳を実行中…（' + queue.length + '件）');
+    const {patches, okEn, okZh, failCount} = await computeTranslationPatches(queue);
+    applyTranslationPatches(merged, patches);
+    if (failCount) {
+      showToast('自動翻訳が完了しました（英語' + okEn + '件・繁體中文' + okZh + '件 / 失敗' + failCount + '件）。失敗分は古い訳文のまま書き出されます。', 6000);
+    } else if (okEn || okZh) {
+      showToast('自動翻訳が完了しました（英語' + okEn + '件・繁體中文' + okZh + '件）。');
+    }
+  }
   const js = generateTourDataJs(merged);
 
   // 書き出す前に構文チェックを行い、壊れたファイルが出力されるのを防ぐ
