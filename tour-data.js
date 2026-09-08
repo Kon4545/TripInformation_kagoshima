@@ -1,6 +1,6 @@
 // ================================================================
 //  MOTO TOURS JAPAN ── ツアーデータ設定ファイル  tour-data.js
-//  admin.html から生成  2026/9/7 20:05:01
+//  admin.html から生成  2026/9/8 14:30:55
 //  多言語対応: ja / en / zh（繁體中文）
 // ================================================================
 // ※ このファイルはテキストエディタ（メモ帳、VS Code 等）で開いてください。
@@ -1616,11 +1616,11 @@ const TOUR_DATA = {
       "icon": "fa-solid fa-cloud-sun",
       "iconColor": "#ed1b23",
       "content": {
-        "ja": "朝晩と日中の寒暖差が大きい可能性がございます。調整しやすい服装でお越しください。\n10月12日～14日 伊豆エリアの最高気温：22℃ /最低気温：15℃ ※予報9/26現在\nライディング中は天候にもよりますが、走行中実際の気温より体感温度が低くなります。重ね着で温度調整できる服装をお勧めいたします。",
-        "en": "There can be a significant temperature difference between morning/evening and daytime. In particular, higher-elevation areas of Izu and Hakone can be quite cold, so please dress in layers you can adjust.\nApr 10-12 forecast for the Izu area: High 16°C / Low 7°C (as of forecast on 3/25)\nDepending on the weather, the perceived temperature while riding can feel colder than the actual temperature. We recommend wearing layered clothing that you can adjust as needed.",
+        "ja": "朝晩と日中の寒暖差が大きい可能性がございます。調整しやすい服装でお越しください。\n10月12日～14日 鹿児島エリアの最高気温：22℃ /最低気温：15℃ ※予報9/26現在\nライディング中は天候にもよりますが、走行中実際の気温より体感温度が低くなります。重ね着で温度調整できる服装をお勧めいたします。",
+        "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
         "zh": "早晚與日間溫差可能較大。尤其是箱根、伊豆地區海拔較高處氣溫偏低，建議穿著可隨時調整的服裝。\n4月10日至12日伊豆地區預測：最高氣溫16℃／最低氣溫7℃（3/25預測時點）\n騎乘時依天氣狀況，實際體感溫度可能比氣溫更低，建議以洋蔥式穿搭調節體溫。",
         "_auto": {
-          "en": "There can be a significant temperature difference between morning/evening and daytime. In particular, higher-elevation areas of Izu and Hakone can be quite cold, so please dress in layers you can adjust.\nApr 10-12 forecast for the Izu area: High 16°C / Low 7°C (as of forecast on 3/25)\nDepending on the weather, the perceived temperature while riding can feel colder than the actual temperature. We recommend wearing layered clothing that you can adjust as needed.",
+          "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
           "zh": "早晚與日間溫差可能較大。尤其是箱根、伊豆地區海拔較高處氣溫偏低，建議穿著可隨時調整的服裝。\n4月10日至12日伊豆地區預測：最高氣溫16℃／最低氣溫7℃（3/25預測時點）\n騎乘時依天氣狀況，實際體感溫度可能比氣溫更低，建議以洋蔥式穿搭調節體溫。"
         }
       }
