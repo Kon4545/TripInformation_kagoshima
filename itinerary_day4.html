@@ -126,7 +126,7 @@ document.getElementById('timeline').innerHTML = (day.items||[]).map(item=>{
       <div class="tl-card-header">
         <div class="tl-card-title"><i class="${item.icon||'fa-solid fa-circle'}"></i>${item.title}${bdg}</div>
       </div>
-      <div class="tl-card-place"><i class="fa-solid fa-location-dot"></i>${item.place||''}</div>
+      ${item.place ? `<div class="tl-card-place"><i class="fa-solid fa-location-dot"></i>${item.place}</div>` : ''}
       <p>${item.desc||''}</p>
     </div>
   </div>`;

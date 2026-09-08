@@ -663,7 +663,10 @@ function renderSns() {
 function renderEmergency() {
   var d  = getData();
   var em = d.emergency;
-  var g  = d.guide;
+  // ホームタブの挨拶欄と同じデータ（複数担当者対応）を参照する。
+  // 以前はd.guide（1人目のみ）しか見ておらず、2人目以降の添乗員を追加しても
+  // ここに反映されなかったため、d.guidesの全員をカード表示するようにしている。
+  var guides = (d.guides && d.guides.length) ? d.guides : (d.guide ? [d.guide] : []);
 
   // 会社カード
   var mainHtml =
@@ -676,15 +679,17 @@ function renderEmergency() {
       '<div class="emg-info-row"><i class="fa-solid fa-envelope"></i>' + esc(em.companyEmail) + '</div>' +
     '</div>';
 
-  // 添乗員カード
-  mainHtml +=
-    '<div class="emg-card guide">' +
-      '<span class="emg-card-label"><i class="fa-solid fa-user-tie" style="margin-right:6px"></i>' + esc(t('emg.label.guide')) + '</span>' +
-      '<span class="emg-card-name">' + esc(g.name) + '</span>' +
-      '<span class="emg-phone">' + esc(g.phone) + '</span>' +
-      '<div class="emg-info-row"><i class="fa-solid fa-envelope"></i>' + esc(g.email) + '</div>' +
-      '<div class="emg-info-row"><i class="fa-brands fa-line"></i>' + esc(t('emg.label.lineId')) + esc(g.lineId) + '</div>' +
-    '</div>';
+  // 添乗員カード（人数分）
+  guides.forEach(function(g) {
+    mainHtml +=
+      '<div class="emg-card guide">' +
+        '<span class="emg-card-label"><i class="fa-solid fa-user-tie" style="margin-right:6px"></i>' + esc(t('emg.label.guide')) + '</span>' +
+        '<span class="emg-card-name">' + esc(g.name) + '</span>' +
+        '<span class="emg-phone">' + esc(g.phone) + '</span>' +
+        '<div class="emg-info-row"><i class="fa-solid fa-envelope"></i>' + esc(g.email) + '</div>' +
+        '<div class="emg-info-row"><i class="fa-brands fa-line"></i>' + esc(t('emg.label.lineId')) + esc(g.lineId) + '</div>' +
+      '</div>';
+  });
 
   document.getElementById('emgMainGrid').innerHTML = mainHtml;
 

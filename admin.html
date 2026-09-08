@@ -213,11 +213,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
             <span><i class="fa-solid fa-image" style="font-size:1.4rem;display:block;margin-bottom:4px"></i>プレビュー</span>
           </div>
           <div style="flex:1;min-width:200px">
-            <input type="file" id="heroBgFile" accept="image/*" style="display:none" onchange="loadHeroBg(this)">
             <div style="display:flex;gap:8px;margin-bottom:10px">
-              <button type="button" onclick="document.getElementById('heroBgFile').click()" style="padding:8px 16px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">
-                <i class="fa-solid fa-upload"></i> 画像を選択
-              </button>
               <button type="button" id="heroBgClearBtn" onclick="clearHeroBg()" style="padding:8px 14px;background:#fff;color:#9B1B1B;border:1.5px solid #9B1B1B;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;display:none">
                 <i class="fa-solid fa-xmark"></i> 削除
               </button>
@@ -226,9 +222,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
               JPG・PNG・WEBP 対応。<strong>横長画像（16:9など）</strong>が最適です。<br>
               画像の上に半透明の赤いオーバーレイをかけ、文字が読みやすくなるよう自動調整されます。
             </div>
-            <label class="form-label">またはファイルパスを直接入力（images フォルダに写真をアップロードした場合）</label>
+            <label class="form-label">ファイルパスを入力（images フォルダに写真をアップロードしてください）</label>
             <input id="f_heroBgPath" class="form-input" placeholder="例：images/hero-bg.jpg" oninput="onHeroBgPathInput(this)" style="font-family:monospace;font-size:.78rem">
-            <div style="font-size:.7rem;color:#8A8478;margin-top:4px">GitHubの images フォルダに同じファイル名で写真をアップロードすると、この欄を変えなくても自動的に新しい写真に切り替わります。</div>
+            <div style="font-size:.7rem;color:#8A8478;margin-top:4px">GitHubの images フォルダに写真をアップロードしてから、上の欄にそのファイル名（パス）を入力してください。同じファイル名で写真を差し替えると、この欄を変えなくても自動的に新しい写真に切り替わります。</div>
           </div>
         </div>
         <div class="form-group" style="margin-top:16px">
@@ -247,9 +243,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
           <div class="form-group"><label class="form-label">集合場所</label><input id="f_meetPlace" class="form-input"></div>
           <div class="form-group"><label class="form-label">集合場所（詳細）</label><input id="f_meetPlaceDetail" class="form-input"></div>
           <div class="form-group"><label class="form-label">集合日付</label><input type="date" id="f_meetDate" class="form-input"></div>
-          <div class="form-group"><label class="form-label">集合時間</label><input id="f_meetTime" class="form-input"></div>
+          <div class="form-group"><label class="form-label">集合時間</label><input type="time" step="300" id="f_meetTime" class="form-input"></div>
           <div class="form-group"><label class="form-label">解散場所</label><input id="f_endPlace" class="form-input"></div>
-          <div class="form-group"><label class="form-label">解散予定時刻</label><input id="f_endTime" class="form-input"></div>
+          <div class="form-group"><label class="form-label">解散予定日</label><input type="date" id="f_endDateISO" class="form-input"></div>
+          <div class="form-group"><label class="form-label">解散予定時刻</label><input type="time" id="f_endTimeOnly" class="form-input" step="300"></div>
           <div class="form-group" style="grid-column:1/-1"><label class="form-label">集合に関する注記</label><input id="f_meetNote" class="form-input"></div>
         </div>
         <!-- カウントダウン・天気予報 -->
@@ -487,7 +484,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
         <div class="form-grid" style="margin-bottom:20px">
           <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_day1Date" class="form-input"></div>
           <div class="form-group"><label class="form-label">テーマ</label><input id="f_day1Theme" class="form-input"></div>
-          <div class="form-group" style="grid-column:1/-1"><label class="form-label">Google Maps 埋め込みURL</label><input id="f_day1Map" class="form-input"></div>
+          <div class="form-group map-url-row" style="grid-column:1/-1">
+            <label class="form-label">Google Maps 埋め込みURL</label>
+            <div style="display:flex;gap:8px;align-items:stretch">
+              <input id="f_day1Map" class="form-input js-map-url-input" style="flex:1" placeholder="任意のGoogle マップURLを貼り付け →「変換」" oninput="clearMapStatusNear(this)">
+              <button type="button" onclick="tryConvertNear(this)" style="padding:0 16px;background:#ed1b23;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0"><i class="fa-solid fa-wand-magic-sparkles"></i> 変換</button>
+            </div>
+            <div class="js-map-url-status" style="margin-top:6px;font-size:.78rem;display:none"></div>
+          </div>
         </div>
         <div style="font-size:.82rem;font-weight:700;color:#1A1A1A;margin-bottom:10px;">行程アイテム</div>
         <div id="day1Items"></div>
@@ -500,7 +504,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
         <div class="form-grid" style="margin-bottom:20px">
           <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_day2Date" class="form-input"></div>
           <div class="form-group"><label class="form-label">テーマ</label><input id="f_day2Theme" class="form-input"></div>
-          <div class="form-group" style="grid-column:1/-1"><label class="form-label">Google Maps 埋め込みURL</label><input id="f_day2Map" class="form-input"></div>
+          <div class="form-group map-url-row" style="grid-column:1/-1">
+            <label class="form-label">Google Maps 埋め込みURL</label>
+            <div style="display:flex;gap:8px;align-items:stretch">
+              <input id="f_day2Map" class="form-input js-map-url-input" style="flex:1" placeholder="任意のGoogle マップURLを貼り付け →「変換」" oninput="clearMapStatusNear(this)">
+              <button type="button" onclick="tryConvertNear(this)" style="padding:0 16px;background:#ed1b23;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0"><i class="fa-solid fa-wand-magic-sparkles"></i> 変換</button>
+            </div>
+            <div class="js-map-url-status" style="margin-top:6px;font-size:.78rem;display:none"></div>
+          </div>
         </div>
         <div style="font-size:.82rem;font-weight:700;color:#1A1A1A;margin-bottom:10px;">行程アイテム</div>
         <div id="day2Items"></div>
@@ -675,7 +686,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
           </div>
         </div>
         <div style="font-size:.78rem;color:#5A5650;margin-bottom:14px;line-height:1.7">
-          追加で個別の写真もアップロードできます（任意）。ファイル選択または画像URLを入力してください。
+          追加で個別の写真も掲載できます（任意）。images フォルダにアップロードした写真のパス、または外部の画像URLを入力してください。
         </div>
         <div id="ptPhotosList"></div>
         <button class="btn-add" onclick="addPtPhoto()" style="margin-bottom:28px"><i class="fa-solid fa-plus"></i> 写真を追加</button>
@@ -903,15 +914,24 @@ function removeIconFromList(i){
 }
 
 // ── Auth ──────────────────────────────────────────────────────
+function normalizePassword(str){
+  return str.trim().replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+}
 function doLogin(){
-  const pw = document.getElementById('pwInput').value;
-  const correct = (typeof TOUR_DATA !== 'undefined' && TOUR_DATA.admin) ? TOUR_DATA.admin.password : 'tabibito2026';
+  if (typeof TOUR_DATA === 'undefined' || !TOUR_DATA.admin) {
+    document.getElementById('loginErr').innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> tour-data.js が読み込めませんでした。ファイルが壊れているか、admin.htmlと同じフォルダに無い可能性があります。開発者にご連絡ください。';
+    document.getElementById('loginErr').style.display='block';
+    return;
+  }
+  const pw = normalizePassword(document.getElementById('pwInput').value);
+  const correct = normalizePassword(TOUR_DATA.admin.password);
   if(pw === correct){
     sessionStorage.setItem('adminAuth','1');
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminScreen').style.display='block';
     initForms();
   } else {
+    document.getElementById('loginErr').innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> パスワードが正しくありません';
     document.getElementById('loginErr').style.display='block';
   }
 }
@@ -1000,6 +1020,73 @@ function extractISORangeFromJaDates(str){
   return out;
 }
 
+// ── 時刻ピッカー共通ヘルパー ─────────────────────────────────────
+// 「9:00」のような1桁時間や「15:00〜」「〜10:00」のようなチルダ付き表記からも
+// HH:MM部分だけを取り出して0埋めする（native time inputはHH:MM形式でないと値を認識せず空欄になってしまうため）
+function padTimeStr(t){
+  const m = String(t||'').match(/(\d{1,2}):(\d{2})/);
+  return m ? `${m[1].padStart(2,'0')}:${m[2]}` : '';
+}
+// ── 「解散予定時刻」用ヘルパー：日付＋時刻＋「頃」をあわせて ja/en/zh を自動生成 ──
+function formatTime12h(hh, mm){
+  const h = Number(hh), m = String(mm).padStart(2,'0');
+  const period = h < 12 ? 'AM' : 'PM';
+  let h12 = h % 12; if (h12 === 0) h12 = 12;
+  return `${h12}:${m} ${period}`;
+}
+// 解散予定日（ISO）・解散予定時刻（HH:MM）→ {ja,en,zh}（「頃」を含む表示文言）
+function formatEndTimeAllLangs(dateIso, timeStr){
+  const dateFmt = formatDateAllLangs(dateIso);
+  if (!dateFmt.ja) return {ja:'', en:'', zh:''};
+  if (!timeStr) return dateFmt;
+  const [hh, mm] = timeStr.split(':');
+  const time24 = `${hh}:${mm}`;
+  const time12 = formatTime12h(hh, mm);
+  return {
+    ja: `${dateFmt.ja}${time24} 頃`,
+    en: `${dateFmt.en}, around ${time12}`,
+    zh: `${dateFmt.zh}${time24}左右`
+  };
+}
+// 既存の日本語表記（例：「2026年4月12日（日）17:00 頃」）から日付ピッカー・時刻ピッカーの初期値を抽出
+function extractEndDateTimeFromJa(str){
+  const out = {date:'', time:''};
+  if (!str) return out;
+  const s = String(str);
+  const dm = s.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+  if (dm) out.date = `${dm[1]}-${String(dm[2]).padStart(2,'0')}-${String(dm[3]).padStart(2,'0')}`;
+  const tm = s.match(/(\d{1,2}):(\d{2})/);
+  if (tm) out.time = `${String(tm[1]).padStart(2,'0')}:${tm[2]}`;
+  return out;
+}
+
+// ── 「集合時間」用ヘルパー：時刻（HH:MM）→ {ja,en,zh}（午前/午後・AM/PM表記） ──
+const MEET_PERIOD_JA = ['午前','午後'];
+const MEET_PERIOD_ZH = ['上午','下午'];
+function formatMeetTimeAllLangs(timeStr){
+  if (!timeStr) return {ja:'', en:'', zh:''};
+  const [hh, mm] = timeStr.split(':');
+  const h = Number(hh), m = String(mm).padStart(2,'0');
+  const periodIdx = h < 12 ? 0 : 1;
+  let h12 = h % 12; if (h12 === 0) h12 = 12;
+  return {
+    ja: `${MEET_PERIOD_JA[periodIdx]} ${h12}:${m}`,
+    en: formatTime12h(hh, mm),
+    zh: `${MEET_PERIOD_ZH[periodIdx]}${h12}:${m}`
+  };
+}
+// 既存の「午前 10:00」「上午10:00」等の表記から24時間表記（HH:MM）を抽出
+function extractMeetTimeFromJa(str){
+  if (!str) return '';
+  const m = String(str).match(/(午前|午後|上午|下午)?\s*(\d{1,2}):(\d{2})/);
+  if (!m) return '';
+  let h = Number(m[2]);
+  const mm = m[3];
+  if (m[1] === '午後' || m[1] === '下午') { if (h < 12) h += 12; }
+  else if (m[1] === '午前' || m[1] === '上午') { if (h === 12) h = 0; }
+  return `${String(h).padStart(2,'0')}:${mm}`;
+}
+
 function switchAdminLang(lang){
   if (lang === ADMIN_LANG) return;
   ADMIN_LANG = lang;
@@ -1037,9 +1124,13 @@ function initForms(){
   set('f_meetPlace',      d.meeting.place);
   set('f_meetPlaceDetail',d.meeting.placeDetail);
   set('f_meetDate',       extractISOFromJaDate(raw.meeting && raw.meeting.date && raw.meeting.date.ja));
-  set('f_meetTime',       d.meeting.time);
+  set('f_meetTime',       extractMeetTimeFromJa(raw.meeting && raw.meeting.time && raw.meeting.time.ja));
   set('f_endPlace',       d.meeting.endPlace);
-  set('f_endTime',        d.meeting.endTime);
+  {
+    const _endDT = extractEndDateTimeFromJa(raw.meeting && raw.meeting.endTime && raw.meeting.endTime.ja);
+    set('f_endDateISO',  _endDT.date);
+    set('f_endTimeOnly', _endDT.time);
+  }
   set('f_meetNote',       d.meeting.note);
   set('f_meetMapUrl',     d.meeting.meetMapUrl);
   set('f_endMapUrl',      d.meeting.endMapUrl);
@@ -1260,10 +1351,9 @@ function makeSchedRow(item={},day,idx){
       <div class="sched-item-title">アイテム ${(idx??'')+1}</div>
       <button class="btn-remove" onclick="this.closest('.sched-item').remove()"><i class="fa-solid fa-trash"></i></button>
     </div>
-    <div class="form-grid-3">
-      <div class="form-group"><label class="form-label">時刻</label><input class="form-input si-time" value="${esc(item.time||'')}"></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">時刻</label><input type="time" step="300" class="form-input si-time" value="${esc(padTimeStr(item.time))}"></div>
       <div class="form-group"><label class="form-label">タイトル</label><input class="form-input si-title" value="${esc(item.title||'')}"></div>
-      <div class="form-group"><label class="form-label">場所</label><input class="form-input si-place" value="${esc(item.place||'')}"></div>
     </div>
     <div class="form-group"><label class="form-label">説明</label><textarea class="form-textarea si-desc" style="min-height:60px">${esc(item.desc||'')}</textarea></div>
     <div class="form-grid-3">
@@ -1275,14 +1365,13 @@ function makeSchedRow(item={},day,idx){
         </select>
       </div>
     </div>
-    <div class="form-grid" style="grid-template-columns:1fr 1fr">
-      <div class="form-group"><label class="form-label">標高（m・任意）</label><input type="number" class="form-input si-elevation" placeholder="例：600" value="${esc(item.elevation ?? '')}"></div>
-      <div class="form-group"><label class="form-label">前のスポットからの距離（km・任意）</label><input type="number" step="0.1" class="form-input si-distance" placeholder="例：8.5" value="${esc(item.distanceFromPrev ?? '')}"></div>
-    </div>
-    <div style="font-size:.72rem;color:#8A8478;margin:-8px 0 12px">標高・距離を入力すると、行程ページに走行ルートの距離・標高グラフが自動表示されます（Googleマップ等で調べた数値を入力してください。両方とも空欄のままなら表示されません）。</div>
-    <div class="form-group" style="margin-bottom:10px">
+    <div class="form-group map-url-row" style="margin-bottom:10px">
       <label class="form-label"><i class="fa-solid fa-street-view" style="color:#ed1b23;margin-right:4px"></i>ストリートビュー 埋め込みURL（任意）</label>
-      <input class="form-input si-streetview" placeholder="Googleマップ「共有」→「地図を埋め込む」のURLを貼り付け" value="${esc(item.streetViewUrl||'')}">
+      <div style="display:flex;gap:8px;align-items:stretch">
+        <input class="form-input si-streetview js-map-url-input" style="flex:1" placeholder="任意のGoogle マップURLを貼り付け →「変換」" value="${esc(item.streetViewUrl||'')}" oninput="clearMapStatusNear(this)">
+        <button type="button" onclick="tryConvertNear(this)" style="padding:0 16px;background:#ed1b23;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0"><i class="fa-solid fa-wand-magic-sparkles"></i> 変換</button>
+      </div>
+      <div class="js-map-url-status" style="margin-top:6px;font-size:.78rem;display:none"></div>
       <div style="font-size:.72rem;color:#8A8478;margin-top:3px">設定すると、行程ページのこのスポットに「プレビューを見る」ボタンが表示され、タップすると現地の様子を事前に確認できます。</div>
     </div>
     <label class="hl-toggle" style="margin-bottom:8px"><input type="checkbox" class="si-highlight" ${hl}> ハイライト表示にする</label><br>
@@ -1293,21 +1382,16 @@ function makeSchedRow(item={},day,idx){
 function addSchedItem(containerId,day){ const el=document.getElementById(containerId); el.appendChild(makeSchedRow({},day,el.children.length)); }
 function getSchedItems(containerId){
   return [...document.querySelectorAll('#'+containerId+' .sched-item')].map(row=>{
-    const elevationRaw = row.querySelector('.si-elevation')?.value ?? '';
-    const distanceRaw   = row.querySelector('.si-distance')?.value ?? '';
     return {
       time:        row.querySelector('.si-time')?.value||'',
       title:       row.querySelector('.si-title')?.value||'',
-      place:       row.querySelector('.si-place')?.value||'',
       desc:        row.querySelector('.si-desc')?.value||'',
       icon:        row.querySelector('.si-icon')?.value||'fa-solid fa-circle',
       badge:       row.querySelector('.si-badge')?.value||'',
       badgeType:   row.querySelector('.si-badgeType')?.value||'',
       isHighlight: row.querySelector('.si-highlight')?.checked||false,
       isRestStop:  row.querySelector('.si-reststop')?.checked||false,
-      streetViewUrl: row.querySelector('.si-streetview')?.value||'',
-      elevation:        elevationRaw === '' ? null : Number(elevationRaw),
-      distanceFromPrev: distanceRaw   === '' ? null : Number(distanceRaw)
+      streetViewUrl: sanitizeMapUrl(row.querySelector('.si-streetview')?.value||'')
     };
   });
 }
@@ -1346,7 +1430,14 @@ function addDayPanelDOM(n){
     <div class="form-grid" style="margin-bottom:20px">
       <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_${key}Date" class="form-input"></div>
       <div class="form-group"><label class="form-label">テーマ</label><input id="f_${key}Theme" class="form-input"></div>
-      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Google Maps 埋め込みURL</label><input id="f_${key}Map" class="form-input"></div>
+      <div class="form-group map-url-row" style="grid-column:1/-1">
+        <label class="form-label">Google Maps 埋め込みURL</label>
+        <div style="display:flex;gap:8px;align-items:stretch">
+          <input id="f_${key}Map" class="form-input js-map-url-input" style="flex:1" placeholder="任意のGoogle マップURLを貼り付け →「変換」" oninput="clearMapStatusNear(this)">
+          <button type="button" onclick="tryConvertNear(this)" style="padding:0 16px;background:#ed1b23;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0"><i class="fa-solid fa-wand-magic-sparkles"></i> 変換</button>
+        </div>
+        <div class="js-map-url-status" style="margin-top:6px;font-size:.78rem;display:none"></div>
+      </div>
     </div>
     <div style="font-size:.82rem;font-weight:700;color:#1A1A1A;margin-bottom:10px;">行程アイテム</div>
     <div id="${key}Items"></div>
@@ -1430,13 +1521,11 @@ function buildHighlights(items){
             <span><i class="fa-solid fa-image" style="font-size:1.3rem;display:block;margin-bottom:3px"></i>未設定</span>
           </div>
           <div style="flex:1;min-width:200px">
-            <input type="file" class="hl-img-file" accept="image/*" style="display:none">
             <div style="display:flex;gap:8px;margin-bottom:6px">
-              <button type="button" class="hl-img-upload-btn" style="padding:7px 14px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit"><i class="fa-solid fa-upload"></i> 画像を選択</button>
               <button type="button" class="hl-img-clear-btn" style="padding:7px 12px;background:#fff;color:#9B1B1B;border:1.5px solid #9B1B1B;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:none"><i class="fa-solid fa-xmark"></i> 削除</button>
             </div>
             <div style="font-size:.72rem;color:#8A8478;margin-bottom:6px">設定するとアイコンの代わりに写真がカード上部に表示されます</div>
-            <label class="form-label" style="font-size:.72rem">またはファイルパスを直接入力（images フォルダに写真をアップロードした場合）</label>
+            <label class="form-label" style="font-size:.72rem">ファイルパスを入力（images フォルダに写真をアップロードしてください）</label>
             <input type="text" class="form-input hl-img-path" placeholder="例：images/highlight-1.jpg">
           </div>
         </div>
@@ -1457,12 +1546,10 @@ function buildHighlights(items){
       row.querySelector('.hl-color').value = this.value;
       preview.style.background = `linear-gradient(145deg,${this.value},${this.value}bb)`;
     });
-    // 写真アップローダーの配線
+    // 写真の配線（images フォルダに置いた写真をパスで参照する）
     const hlHiddenImg  = row.querySelector('.hl-image');
     const hlImgPreview = row.querySelector('.hl-img-preview');
     const hlClearBtn   = row.querySelector('.hl-img-clear-btn');
-    const hlFileInput  = row.querySelector('.hl-img-file');
-    const hlUploadBtn  = row.querySelector('.hl-img-upload-btn');
     const hlPathInput  = row.querySelector('.hl-img-path');
     function setHlImg(data){
       hlHiddenImg.value = data;
@@ -1476,16 +1563,7 @@ function buildHighlights(items){
     }
     hlPathInput.value = (item.image||'').indexOf('data:')===0 ? '' : (item.image||'');
     if(item.image) setHlImg(item.image);
-    hlUploadBtn.addEventListener('click', ()=>hlFileInput.click());
-    hlFileInput.addEventListener('change', function(){
-      if(!this.files||!this.files[0]) return;
-      const file=this.files[0];
-      if(!file.type.startsWith('image/')){ showToast('画像ファイルを選択してください'); return; }
-      const reader=new FileReader();
-      reader.onload=e=>{ hlPathInput.value=''; setHlImg(e.target.result); showToast('画像を読み込みました。「保存」を押して反映してください。'); };
-      reader.readAsDataURL(file);
-    });
-    hlClearBtn.addEventListener('click', ()=>{ hlPathInput.value=''; setHlImg(''); hlFileInput.value=''; });
+    hlClearBtn.addEventListener('click', ()=>{ hlPathInput.value=''; setHlImg(''); });
     hlPathInput.addEventListener('input', ()=>setHlImg(hlPathInput.value.trim()));
     el.appendChild(row);
   });
@@ -1710,11 +1788,8 @@ function buildPtPhotos(items){
           <span><i class="fa-solid fa-image" style="font-size:1.1rem;display:block;margin-bottom:2px;text-align:center"></i>未設定</span>
         </div>
         <div style="flex:1;min-width:180px">
-          <input type="file" class="pt-ph-file" accept="image/*" style="display:none">
-          <div style="display:flex;gap:8px;margin-bottom:6px">
-            <button type="button" class="pt-ph-upload-btn" style="padding:6px 12px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit"><i class="fa-solid fa-upload"></i> ファイル選択</button>
-          </div>
-          <input type="text" class="form-input pt-ph-url" placeholder="または画像URLを入力" value="${esc(item.src||'')}" style="margin-bottom:6px">
+          <label class="form-label" style="font-size:.72rem">ファイルパスまたは画像URLを入力（images フォルダに写真をアップロードしてください）</label>
+          <input type="text" class="form-input pt-ph-url" placeholder="例：images/tour-photo-1.jpg" value="${esc(item.src||'')}" style="margin-bottom:6px">
         </div>
       </div>
       <input type="hidden" class="pt-ph-src" value="">
@@ -1722,9 +1797,7 @@ function buildPtPhotos(items){
 
     const hidden  = row.querySelector('.pt-ph-src');
     const preview = row.querySelector('.pt-ph-preview');
-    const fileInput = row.querySelector('.pt-ph-file');
     const urlInput  = row.querySelector('.pt-ph-url');
-    const uploadBtn = row.querySelector('.pt-ph-upload-btn');
 
     function setPreview(src){
       if(src){
@@ -1738,20 +1811,6 @@ function buildPtPhotos(items){
     hidden.value = item.src||'';
     if(item.src) setPreview(item.src);
 
-    uploadBtn.addEventListener('click',()=>fileInput.click());
-    fileInput.addEventListener('change',function(){
-      if(!this.files||!this.files[0]) return;
-      const file=this.files[0];
-      if(!file.type.startsWith('image/')){ showToast('画像ファイルを選択してください'); return; }
-      const reader=new FileReader();
-      reader.onload=e=>{
-        hidden.value=e.target.result;
-        urlInput.value='';
-        setPreview(e.target.result);
-        showToast('写真を読み込みました');
-      };
-      reader.readAsDataURL(file);
-    });
     urlInput.addEventListener('input',function(){
       hidden.value=this.value;
       setPreview(this.value);
@@ -1853,12 +1912,10 @@ function buildPtNextTours(items){
             <span><i class="fa-solid fa-image" style="font-size:1.1rem;display:block;text-align:center"></i>未設定</span>
           </div>
           <div style="flex:1;min-width:200px">
-            <input type="file" class="ptn-img-file" accept="image/*" style="display:none">
             <div style="display:flex;gap:8px;margin-bottom:4px">
-              <button type="button" class="ptn-img-upload-btn" style="padding:6px 12px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit"><i class="fa-solid fa-upload"></i> 画像を選択</button>
               <button type="button" class="ptn-img-clear-btn" style="padding:6px 10px;background:#fff;color:#9B1B1B;border:1.5px solid #9B1B1B;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:none"><i class="fa-solid fa-xmark"></i> 削除</button>
             </div>
-            <label class="form-label" style="font-size:.72rem">またはファイルパスを直接入力（images フォルダに写真をアップロードした場合）</label>
+            <label class="form-label" style="font-size:.72rem">ファイルパスを入力（images フォルダに写真をアップロードしてください）</label>
             <input type="text" class="form-input ptn-img-path" placeholder="例：images/next-tour-1.jpg">
           </div>
         </div>
@@ -1866,8 +1923,6 @@ function buildPtNextTours(items){
 
     const hidden   = row.querySelector('.ptn-image');
     const preview  = row.querySelector('.ptn-img-preview');
-    const fileInput= row.querySelector('.ptn-img-file');
-    const uploadBtn= row.querySelector('.ptn-img-upload-btn');
     const clearBtn = row.querySelector('.ptn-img-clear-btn');
     const pathInput= row.querySelector('.ptn-img-path');
 
@@ -1878,14 +1933,7 @@ function buildPtNextTours(items){
     }
     pathInput.value = (item.image||'').indexOf('data:')===0 ? '' : (item.image||'');
     if(item.image) setPtnImg(item.image);
-    uploadBtn.addEventListener('click',()=>fileInput.click());
-    fileInput.addEventListener('change',function(){
-      if(!this.files||!this.files[0]) return;
-      const reader=new FileReader();
-      reader.onload=e=>{ pathInput.value=''; setPtnImg(e.target.result); showToast('画像を読み込みました'); };
-      reader.readAsDataURL(this.files[0]);
-    });
-    clearBtn.addEventListener('click',()=>{ pathInput.value=''; setPtnImg(''); fileInput.value=''; });
+    clearBtn.addEventListener('click',()=>{ pathInput.value=''; setPtnImg(''); });
     pathInput.addEventListener('input', ()=>setPtnImg(pathInput.value.trim()));
 
     el.appendChild(row);
@@ -2150,23 +2198,19 @@ function buildGoods(items){
             <span><i class="fa-solid fa-image" style="font-size:1.3rem;display:block;margin-bottom:3px"></i>未設定</span>
           </div>
           <div style="flex:1;min-width:200px">
-            <input type="file" class="gd-img-file" accept="image/*" style="display:none">
             <div style="display:flex;gap:8px;margin-bottom:6px">
-              <button type="button" class="gd-img-upload-btn" style="padding:7px 14px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit"><i class="fa-solid fa-upload"></i> 画像を選択</button>
               <button type="button" class="gd-img-clear-btn" style="padding:7px 12px;background:#fff;color:#9B1B1B;border:1.5px solid #9B1B1B;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:none"><i class="fa-solid fa-xmark"></i> 削除</button>
             </div>
             <div style="font-size:.72rem;color:#8A8478;margin-bottom:6px">設定するとカード上部に商品写真が表示されます</div>
-            <label class="form-label" style="font-size:.72rem">またはファイルパスを直接入力（images フォルダに写真をアップロードした場合）</label>
+            <label class="form-label" style="font-size:.72rem">ファイルパスを入力（images フォルダに写真をアップロードしてください）</label>
             <input type="text" class="form-input gd-img-path" placeholder="例：images/goods-1.jpg">
           </div>
         </div>
       </div>`;
-    // 画像アップローダーの配線
+    // 画像の配線（images フォルダに置いた写真をパスで参照する）
     const hiddenImg  = row.querySelector('.gd-image');
     const preview    = row.querySelector('.gd-img-preview');
     const clearBtn   = row.querySelector('.gd-img-clear-btn');
-    const fileInput  = row.querySelector('.gd-img-file');
-    const uploadBtn  = row.querySelector('.gd-img-upload-btn');
     const pathInput  = row.querySelector('.gd-img-path');
     function setGdImg(data){
       hiddenImg.value = data;
@@ -2180,16 +2224,7 @@ function buildGoods(items){
     }
     pathInput.value = (item.image||'').indexOf('data:')===0 ? '' : (item.image||'');
     if(item.image) setGdImg(item.image);
-    uploadBtn.addEventListener('click', ()=>fileInput.click());
-    fileInput.addEventListener('change', function(){
-      if(!this.files||!this.files[0]) return;
-      const file=this.files[0];
-      if(!file.type.startsWith('image/')){ showToast('画像ファイルを選択してください'); return; }
-      const reader=new FileReader();
-      reader.onload=e=>{ pathInput.value=''; setGdImg(e.target.result); showToast('画像を読み込みました。「保存」を押して反映してください。'); };
-      reader.readAsDataURL(file);
-    });
-    clearBtn.addEventListener('click', ()=>{ pathInput.value=''; setGdImg(''); fileInput.value=''; });
+    clearBtn.addEventListener('click', ()=>{ pathInput.value=''; setGdImg(''); });
     pathInput.addEventListener('input', ()=>setGdImg(pathInput.value.trim()));
     el.appendChild(row);
   });
@@ -2217,26 +2252,30 @@ function collectData(){
   const _tourDateStart = g('f_tourDateStart'), _tourDateEnd = g('f_tourDateEnd');
   const _tourDatesOut = _tourDateStart ? formatDateRangeAllLangs(_tourDateStart, _tourDateEnd || _tourDateStart) : d.basic.tourDates;
   d.basic = { tourTitle:g('f_tourTitle'), tourSubtitle:g('f_tourSubtitle'), participantCount:g('f_participantCount'), tourDates:_tourDatesOut, area:g('f_area'), heroBgImage:_heroBgData, heroVideoUrl:g('f_heroVideoUrl') };
-  const _cMeetUrl = g('f_meetMapUrl');
-  const _cEndUrl  = document.getElementById('f_sameMeetEnd')?.checked ? _cMeetUrl : g('f_endMapUrl');
+  const _cMeetUrl = sanitizeMapUrl(g('f_meetMapUrl'));
+  const _cEndUrl  = document.getElementById('f_sameMeetEnd')?.checked ? _cMeetUrl : sanitizeMapUrl(g('f_endMapUrl'));
   const _meetDateIso = g('f_meetDate');
   const _meetDateOut = _meetDateIso ? formatDateAllLangs(_meetDateIso) : d.meeting.date;
-  d.meeting = { place:g('f_meetPlace'), placeDetail:g('f_meetPlaceDetail'), date:_meetDateOut, time:g('f_meetTime'), endPlace:g('f_endPlace'), endTime:g('f_endTime'), note:g('f_meetNote'), meetMapUrl:_cMeetUrl, endMapUrl:_cEndUrl, meetIcon:g('f_meetIcon')||'fa-solid fa-flag-checkered', meetIconColor:g('f_meetIconColor')||'#9e1016', dateIcon:g('f_dateIcon')||'fa-solid fa-clock', dateIconColor:g('f_dateIconColor')||'#9e1016', endIcon:g('f_endIcon')||'fa-solid fa-circle-check', endIconColor:g('f_endIconColor')||'#9e1016', meetDateISO:g('f_meetDateISO'), tourEndDateISO:g('f_tourEndDateISO'), meetLat:g('f_meetLat'), meetLng:g('f_meetLng'), shuttle:{ enabled:document.getElementById('f_shuttleEnabled')?.checked||false, note:g('f_shuttleNote'), deadline:g('f_shuttleDeadline'), contact:g('f_shuttleContact'), pickups:getShuttlePickups() } };
+  const _meetTimeIso = g('f_meetTime');
+  const _meetTimeOut = _meetTimeIso ? formatMeetTimeAllLangs(_meetTimeIso) : d.meeting.time;
+  const _endDateIso = g('f_endDateISO');
+  const _endTimeOut = _endDateIso ? formatEndTimeAllLangs(_endDateIso, g('f_endTimeOnly')) : d.meeting.endTime;
+  d.meeting = { place:g('f_meetPlace'), placeDetail:g('f_meetPlaceDetail'), date:_meetDateOut, time:_meetTimeOut, endPlace:g('f_endPlace'), endTime:_endTimeOut, note:g('f_meetNote'), meetMapUrl:_cMeetUrl, endMapUrl:_cEndUrl, meetIcon:g('f_meetIcon')||'fa-solid fa-flag-checkered', meetIconColor:g('f_meetIconColor')||'#9e1016', dateIcon:g('f_dateIcon')||'fa-solid fa-clock', dateIconColor:g('f_dateIconColor')||'#9e1016', endIcon:g('f_endIcon')||'fa-solid fa-circle-check', endIconColor:g('f_endIconColor')||'#9e1016', meetDateISO:g('f_meetDateISO'), tourEndDateISO:g('f_tourEndDateISO'), meetLat:g('f_meetLat'), meetLng:g('f_meetLng'), shuttle:{ enabled:document.getElementById('f_shuttleEnabled')?.checked||false, note:g('f_shuttleNote'), deadline:g('f_shuttleDeadline'), contact:g('f_shuttleContact'), pickups:getShuttlePickups() } };
   const guidesArr = getGuides();
   d.guides = guidesArr;
   d.guide  = guidesArr[0] || {}; // backward compat
   d.includes = getSimpleList('includesList');
   d.excludes = getSimpleList('excludesList');
   const _day1DateIso = g('f_day1Date');
-  d.day1 = { date:_day1DateIso ? formatDateAllLangs(_day1DateIso) : d.day1.date, theme:g('f_day1Theme'), mapEmbed:g('f_day1Map'), items:getSchedItems('day1Items') };
+  d.day1 = { date:_day1DateIso ? formatDateAllLangs(_day1DateIso) : d.day1.date, theme:g('f_day1Theme'), mapEmbed:sanitizeMapUrl(g('f_day1Map')), items:getSchedItems('day1Items') };
   const _day2DateIso = g('f_day2Date');
-  d.day2 = { date:_day2DateIso ? formatDateAllLangs(_day2DateIso) : d.day2.date, theme:g('f_day2Theme'), mapEmbed:g('f_day2Map'), items:getSchedItems('day2Items') };
+  d.day2 = { date:_day2DateIso ? formatDateAllLangs(_day2DateIso) : d.day2.date, theme:g('f_day2Theme'), mapEmbed:sanitizeMapUrl(g('f_day2Map')), items:getSchedItems('day2Items') };
   for (let n = MIN_TOUR_DAYS + 1; n <= MAX_TOUR_DAYS; n++) {
     const key = 'day' + n;
     if (!document.getElementById('tab-' + key)) { delete d[key]; continue; }
     const _dayNDateIso = g('f_'+key+'Date');
     const _dayNDateFallback = d[key] ? d[key].date : '';
-    d[key] = { date:_dayNDateIso ? formatDateAllLangs(_dayNDateIso) : _dayNDateFallback, theme:g('f_'+key+'Theme'), mapEmbed:g('f_'+key+'Map'), items:getSchedItems(key+'Items') };
+    d[key] = { date:_dayNDateIso ? formatDateAllLangs(_dayNDateIso) : _dayNDateFallback, theme:g('f_'+key+'Theme'), mapEmbed:sanitizeMapUrl(g('f_'+key+'Map')), items:getSchedItems(key+'Items') };
   }
   const hotelsArr = getHotels();
   d.hotels = hotelsArr;
@@ -2274,7 +2313,7 @@ const ADMIN_SHARED_FIELD_NAMES = {
   platform:1, handle:1, buyUrl:1, lineId:1, enabled:1, isHighlight:1, isRestStop:1, streetViewUrl:1,
   embedCode:1, src:1, nameEn:1, albumUrl:1, mapReviewUrl:1,
   meetDateISO:1, tourEndDateISO:1, meetLat:1, meetLng:1,
-  elevation:1, distanceFromPrev:1, label:1,
+  label:1,
   meetIcon:1, meetIconColor:1, dateIcon:1, dateIconColor:1, endIcon:1, endIconColor:1,
   vehicleId:1, maker:1, year:1, displacement:1, weight:1, seatHeight:1, tankCapacity:1, fuel:1, class:1
 };
@@ -2304,7 +2343,11 @@ function mergeLeaf(rawNode, flatVal, lang, keyName, path){
     return flatVal;
   }
   // 新規項目（raw に対応データなし）→ 項目名で翻訳対象か共有項目か判定
-  if (keyName && ADMIN_SHARED_FIELD_NAMES[keyName]) return flatVal;
+  // 「name」は基本的に翻訳対象（グッズ名など）として扱うが、guides/guide配下の
+  // 添乗員名だけは人名であり翻訳すべきでないため、パスで判定して共有項目として扱う
+  // （新規に2人目以降の添乗員を追加した際に、名前が言語別に分かれてしまうのを防ぐため）
+  const isGuideName = keyName === 'name' && (path[0] === 'guides' || path[0] === 'guide');
+  if ((keyName && ADMIN_SHARED_FIELD_NAMES[keyName]) || isGuideName) return flatVal;
   const w = {ja:'', en:'', zh:''};
   w[lang] = flatVal;
   if (lang === 'ja' && _xlatQueue && flatVal) {
@@ -2357,8 +2400,8 @@ function saveData(){
 function writeRawOverride(merged){
   try {
     // 旧バージョン（多言語化前）の保存データが残っていると容量を圧迫するため、保存前に必ず削除する
-    localStorage.removeItem('TOUR_DATA_OVERRIDE');
-    localStorage.setItem('TOUR_DATA_RAW_OVERRIDE', JSON.stringify(merged));
+    tourStorageRemove('TOUR_DATA_OVERRIDE');
+    tourStorageSet('TOUR_DATA_RAW_OVERRIDE', JSON.stringify(merged));
     return true;
   } catch (e) {
     if (e && e.name === 'QuotaExceededError') {
@@ -2471,8 +2514,8 @@ async function autoTranslateQueue(queue){
 }
 function clearOverride(){
   if(confirm('一時保存データをリセットし、tour-data.js の内容に戻しますか？（すべての言語の編集内容が失われます）')){
-    localStorage.removeItem('TOUR_DATA_RAW_OVERRIDE');
-    localStorage.removeItem('TOUR_DATA_OVERRIDE');
+    tourStorageRemove('TOUR_DATA_RAW_OVERRIDE');
+    tourStorageRemove('TOUR_DATA_OVERRIDE');
     initForms();
     showToast('リセットしました。');
   }
@@ -2485,6 +2528,15 @@ async function exportFile(){
   const raw    = getRawData();
   const merged = mergeIntoRaw(raw, collectData(), ADMIN_LANG);
   const js = generateTourDataJs(merged);
+
+  // 書き出す前に構文チェックを行い、壊れたファイルが出力されるのを防ぐ
+  // （このチェックが無いと、ログイン不可・サイト全体の表示崩れなどが本番環境で起きてから気づく事になる）
+  try {
+    new Function(js);
+  } catch (e) {
+    alert('tour-data.js の生成中にエラーが検出されたため、書き出しを中止しました。\n\nお手数ですが、この画面のスクリーンショットを添えて開発者にご連絡ください。\n\nエラー内容: ' + e.message);
+    return;
+  }
 
   // 対応ブラウザ（Chrome / Edge など）ではファイル保存ダイアログで
   // 既存の tour-data.js を選んでそのまま上書き保存できる
@@ -2565,9 +2617,44 @@ function resolveLang(node, lang) {
   return node;
 }
 
+// ── ブラウザ保存データの名前空間分離 ──────────────────────────────
+// このしおりを複製して複数ツアー分を同じドメイン配下（例：username.github.io/ツアーA/、
+// username.github.io/ツアーB/）で公開した場合、localStorageはドメイン単位でしか区別されず
+// URLのパスでは区別されないため、何も対策しないと別ツアーの一時保存データと混ざってしまう。
+// そのため、保存キーの先頭に「そのページが置かれているフォルダのパス」を付与して区別する。
+function tourStorageNS() {
+  try { return location.pathname.replace(/\\/[^\\/]*$/, ''); } catch (e) { return ''; }
+}
+function tourStorageGet(baseKey) {
+  try {
+    var nsKey = tourStorageNS() + '::' + baseKey;
+    var v = localStorage.getItem(nsKey);
+    if (v !== null) return v;
+    // 名前空間分離前の旧データが残っていれば、このツアー用として一度だけ引き継いでから旧キーを削除する。
+    // 旧キーは全ツアーで共有されてしまうため、読み取るだけで残したままにすると
+    // 別のツアーがあとから同じ旧データを引き継いでしまい、結局ツアー間で混ざる原因になる。
+    var legacy = localStorage.getItem(baseKey);
+    if (legacy !== null) {
+      localStorage.setItem(nsKey, legacy);
+      localStorage.removeItem(baseKey);
+      return legacy;
+    }
+    return null;
+  } catch (e) { return null; }
+}
+function tourStorageSet(baseKey, value) {
+  try { localStorage.setItem(tourStorageNS() + '::' + baseKey, value); } catch (e) {}
+}
+function tourStorageRemove(baseKey) {
+  try {
+    localStorage.removeItem(tourStorageNS() + '::' + baseKey);
+    localStorage.removeItem(baseKey); // 旧キーが残っていれば併せて削除
+  } catch (e) {}
+}
+
 function getCurrentLang() {
   try {
-    var l = localStorage.getItem('TOUR_LANG');
+    var l = tourStorageGet('TOUR_LANG');
     if (l === 'en' || l === 'zh') return l;
   } catch (e) {}
   return 'ja';
@@ -2575,7 +2662,7 @@ function getCurrentLang() {
 
 function getRawData() {
   try {
-    var override = localStorage.getItem('TOUR_DATA_RAW_OVERRIDE');
+    var override = tourStorageGet('TOUR_DATA_RAW_OVERRIDE');
     if (override) return JSON.parse(override);
   } catch (e) {}
   return TOUR_DATA;
@@ -2591,23 +2678,6 @@ function getData(lang) {
 // ── Hero Background Image ────────────────────────────────────
 let _heroBgData = '';
 
-function loadHeroBg(input) {
-  if (!input.files || !input.files[0]) return;
-  const file = input.files[0];
-  if (!file.type.startsWith('image/')) {
-    showToast('画像ファイルを選択してください');
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    _heroBgData = e.target.result;
-    const pathInput = document.getElementById('f_heroBgPath');
-    if (pathInput) pathInput.value = ''; // アップロード画像を使う場合はパス欄をクリア
-    updateHeroBgPreview();
-    showToast('画像を読み込みました。「保存」を押して反映してください。');
-  };
-  reader.readAsDataURL(file);
-}
 // パス欄に直接入力された場合（images フォルダの画像をファイル名で参照する方式）
 function onHeroBgPathInput(input) {
   _heroBgData = input.value.trim();
@@ -2629,8 +2699,6 @@ function updateHeroBgPreview() {
 
 function clearHeroBg() {
   _heroBgData = '';
-  const f = document.getElementById('heroBgFile');
-  if (f) f.value = '';
   const pathInput = document.getElementById('f_heroBgPath');
   if (pathInput) pathInput.value = '';
   updateHeroBgPreview();
@@ -2664,8 +2732,8 @@ function makeHotelRow(item={}, idx){
       <div class="form-group"><label class="form-label">ホテル名</label><input class="form-input ht-name" value="${esc(item.name||'')}"></div>
       <div class="form-group"><label class="form-label">電話番号</label><input class="form-input ht-phone" value="${esc(item.phone||'')}"></div>
       <div class="form-group" style="grid-column:1/-1"><label class="form-label">住所</label><input class="form-input ht-address" value="${esc(item.address||'')}"></div>
-      <div class="form-group"><label class="form-label">チェックイン</label><input class="form-input ht-checkin" value="${esc(item.checkin||'')}"></div>
-      <div class="form-group"><label class="form-label">チェックアウト</label><input class="form-input ht-checkout" value="${esc(item.checkout||'')}"></div>
+      <div class="form-group"><label class="form-label">チェックイン</label><input type="time" step="300" class="form-input ht-checkin" value="${esc(padTimeStr(item.checkin))}"></div>
+      <div class="form-group"><label class="form-label">チェックアウト</label><input type="time" step="300" class="form-input ht-checkout" value="${esc(padTimeStr(item.checkout))}"></div>
       <div class="form-group" style="grid-column:1/-1"><label class="form-label"><i class="fa-solid fa-arrow-up-right-from-square" style="color:#ed1b23"></i>&ensp;公式サイトURL（任意）</label><input class="form-input ht-url" value="${esc(item.url||'')}" placeholder="https://www.hotel-example.com/"></div>
     </div>
     <div class="form-group" style="margin-bottom:10px"><label class="form-label">施設説明</label><textarea class="form-textarea ht-desc">${esc(item.desc||'')}</textarea></div>
@@ -2682,13 +2750,11 @@ function makeHotelRow(item={}, idx){
       </div>
       <div style="flex:1;min-width:180px">
         <input type="hidden" class="ht-image" value="${esc(item.image||'')}">
-        <input type="file" class="ht-img-file" accept="image/*" style="display:none">
         <div style="display:flex;gap:8px;margin-bottom:8px">
-          <button type="button" class="ht-img-upload-btn" style="padding:8px 14px;background:#ed1b23;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit"><i class="fa-solid fa-upload"></i> 画像を選択</button>
           <button type="button" class="ht-img-clear-btn" style="padding:8px 12px;background:#fff;color:#9B1B1B;border:1.5px solid #9B1B1B;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;display:none"><i class="fa-solid fa-xmark"></i> 削除</button>
         </div>
         <div style="font-size:.72rem;color:#8A8478;line-height:1.7;margin-bottom:8px">JPG・PNG・WEBP 対応。横長画像が最適です。<br>設定するとホテルカードの左側（モバイルは上部）に表示されます。</div>
-        <label class="form-label" style="font-size:.7rem">またはファイルパスを直接入力（images フォルダに写真をアップロードした場合）</label>
+        <label class="form-label" style="font-size:.7rem">ファイルパスを入力（images フォルダに写真をアップロードしてください）</label>
         <input class="form-input ht-image-path" value="${esc((item.image||'').indexOf('data:')===0 ? '' : (item.image||''))}" placeholder="例：images/hotel-3.jpg" style="font-family:monospace;font-size:.76rem">
       </div>
     </div>`;
@@ -2698,8 +2764,6 @@ function makeHotelRow(item={}, idx){
   const pathInput = div.querySelector('.ht-image-path');
   const preview   = div.querySelector('.ht-img-preview');
   const clearBtn  = div.querySelector('.ht-img-clear-btn');
-  const fileInput = div.querySelector('.ht-img-file');
-  const uploadBtn = div.querySelector('.ht-img-upload-btn');
   function setHtImg(data){
     hiddenImg.value = data;
     if (data) {
@@ -2712,16 +2776,7 @@ function makeHotelRow(item={}, idx){
   }
   if (item.image) setHtImg(item.image);
   pathInput.addEventListener('input', () => setHtImg(pathInput.value.trim()));
-  uploadBtn.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', function(){
-    if (!this.files || !this.files[0]) return;
-    const file = this.files[0];
-    if (!file.type.startsWith('image/')) { showToast('画像ファイルを選択してください'); return; }
-    const reader = new FileReader();
-    reader.onload = e => { pathInput.value = ''; setHtImg(e.target.result); showToast('画像を読み込みました。「保存」を押して反映してください。'); };
-    reader.readAsDataURL(file);
-  });
-  clearBtn.addEventListener('click', () => { pathInput.value = ''; setHtImg(''); fileInput.value=''; });
+  clearBtn.addEventListener('click', () => { pathInput.value = ''; setHtImg(''); });
   return div;
 }
 function getHotels(){
@@ -2730,8 +2785,8 @@ function getHotels(){
     name:      row.querySelector('.ht-name')?.value     || '',
     address:   row.querySelector('.ht-address')?.value  || '',
     phone:     row.querySelector('.ht-phone')?.value     || '',
-    checkin:   row.querySelector('.ht-checkin')?.value   || '',
-    checkout:  row.querySelector('.ht-checkout')?.value  || '',
+    checkin:   row.querySelector('.ht-checkin')?.value  ? row.querySelector('.ht-checkin').value + '〜'  : '',
+    checkout:  row.querySelector('.ht-checkout')?.value ? '〜' + row.querySelector('.ht-checkout').value : '',
     desc:      row.querySelector('.ht-desc')?.value      || '',
     url:       row.querySelector('.ht-url')?.value       || '',
     image:     row.querySelector('.ht-image')?.value     || '',
@@ -2863,12 +2918,32 @@ function getVehicles(){
 }
 
 // ── Google Maps URL Converter ────────────────────────────────
+// 埋め込みURLの pb= パラメータ部分だけを厳密に抜き出して、綺麗な埋め込みURLを組み立てる。
+// スタッフが「地図を埋め込む」のiframeコードを丸ごと貼り付けてしまった場合でも、
+// 余分な width= height= style= …></iframe> 等の断片が混ざらないようにするため、
+// 区切り文字（空白・引用符・山括弧なども含む）の手前までしか値を拾わない。
+function extractEmbedPbUrl(url) {
+  const pbMatch = url.match(/[?&!]pb=([^&?#\s"'<>]+)/);
+  return pbMatch ? 'https://www.google.com/maps/embed?pb=' + pbMatch[1] : null;
+}
+function sanitizeMapUrl(raw) {
+  const url = (raw || '').trim();
+  if (!url || !url.includes('google.com/maps/embed')) return url;
+  const clean = extractEmbedPbUrl(url);
+  return clean || url;
+}
 function convertGoogleMapsUrl(raw) {
   const url = raw.trim();
   if (!url) return { ok: false, msg: 'URLを入力してください。' };
 
-  // ① すでに埋め込みURL
+  // ① すでに埋め込みURL → pb=部分だけを抜き出して整形する
+  //    （iframeタグを丸ごと貼り付けてしまい、余分な属性が混ざっているケースにも対応）
   if (url.includes('google.com/maps/embed')) {
+    const clean = extractEmbedPbUrl(url);
+    if (clean) {
+      const wasDirty = clean !== url;
+      return { ok: true, url: clean, msg: wasDirty ? '✓ 余分なタグを取り除いて整形しました。' : '✓ 埋め込みURL（変換不要）' };
+    }
     return { ok: true, url, msg: '✓ 埋め込みURL（変換不要）' };
   }
 
@@ -2879,7 +2954,7 @@ function convertGoogleMapsUrl(raw) {
 
   if (/google\.com\/maps|maps\.google\.com/.test(url)) {
     // ③ pb= パラメーターがある → 直接変換
-    const pbMatch = url.match(/[?&!]pb=([^&?#\s]+)/);
+    const pbMatch = url.match(/[?&!]pb=([^&?#\s"'<>]+)/);
     if (pbMatch) {
       return { ok: true, url: 'https://www.google.com/maps/embed?pb=' + pbMatch[1], msg: '✓ 埋め込みURLに変換しました。' };
     }
@@ -2920,11 +2995,7 @@ function convertGoogleMapsUrl(raw) {
   return { ok: false, msg: 'Google マップのURLを認識できませんでした。\n「共有」→「地図を埋め込む」→ src値をコピーしてください。' };
 }
 
-function tryConvert(inputId, statusId) {
-  const input  = document.getElementById(inputId);
-  const status = document.getElementById(statusId);
-  const result = convertGoogleMapsUrl(input.value);
-
+function applyMapConvertResult(input, status, result) {
   status.style.display = 'block';
   if (result.ok) {
     input.value = result.url;
@@ -2947,13 +3018,35 @@ function tryConvert(inputId, statusId) {
     : '<i class="fa-solid fa-circle-exclamation"></i> ')
     + result.msg;
 }
-
+function tryConvert(inputId, statusId) {
+  const input  = document.getElementById(inputId);
+  const status = document.getElementById(statusId);
+  applyMapConvertResult(input, status, convertGoogleMapsUrl(input.value));
+}
 function clearMapStatus(statusId) {
   const el = document.getElementById(statusId);
   if (!el) return;
   el.style.display = 'none';
   const inputId = statusId === 'meetMapStatus' ? 'f_meetMapUrl' : 'f_endMapUrl';
   document.getElementById(inputId).style.borderColor = '';
+}
+// Day3〜7・行程アイテム・送迎ピックアップなど、動的に増減する行のマップURL欄用：
+// 固定IDを持たないため、ボタン自身のDOM上の位置関係から入力欄・ステータス表示欄を見つけて変換する
+// （HTML側は「.map-url-row」の中に「.js-map-url-input」「.js-map-url-status」を置く決まりにする）
+function tryConvertNear(btn) {
+  const wrap = btn.closest('.map-url-row');
+  if (!wrap) return;
+  const input  = wrap.querySelector('.js-map-url-input');
+  const status = wrap.querySelector('.js-map-url-status');
+  if (!input || !status) return;
+  applyMapConvertResult(input, status, convertGoogleMapsUrl(input.value));
+}
+function clearMapStatusNear(input) {
+  const wrap = input.closest('.map-url-row');
+  if (!wrap) return;
+  const status = wrap.querySelector('.js-map-url-status');
+  if (status) status.style.display = 'none';
+  input.style.borderColor = '';
 }
 
 // ── アイコンプレビュー ────────────────────────────────────────
@@ -2970,7 +3063,7 @@ function buildShuttlePickups(items){
       </div>
       <div class="form-grid-3" style="margin-bottom:10px">
         <div class="form-group"><label class="form-label">場所</label><input class="form-input sp-place" placeholder="小田原駅東口" value="${esc(item.place||'')}"></div>
-        <div class="form-group"><label class="form-label">時刻</label><input class="form-input sp-time" placeholder="8:30" value="${esc(item.time||'')}"></div>
+        <div class="form-group"><label class="form-label">時刻</label><input type="time" step="300" class="form-input sp-time" value="${esc(padTimeStr(item.time))}"></div>
         <div class="form-group"><label class="form-label">補足</label><input class="form-input sp-note" placeholder="改札前集合" value="${esc(item.note||'')}"></div>
       </div>
       <div class="form-group" style="margin-bottom:0">
@@ -3009,7 +3102,7 @@ function getShuttlePickups(){
     place:  row.querySelector('.sp-place')?.value||'',
     time:   row.querySelector('.sp-time')?.value||'',
     note:   row.querySelector('.sp-note')?.value||'',
-    mapUrl: row.querySelector('.sp-mapurl')?.value||''
+    mapUrl: sanitizeMapUrl(row.querySelector('.sp-mapurl')?.value||'')
   })).filter(p=>p.place);
 }
 
@@ -3179,7 +3272,7 @@ let _vehicleCatalogCache;
 function getVehicleCatalogCached(){
   if (_vehicleCatalogCache !== undefined) return _vehicleCatalogCache;
   try {
-    const raw = localStorage.getItem(VEHICLE_CATALOG_KEY);
+    const raw = tourStorageGet(VEHICLE_CATALOG_KEY);
     _vehicleCatalogCache = raw ? JSON.parse(raw) : null;
   } catch (e) { _vehicleCatalogCache = null; }
   return _vehicleCatalogCache;
@@ -3253,8 +3346,8 @@ async function handleVehicleCatalogFile(fileInput){
 
 function writeVehicleCatalog(rows){
   try {
-    localStorage.setItem(VEHICLE_CATALOG_KEY, JSON.stringify(rows));
-    localStorage.setItem(VEHICLE_CATALOG_AT_KEY, new Date().toISOString());
+    tourStorageSet(VEHICLE_CATALOG_KEY, JSON.stringify(rows));
+    tourStorageSet(VEHICLE_CATALOG_AT_KEY, new Date().toISOString());
     _vehicleCatalogCache = rows; // 再パース不要にするため即時反映
     return true;
   } catch (e) {
@@ -3278,7 +3371,7 @@ function renderVehicleCatalogStatus(){
     el.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="color:#9B1B1B"></i> まだ車両カタログが取り込まれていません。';
     return;
   }
-  const at = localStorage.getItem(VEHICLE_CATALOG_AT_KEY);
+  const at = tourStorageGet(VEHICLE_CATALOG_AT_KEY);
   const dateStr = at ? new Date(at).toLocaleString('ja-JP') : '不明';
   el.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#2D6A4F"></i> 取り込み済み：' +
     rows.length + '件（最終取り込み：' + esc(dateStr) + '）';

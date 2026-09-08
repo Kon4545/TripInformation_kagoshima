@@ -249,7 +249,7 @@ document.getElementById('heroChips').innerHTML = [
 // 持ち物チェックリストの達成状況（caution.htmlと同じlocalStorageキー・ci-ii形式で判定）
 function getChecklistCompletion(){
   try {
-    const all = JSON.parse(localStorage.getItem('MTJ_CHECKLIST_STATE_v1') || '{}');
+    const all = JSON.parse(tourStorageGet('MTJ_CHECKLIST_STATE_v1') || '{}');
     const key = (d.basic && d.basic.tourDates) || 'default';
     const state = all[key] || {};
     let total = 0, checked = 0;

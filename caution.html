@@ -547,15 +547,15 @@ function checklistTourKey() {
 }
 function loadCheckState() {
   try {
-    var all = JSON.parse(localStorage.getItem(CHECK_STORAGE_KEY) || '{}');
+    var all = JSON.parse(tourStorageGet(CHECK_STORAGE_KEY) || '{}');
     return all[checklistTourKey()] || {};
   } catch (e) { return {}; }
 }
 function saveCheckState() {
   try {
-    var all = JSON.parse(localStorage.getItem(CHECK_STORAGE_KEY) || '{}');
+    var all = JSON.parse(tourStorageGet(CHECK_STORAGE_KEY) || '{}');
     all[checklistTourKey()] = checkState;
-    localStorage.setItem(CHECK_STORAGE_KEY, JSON.stringify(all));
+    tourStorageSet(CHECK_STORAGE_KEY, JSON.stringify(all));
   } catch (e) {}
 }
 const checkState = loadCheckState();
@@ -842,18 +842,32 @@ function renderFaq() {
   var faqs = d.faq || [];
   if (!faqs.length) return;
   document.getElementById('faqSection').style.display = '';
-  document.getElementById('faqList').innerHTML = faqs.map(function(item) {
-    return '<div style="background:#fff;border:1px solid #E8E2D8;border-radius:12px;padding:18px 20px;margin-bottom:12px">' +
-      '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">' +
+  document.getElementById('faqList').innerHTML = faqs.map(function(item, idx) {
+    return '<div style="background:#fff;border:1px solid #E8E2D8;border-radius:12px;margin-bottom:12px;overflow:hidden">' +
+      '<button type="button" onclick="toggleFaq(' + idx + ')" aria-expanded="false" aria-controls="faqAnswer' + idx + '" ' +
+        'style="width:100%;background:none;border:none;text-align:left;cursor:pointer;padding:18px 20px;display:flex;align-items:flex-start;gap:10px;font:inherit">' +
         '<i class="fa-solid fa-circle-question" style="color:#9e1016;font-size:1.1rem;flex-shrink:0;margin-top:2px"></i>' +
-        '<span style="font-weight:700;color:var(--navy);font-size:.96rem;line-height:1.6">' + esc(item.q) + '</span>' +
-      '</div>' +
-      '<div style="display:flex;align-items:flex-start;gap:10px;padding-left:2px">' +
-        '<i class="fa-solid fa-comment-dots" style="color:var(--text-mid);font-size:1rem;flex-shrink:0;margin-top:3px;margin-left:2px"></i>' +
-        '<span style="color:var(--text-mid);font-size:.92rem;line-height:1.7;white-space:pre-line">' + esc(item.a) + '</span>' +
+        '<span style="font-weight:700;color:var(--navy);font-size:.96rem;line-height:1.6;flex:1">' + esc(item.q) + '</span>' +
+        '<i class="fa-solid fa-chevron-down faq-chev" id="faqChev' + idx + '" style="color:var(--text-mid);font-size:.85rem;flex-shrink:0;margin-top:4px;transition:transform .2s"></i>' +
+      '</button>' +
+      '<div id="faqAnswer' + idx + '" style="display:none;padding:0 20px 18px">' +
+        '<div style="display:flex;align-items:flex-start;gap:10px;padding-left:2px">' +
+          '<i class="fa-solid fa-comment-dots" style="color:var(--text-mid);font-size:1rem;flex-shrink:0;margin-top:3px;margin-left:2px"></i>' +
+          '<span style="color:var(--text-mid);font-size:.92rem;line-height:1.7;white-space:pre-line">' + esc(item.a) + '</span>' +
+        '</div>' +
       '</div>' +
     '</div>';
   }).join('');
+}
+
+function toggleFaq(idx) {
+  var answer = document.getElementById('faqAnswer' + idx);
+  var chev = document.getElementById('faqChev' + idx);
+  var btn = chev.closest('button');
+  var open = answer.style.display !== 'none';
+  answer.style.display = open ? 'none' : 'block';
+  chev.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+  btn.setAttribute('aria-expanded', String(!open));
 }
 
 /* ─────────────────────────────────────────────

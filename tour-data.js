@@ -1,6 +1,6 @@
 // ================================================================
 //  MOTO TOURS JAPAN ── ツアーデータ設定ファイル  tour-data.js
-//  admin.html から生成  2026/9/8 14:30:55
+//  admin.html から生成  2026/9/8 18:27:49
 //  多言語対応: ja / en / zh（繁體中文）
 // ================================================================
 // ※ このファイルはテキストエディタ（メモ帳、VS Code 等）で開いてください。
@@ -97,12 +97,8 @@ const TOUR_DATA = {
     },
     "endTime": {
       "ja": "2026年10月14日（水）17:30 頃",
-      "en": "Apr 12, 2026 (Sun), around 5:00 PM",
-      "zh": "2026年4月12日（日）17:00左右",
-      "_auto": {
-        "en": "Apr 12, 2026 (Sun), around 5:00 PM",
-        "zh": "2026年4月12日（日）17:00左右"
-      }
+      "en": "Oct 14, 2026 (Wed), around 5:30 PM",
+      "zh": "2026年10月14日（三）17:30左右"
     },
     "note": {
       "ja": "集合時間の10分前にはお集まりください。また集合・解散時は鹿児島中央駅から集合・解散場所までの送迎がございます。",
@@ -113,8 +109,8 @@ const TOUR_DATA = {
         "zh": "請於集合時間前10分鐘到達。解散時將提供從Bikers Paradise南箱根至小田原車站的接送服務。"
       }
     },
-    "meetMapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8322.180268988799!2d130.5562420681447!3d31.56715250928157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788770987046!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-    "endMapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8322.180268988799!2d130.5562420681447!3d31.56715250928157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-!5e0!3m2!1sja!2sjp!4v1788771001917!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
+    "meetMapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8322.180268988799!2d130.5562420681447!3d31.56715250928157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788770987046!5m2!1sja!2sjp",
+    "endMapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8322.180268988799!2d130.5562420681447!3d31.56715250928157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-!5e0!3m2!1sja!2sjp!4v1788771001917!5m2!1sja!2sjp",
     "meetIcon": "fa-solid fa-flag-checkered",
     "meetIconColor": "#ed1b23",
     "dateIcon": "fa-solid fa-clock",
@@ -165,7 +161,7 @@ const TOUR_DATA = {
               "zh": "小田原車站西口圓環"
             }
           },
-          "time": "9:00",
+          "time": "09:00",
           "note": {
             "ja": "改札口を出て「東口（桜島口）」の表示に従って進みます。観覧車がある商業施設「アミュプラザ鹿児島」側の出口を出ると、目の前が広場です。 付近にて目印を持ったスタッフがお出迎えいたします。",
             "en": "Near the Hojo Soun Statue",
@@ -175,7 +171,7 @@ const TOUR_DATA = {
               "zh": "北條早雲公銅像附近"
             }
           },
-          "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661.50892408639!2d130.5472699914815!3d31.58204829069494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e674f802e0ee3%3A0xcfae6560e3af46c7!2z6bm_5YWQ5bO25Lit5aSu6aeF5p2x5Y-j6aeF5YmN5bqD5aC0IOmAgei_jueUqOmnkOi7iuWgtA!5e0!3m2!1sja!2sjp!4v1788776079849!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\""
+          "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4669.9324506777075!2d130.5469276538502!3d31.581774304484565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e674f802e0ee3%3A0xcfae6560e3af46c7!2z6bm_5YWQ5bO25Lit5aSu6aeF5p2x5Y-j6aeF5YmN5bqD5aC0IOmAgei_jueUqOmnkOi7iuWgtA!5e0!3m2!1sja!2sjp!4v1788777834257!5m2!1sja!2sjp"
         }
       ]
     }
@@ -381,10 +377,10 @@ const TOUR_DATA = {
         "zh": "馳騁箱根群峰"
       }
     },
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d108682.66598841295!2d130.6967377920576!3d31.652099562737114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e590079bd7c7d%3A0x5e985479736522b5!2z44Gq44GO44GV5YWs5ZyS44GC44GE44KJ6aeQ6LuK5aC044CB44CSODk5LTU2NTEg6bm_5YWQ5bO255yM5ae26Imv5biC6ISH5YWD77yR77yU77yZ77yX4oiS77yS!3m2!1d31.7033703!2d130.6183423!4m5!1s0x353ee565d8f97dc3%3A0x619731b86cfa7eb5!2z44Kq44O844Ks44OL44OD44Kv44Os44K544OI44Op44OzSkFT6KqN6Ki85bqX772cIOm7kumFouOBrumDtyDmobflv5fnlLDjgIHjgJI4OTktNDUwMSDpub_lhZDls7bnnIzpnKfls7bluILnpo_lsbHnlLrnpo_lsbHvvJPvvJHvvJHiiJLvvJI!3m2!1d31.6485193!2d130.8224189!4m5!1s0x353e5f860593bd7b%3A0xbe26e8a396967d7b!2z5rmv5LmL5bmz5bGV5pyb5omA44CB44CSODkxLTE0MTgg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO25bCP5rGg55S677yR77yQ77yS77yV!3m2!1d31.591480699999998!2d130.6299912!4m5!1s0x353e5fdee9f1980d%3A0xb7e0b302b59edc4f!2z44CM5Y-r44Gz44Gu6IKW5YOP44CN5aSn5oiQ5rWp44CB44CSODkxLTE0MjAg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO26LWk5rC055S677yT77yW77yS77yZ4oiS77yT!3m2!1d31.5778057!2d130.60274099999998!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!5e0!3m2!1sja!2sjp!4v1788773409450!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d108682.66598841295!2d130.6967377920576!3d31.652099562737114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e590079bd7c7d%3A0x5e985479736522b5!2z44Gq44GO44GV5YWs5ZyS44GC44GE44KJ6aeQ6LuK5aC044CB44CSODk5LTU2NTEg6bm_5YWQ5bO255yM5ae26Imv5biC6ISH5YWD77yR77yU77yZ77yX4oiS77yS!3m2!1d31.7033703!2d130.6183423!4m5!1s0x353ee565d8f97dc3%3A0x619731b86cfa7eb5!2z44Kq44O844Ks44OL44OD44Kv44Os44K544OI44Op44OzSkFT6KqN6Ki85bqX772cIOm7kumFouOBrumDtyDmobflv5fnlLDjgIHjgJI4OTktNDUwMSDpub_lhZDls7bnnIzpnKfls7bluILnpo_lsbHnlLrnpo_lsbHvvJPvvJHvvJHiiJLvvJI!3m2!1d31.6485193!2d130.8224189!4m5!1s0x353e5f860593bd7b%3A0xbe26e8a396967d7b!2z5rmv5LmL5bmz5bGV5pyb5omA44CB44CSODkxLTE0MTgg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO25bCP5rGg55S677yR77yQ77yS77yV!3m2!1d31.591480699999998!2d130.6299912!4m5!1s0x353e5fdee9f1980d%3A0xb7e0b302b59edc4f!2z44CM5Y-r44Gz44Gu6IKW5YOP44CN5aSn5oiQ5rWp44CB44CSODkxLTE0MjAg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO26LWk5rC055S677yT77yW77yS77yZ4oiS77yT!3m2!1d31.5778057!2d130.60274099999998!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!5e0!3m2!1sja!2sjp!4v1788773409450!5m2!1sja!2sjp",
     "items": [
       {
-        "time": "9:30",
+        "time": "09:30",
         "title": {
           "ja": "鹿児島サンロイヤルホテル",
           "en": "Bikers Paradise Minami-Hakone",
@@ -393,11 +389,6 @@ const TOUR_DATA = {
             "en": "Bikers Paradise Minami-Hakone",
             "zh": "Bikers Paradise 南箱根"
           }
-        },
-        "place": {
-          "ja": "集合",
-          "en": "Meeting",
-          "zh": "集合"
         },
         "desc": {
           "ja": "ブリーフィング・レクチャー・着替え・準備運動・車両説明を行います。",
@@ -413,9 +404,7 @@ const TOUR_DATA = {
         "badgeType": "red",
         "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108780.58511066047!2d130.45960966176025!3d31.568261338413247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773513171!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108780.58511066047!2d130.45960966176025!3d31.568261338413247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773513171!5m2!1sja!2sjp"
       },
       {
         "time": "11:45",
@@ -426,15 +415,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Yosegi Marquetry Hamamatsuya",
             "zh": "寄木細工 濱松屋"
-          }
-        },
-        "place": {
-          "ja": "休憩",
-          "en": "Sightseeing / Shopping",
-          "zh": "參觀・購物",
-          "_auto": {
-            "en": "Sightseeing / Shopping",
-            "zh": "參觀・購物"
           }
         },
         "desc": {
@@ -458,10 +438,8 @@ const TOUR_DATA = {
         },
         "badgeType": "",
         "isHighlight": false,
-        "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1999.0830453698015!2d130.61597421818595!3d31.700440924510886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5814693bfee9%3A0xc9fdcdb0507d768b!2z44Gq44GO44GV5YWs5ZyS44GC44GE44KJ!5e0!3m2!1sja!2sjp!4v1788773600461!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "isRestStop": false,
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1999.0830453698015!2d130.61597421818595!3d31.700440924510886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5814693bfee9%3A0xc9fdcdb0507d768b!2z44Gq44GO44GV5YWs5ZyS44GC44GE44KJ!5e0!3m2!1sja!2sjp!4v1788773600461!5m2!1sja!2sjp"
       },
       {
         "time": "13:00",
@@ -474,11 +452,6 @@ const TOUR_DATA = {
             "zh": "箱根小涌園 天悠"
           }
         },
-        "place": {
-          "ja": "ランチ",
-          "en": "Lunch",
-          "zh": "午餐"
-        },
         "desc": {
           "ja": "桜島と壺畑を望む、黒酢の味わいを楽しむ郷",
           "en": "A popular hot spring inn offering views that capture Hakone's four seasons and a soothing, relaxing atmosphere.",
@@ -490,16 +463,18 @@ const TOUR_DATA = {
         },
         "icon": "fa-solid fa-utensils",
         "badge": {
-          "ja": "お店",
+          "ja": "ランチ",
           "en": "Shop",
-          "zh": "商店"
+          "zh": "商店",
+          "_auto": {
+            "en": "Shop",
+            "zh": "商店"
+          }
         },
         "badgeType": "blue",
         "isHighlight": true,
         "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50301.48981399393!2d130.83039943329698!3d31.67385132471522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353ee565d8f97dc3%3A0x619731b86cfa7eb5!2z44Kq44O844Ks44OL44OD44Kv44Os44K544OI44Op44OzSkFT6KqN6Ki85bqX772cIOm7kumFouOBrumDtyDmobflv5fnlLA!5e0!3m2!1sja!2sjp!4v1788773675759!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50301.48981399393!2d130.83039943329698!3d31.67385132471522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353ee565d8f97dc3%3A0x619731b86cfa7eb5!2z44Kq44O844Ks44OL44OD44Kv44Os44K544OI44Op44OzSkFT6KqN6Ki85bqX772cIOm7kumFouOBrumDtyDmobflv5fnlLA!5e0!3m2!1sja!2sjp!4v1788773675759!5m2!1sja!2sjp"
       },
       {
         "time": "15:30",
@@ -510,15 +485,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Hakone Ropeway",
             "zh": "箱根空中纜車"
-          }
-        },
-        "place": {
-          "ja": "展望所",
-          "en": "Sounzan Station",
-          "zh": "早雲山站",
-          "_auto": {
-            "en": "Sounzan Station",
-            "zh": "早雲山站"
           }
         },
         "desc": {
@@ -537,11 +503,9 @@ const TOUR_DATA = {
           "zh": "觀光"
         },
         "badgeType": "gold",
-        "isHighlight": false,
+        "isHighlight": true,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85441.37625239676!2d130.71164851943647!3d31.645198271524293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5f860593bd7b%3A0xbe26e8a396967d7b!2z5rmv5LmL5bmz5bGV5pyb5omA!5e0!3m2!1sja!2sjp!4v1788773735050!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85441.37625239676!2d130.71164851943647!3d31.645198271524293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5f860593bd7b%3A0xbe26e8a396967d7b!2z5rmv5LmL5bmz5bGV5pyb5omA!5e0!3m2!1sja!2sjp!4v1788773735050!5m2!1sja!2sjp"
       },
       {
         "time": "16:20",
@@ -552,15 +516,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Ashinoko Skyline",
             "zh": "蘆之湖天空之路"
-          }
-        },
-        "place": {
-          "ja": "",
-          "en": "Fukara, Susono City, Shizuoka",
-          "zh": "靜岡縣裾野市深良",
-          "_auto": {
-            "en": "Fukara, Susono City, Shizuoka",
-            "zh": "靜岡縣裾野市深良"
           }
         },
         "desc": {
@@ -585,9 +540,7 @@ const TOUR_DATA = {
         "badgeType": "blue",
         "isHighlight": true,
         "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10086.189745369747!2d130.59193824441638!3d31.594908209592436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5fc9e3e17799%3A0x193d963834f63299!2z5qGc5bO25riv!5e0!3m2!1sja!2sjp!4v1788778712595!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10382.037589845228!2d130.59537941845483!3d31.59221441780715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5fc9e3e17799%3A0x193d963834f63299!2z5qGc5bO25riv!5e0!3m2!1sja!2sjp!4v1788859594397!5m2!1sja!2sjp"
       },
       {
         "time": "17:30",
@@ -598,15 +551,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Hotel New Akao",
             "zh": "新熱海大飯店"
-          }
-        },
-        "place": {
-          "ja": "ホテル",
-          "en": "1993-250 Atami, Atami City, Shizuoka",
-          "zh": "靜岡縣熱海市熱海1993-250",
-          "_auto": {
-            "en": "1993-250 Atami, Atami City, Shizuoka",
-            "zh": "靜岡縣熱海市熱海1993-250"
           }
         },
         "desc": {
@@ -625,11 +569,9 @@ const TOUR_DATA = {
           "zh": "住宿"
         },
         "badgeType": "green",
-        "isHighlight": true,
+        "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85451.96502102325!2d130.62608493459842!3d31.633674778062694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773956457!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85451.96502102325!2d130.62608493459842!3d31.633674778062694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773956457!5m2!1sja!2sjp"
       }
     ]
   },
@@ -648,10 +590,10 @@ const TOUR_DATA = {
         "zh": "伊豆天空之路、七瀑迴環橋等豐富騎乘體驗"
       }
     },
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m74!1m12!1m3!1d5468.751442238279!2d130.63613483806566!3d31.21822603605749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m59!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e7af332e79629%3A0xf25154dbbcafba14!2z5oyH5a6_44K544Kr44Kk44Op44Kk44Oz44CB6bm_5YWQ5bO255yM!3m2!1d31.4151253!2d130.4974131!4m5!1s0x353e77ac5b000497%3A0xae858072920b8b52!2z55-l6Kan54m55pS75bmz5ZKM5Lya6aSo44CB44CSODk3LTAzMDIg6bm_5YWQ5bO255yM5Y2X5Lmd5bee5biC55-l6Kan55S66YOh77yR77yX77yY77yY77yR!3m2!1d31.3636111!2d130.43430279999998!4m5!1s0x353e7fe5baaa080d%3A0xf2be52a54be564b9!2z44CSODkxLTAzMTEg6bm_5YWQ5bO255yM5oyH5a6_5biC6KW_5pa577yU77yT77yZ77yT4oiS77yR!3m2!1d31.2715529!2d130.6264345!4m5!1s0x353dd5638dd6f0b7%3A0xb75a69602d60676!2z6buE6YeR44Gu6bOl5bGF44CB44CSODkxLTAzMTIg6bm_5YWQ5bO255yM5oyH5a6_5biC5rGg55Sw77yT77yR77yU77yW4oiS77yY!3m2!1d31.2492193!2d130.5640828!4m5!1s0x353dd17ea6bc44db%3A0x61b0da171cb5350e!2z6ZaL6IGe5bGx6bqT6Ieq54S25YWs5ZyS77yI44OI44Kr44Op6aas54mn5aC077yJ44CB44CSODkxLTA2MDIg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5bed5bC777yW77yX77yU77yT!3m2!1d31.1782851!2d130.55227929999998!4m5!1s0x353dd1462caab6b5%3A0xc86e28c3d6ede2a9!2z5bmz44OQ44Ko44CB44CSODkxLTA2MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5Y2B55S6!3m2!1d31.1655752!2d130.519393!4m3!3m2!1d31.201162099999998!2d130.5218495!4m5!1s0x353dd39257ed7979%3A0x85af626926de99f!2z6KW_5aSn5bGx6aeF44CB44CSODkxLTA1MTQg6bm_5YWQ5bO255yM5oyH5a6_5biC5bGx5bed5aSn5bGx!3m2!1d31.1903059!2d130.5765123!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!5e0!3m2!1sja!2sjp!4v1788774023090!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m74!1m12!1m3!1d5468.751442238279!2d130.63613483806566!3d31.21822603605749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m59!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e7af332e79629%3A0xf25154dbbcafba14!2z5oyH5a6_44K544Kr44Kk44Op44Kk44Oz44CB6bm_5YWQ5bO255yM!3m2!1d31.4151253!2d130.4974131!4m5!1s0x353e77ac5b000497%3A0xae858072920b8b52!2z55-l6Kan54m55pS75bmz5ZKM5Lya6aSo44CB44CSODk3LTAzMDIg6bm_5YWQ5bO255yM5Y2X5Lmd5bee5biC55-l6Kan55S66YOh77yR77yX77yY77yY77yR!3m2!1d31.3636111!2d130.43430279999998!4m5!1s0x353e7fe5baaa080d%3A0xf2be52a54be564b9!2z44CSODkxLTAzMTEg6bm_5YWQ5bO255yM5oyH5a6_5biC6KW_5pa577yU77yT77yZ77yT4oiS77yR!3m2!1d31.2715529!2d130.6264345!4m5!1s0x353dd5638dd6f0b7%3A0xb75a69602d60676!2z6buE6YeR44Gu6bOl5bGF44CB44CSODkxLTAzMTIg6bm_5YWQ5bO255yM5oyH5a6_5biC5rGg55Sw77yT77yR77yU77yW4oiS77yY!3m2!1d31.2492193!2d130.5640828!4m5!1s0x353dd17ea6bc44db%3A0x61b0da171cb5350e!2z6ZaL6IGe5bGx6bqT6Ieq54S25YWs5ZyS77yI44OI44Kr44Op6aas54mn5aC077yJ44CB44CSODkxLTA2MDIg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5bed5bC777yW77yX77yU77yT!3m2!1d31.1782851!2d130.55227929999998!4m5!1s0x353dd1462caab6b5%3A0xc86e28c3d6ede2a9!2z5bmz44OQ44Ko44CB44CSODkxLTA2MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5Y2B55S6!3m2!1d31.1655752!2d130.519393!4m3!3m2!1d31.201162099999998!2d130.5218495!4m5!1s0x353dd39257ed7979%3A0x85af626926de99f!2z6KW_5aSn5bGx6aeF44CB44CSODkxLTA1MTQg6bm_5YWQ5bO255yM5oyH5a6_5biC5bGx5bed5aSn5bGx!3m2!1d31.1903059!2d130.5765123!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!5e0!3m2!1sja!2sjp!4v1788774023090!5m2!1sja!2sjp",
     "items": [
       {
-        "time": "9:00",
+        "time": "09:00",
         "title": {
           "ja": "鹿児島サンロイヤルホテル",
           "en": "Hotel New Akao",
@@ -659,15 +601,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Hotel New Akao",
             "zh": "新熱海大飯店"
-          }
-        },
-        "place": {
-          "ja": "ホテル",
-          "en": "1993-250 Atami, Atami City, Shizuoka",
-          "zh": "靜岡縣熱海市熱海1993-250",
-          "_auto": {
-            "en": "1993-250 Atami, Atami City, Shizuoka",
-            "zh": "靜岡縣熱海市熱海1993-250"
           }
         },
         "desc": {
@@ -688,12 +621,10 @@ const TOUR_DATA = {
         "badgeType": "blue",
         "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85451.96502102325!2d130.62608493459842!3d31.633674778062694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773956457!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85451.96502102325!2d130.62608493459842!3d31.633674778062694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788773956457!5m2!1sja!2sjp"
       },
       {
-        "time": "9:15",
+        "time": "09:15",
         "title": {
           "ja": "指宿スカイライン",
           "en": "Izu Skyline",
@@ -701,15 +632,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Izu Skyline",
             "zh": "伊豆天空之路"
-          }
-        },
-        "place": {
-          "ja": "スカイライン",
-          "en": "Atami Tollgate",
-          "zh": "熱海收費站",
-          "_auto": {
-            "en": "Atami Tollgate",
-            "zh": "熱海收費站"
           }
         },
         "desc": {
@@ -728,11 +650,9 @@ const TOUR_DATA = {
           "zh": "山道"
         },
         "badgeType": "",
-        "isHighlight": false,
+        "isHighlight": true,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52410.17606881633!2d130.5559589915496!3d31.435241293941125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e7af332e79629%3A0xf25154dbbcafba14!2z6bm_5YWQ5bO255yMIOaMh-Wuv-OCueOCq-OCpOODqeOCpOODsw!5e0!3m2!1sja!2sjp!4v1788774141588!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52410.17606881633!2d130.5559589915496!3d31.435241293941125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e7af332e79629%3A0xf25154dbbcafba14!2z6bm_5YWQ5bO255yMIOaMh-Wuv-OCueOCq-OCpOODqeOCpOODsw!5e0!3m2!1sja!2sjp!4v1788774141588!5m2!1sja!2sjp"
       },
       {
         "time": "10:00",
@@ -743,15 +663,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Kameishi Parking Area",
             "zh": "龜石停車場"
-          }
-        },
-        "place": {
-          "ja": "観光",
-          "en": "Rest Stop",
-          "zh": "休息",
-          "_auto": {
-            "en": "Rest Stop",
-            "zh": "休息"
           }
         },
         "desc": {
@@ -776,9 +687,7 @@ const TOUR_DATA = {
         "badgeType": "",
         "isHighlight": true,
         "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54509.31254370088!2d130.3609624250701!3d31.363613968224932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e77ac5b000497%3A0xae858072920b8b52!2z55-l6Kan54m55pS75bmz5ZKM5Lya6aSo!5e0!3m2!1sja!2sjp!4v1788774211230!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54509.31254370088!2d130.3609624250701!3d31.363613968224932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e77ac5b000497%3A0xae858072920b8b52!2z55-l6Kan54m55pS75bmz5ZKM5Lya6aSo!5e0!3m2!1sja!2sjp!4v1788774211230!5m2!1sja!2sjp"
       },
       {
         "time": "12:15",
@@ -789,15 +698,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Unagi & Tororo Kawazen",
             "zh": "鰻魚・山藥泥 川善"
-          }
-        },
-        "place": {
-          "ja": "ランチ",
-          "en": "317 Sekino, Izu City, Shizuoka",
-          "zh": "靜岡縣伊豆市關野317",
-          "_auto": {
-            "en": "317 Sekino, Izu City, Shizuoka",
-            "zh": "靜岡縣伊豆市關野317"
           }
         },
         "desc": {
@@ -811,20 +711,18 @@ const TOUR_DATA = {
         },
         "icon": "fa-solid fa-utensils",
         "badge": {
-          "ja": "昼食",
-          "en": "Lunch",
+          "ja": "ランチ",
+          "en": "lunch",
           "zh": "午餐",
           "_auto": {
-            "en": "Lunch",
+            "en": "lunch",
             "zh": "午餐"
           }
         },
         "badgeType": "blue",
-        "isHighlight": true,
+        "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4255.436690582661!2d130.62782824733654!3d31.27015849756702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e7fe5baa83bb5%3A0x88d3c9efd66cc7bb!2z5L-h5bee5bq1!5e0!3m2!1sja!2sjp!4v1788774292702!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4255.436690582661!2d130.62782824733654!3d31.27015849756702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e7fe5baa83bb5%3A0x88d3c9efd66cc7bb!2z5L-h5bee5bq1!5e0!3m2!1sja!2sjp!4v1788774292702!5m2!1sja!2sjp"
       },
       {
         "time": "13:30",
@@ -835,15 +733,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Wasabi Pickling Experience",
             "zh": "山葵漬體驗"
-          }
-        },
-        "place": {
-          "ja": "池田湖",
-          "en": "Michi-no-Eki Amagi-goe",
-          "zh": "天城越休息站",
-          "_auto": {
-            "en": "Michi-no-Eki Amagi-goe",
-            "zh": "天城越休息站"
           }
         },
         "desc": {
@@ -868,9 +757,7 @@ const TOUR_DATA = {
         "badgeType": "blue",
         "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14179.861542450077!2d130.5695156163115!3d31.247041340284895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353dd5638dd6f0b7%3A0xb75a69602d60676!2z6buE6YeR44Gu6bOl5bGF!5e0!3m2!1sja!2sjp!4v1788774424309!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14179.861542450077!2d130.5695156163115!3d31.247041340284895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353dd5638dd6f0b7%3A0xb75a69602d60676!2z6buE6YeR44Gu6bOl5bGF!5e0!3m2!1sja!2sjp!4v1788774424309!5m2!1sja!2sjp"
       },
       {
         "time": "15:00",
@@ -881,15 +768,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Kawazu Nanadaru Loop Bridge",
             "zh": "河津七瀑迴環橋"
-          }
-        },
-        "place": {
-          "ja": "駅",
-          "en": "Nashimoto, Kawazu, Kamo District, Shizuoka",
-          "zh": "靜岡縣賀茂郡河津町梨本",
-          "_auto": {
-            "en": "Nashimoto, Kawazu, Kamo District, Shizuoka",
-            "zh": "靜岡縣賀茂郡河津町梨本"
           }
         },
         "desc": {
@@ -913,10 +791,8 @@ const TOUR_DATA = {
         },
         "badgeType": "gold",
         "isHighlight": true,
-        "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32154.09993792561!2d130.56261637980396!3d31.20749099306397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353dd39257ed7979%3A0x85af626926de99f!2z6KW_5aSn5bGx6aeF!5e0!3m2!1sja!2sjp!4v1788774553827!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "isRestStop": true,
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32154.09993792561!2d130.56261637980396!3d31.20749099306397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353dd39257ed7979%3A0x85af626926de99f!2z6KW_5aSn5bGx6aeF!5e0!3m2!1sja!2sjp!4v1788774553827!5m2!1sja!2sjp"
       },
       {
         "time": "15:30",
@@ -927,15 +803,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Hotel New Ginsui",
             "zh": "新銀水酒店"
-          }
-        },
-        "place": {
-          "ja": "ホテル",
-          "en": "2977-1 Nishina, Nishi-Izu Town, Kamo District, Shizuoka",
-          "zh": "靜岡縣賀茂郡西伊豆町仁科2977-1",
-          "_auto": {
-            "en": "2977-1 Nishina, Nishi-Izu Town, Kamo District, Shizuoka",
-            "zh": "靜岡縣賀茂郡西伊豆町仁科2977-1"
           }
         },
         "desc": {
@@ -956,9 +823,7 @@ const TOUR_DATA = {
         "badgeType": "green",
         "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32154.09993792561!2d130.56261637980396!3d31.20749099306397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788774599856!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32154.09993792561!2d130.56261637980396!3d31.20749099306397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788774599856!5m2!1sja!2sjp"
       }
     ]
   },
@@ -977,10 +842,10 @@ const TOUR_DATA = {
         "zh": "馳騁西伊豆天空之路，品味駿河灣海鮮"
       }
     },
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m58!1m12!1m3!1d8008.75029191679!2d130.55540033294756!3d31.554202424196607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m43!3e0!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!4m5!1s0x353de7a165a95087%3A0xd5dbb841d672fa4a!2z5p6V5bSO5biC44GL44Gk44GK5YWs56S-IE1ha3VyYXpha2ktc2hpIEthdHN1byBLb3NoYeOAgeOAkjg5OC0wMDI1IOm5v-WFkOWztuecjOaeleW0juW4gueri-elnuacrOeUuu-8k--8lO-8lw!3m2!1d31.269188999999997!2d130.285078!4m5!1s0x353de7a0e65d7f99%3A0x8c455d9bda021050!2z6Jap5pGp6YWS6YCgIOiKsea4oeW3neiSuOa6nOaJgCDmmI7msrvolLXjgIHjgJI4OTgtMDAyNSDpub_lhZDls7bnnIzmnpXltI7luILnq4vnpZ7mnKznlLrvvJLvvJY!3m2!1d31.271608299999997!2d130.28493749999998!4m5!1s0x353e74c3be68bddd%3A0x813e006a68c42052!2z44GG44Gq44GO5bCC6ZaA5bqXIOS4h-OBruOBm-OAgeOAkjg5Ny0wMDAxIOm5v-WFkOWztuecjOWNl-OBleOBpOOBvuW4guWKoOS4lueUsOadkeWOn--8lOS4geebru-8ke-8kOKIku-8mQ!3m2!1d31.4173473!2d130.3322495!4m5!1s0x353e5e5eeede7ee1%3A0x596ea6c552fa083f!2z5LuZ5beM5ZyS44CB44CSODkyLTA4NzEg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5ZCJ6YeO55S677yZ77yX77yQ77yQ4oiS77yR!3m2!1d31.6174149!2d130.5771969!4m5!1s0x353e60c854ba5487%3A0xd6d4b35668fe339b!2z44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yV4oiS77yS77yZIO-8pe-8ru-8pe-8r--8s-OCu-ODq-ODleS4juasoemDju-8s--8sw!3m2!1d31.567544299999998!2d130.5610814!4m5!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yS5LiB55uu77yU4oiS77yS77yV!3m2!1d31.561762899999998!2d130.5630913!5e0!3m2!1sja!2sjp!4v1788774653882!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m58!1m12!1m3!1d8008.75029191679!2d130.55540033294756!3d31.554202424196607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m43!3e0!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!4m5!1s0x353de7a165a95087%3A0xd5dbb841d672fa4a!2z5p6V5bSO5biC44GL44Gk44GK5YWs56S-IE1ha3VyYXpha2ktc2hpIEthdHN1byBLb3NoYeOAgeOAkjg5OC0wMDI1IOm5v-WFkOWztuecjOaeleW0juW4gueri-elnuacrOeUuu-8k--8lO-8lw!3m2!1d31.269188999999997!2d130.285078!4m5!1s0x353de7a0e65d7f99%3A0x8c455d9bda021050!2z6Jap5pGp6YWS6YCgIOiKsea4oeW3neiSuOa6nOaJgCDmmI7msrvolLXjgIHjgJI4OTgtMDAyNSDpub_lhZDls7bnnIzmnpXltI7luILnq4vnpZ7mnKznlLrvvJLvvJY!3m2!1d31.271608299999997!2d130.28493749999998!4m5!1s0x353e74c3be68bddd%3A0x813e006a68c42052!2z44GG44Gq44GO5bCC6ZaA5bqXIOS4h-OBruOBm-OAgeOAkjg5Ny0wMDAxIOm5v-WFkOWztuecjOWNl-OBleOBpOOBvuW4guWKoOS4lueUsOadkeWOn--8lOS4geebru-8ke-8kOKIku-8mQ!3m2!1d31.4173473!2d130.3322495!4m5!1s0x353e5e5eeede7ee1%3A0x596ea6c552fa083f!2z5LuZ5beM5ZyS44CB44CSODkyLTA4NzEg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5ZCJ6YeO55S677yZ77yX77yQ77yQ4oiS77yR!3m2!1d31.6174149!2d130.5771969!4m5!1s0x353e60c854ba5487%3A0xd6d4b35668fe339b!2z44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yV4oiS77yS77yZIO-8pe-8ru-8pe-8r--8s-OCu-ODq-ODleS4juasoemDju-8s--8sw!3m2!1d31.567544299999998!2d130.5610814!4m5!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yS5LiB55uu77yU4oiS77yS77yV!3m2!1d31.561762899999998!2d130.5630913!5e0!3m2!1sja!2sjp!4v1788774653882!5m2!1sja!2sjp",
     "items": [
       {
-        "time": "9:00",
+        "time": "09:00",
         "title": {
           "ja": "指宿ロイヤルホテル",
           "en": "Hotel New Ginsui",
@@ -988,15 +853,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Hotel New Ginsui",
             "zh": "新銀水酒店"
-          }
-        },
-        "place": {
-          "ja": "ホテル",
-          "en": "2977-1 Nishina, Nishi-Izu Town, Kamo District, Shizuoka",
-          "zh": "靜岡縣賀茂郡西伊豆町仁科2977-1",
-          "_auto": {
-            "en": "2977-1 Nishina, Nishi-Izu Town, Kamo District, Shizuoka",
-            "zh": "靜岡縣賀茂郡西伊豆町仁科2977-1"
           }
         },
         "desc": {
@@ -1017,9 +873,7 @@ const TOUR_DATA = {
         "badgeType": "blue",
         "isHighlight": false,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.9267371123!2d130.67686554664292!3d31.32907934998575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788774694340!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.9267371123!2d130.67686554664292!3d31.32907934998575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or!5e0!3m2!1sja!2sjp!4v1788774694340!5m2!1sja!2sjp"
       },
       {
         "time": "10:15",
@@ -1030,15 +884,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Nishi-Amagi Highland Pasture House",
             "zh": "西天城高原牧場之家"
-          }
-        },
-        "place": {
-          "ja": "酒蔵",
-          "en": "3609-1 Ukusu, Nishi-Izu Town, Kamo District, Shizuoka",
-          "zh": "靜岡縣賀茂郡西伊豆町宇久須3609-1",
-          "_auto": {
-            "en": "3609-1 Ukusu, Nishi-Izu Town, Kamo District, Shizuoka",
-            "zh": "靜岡縣賀茂郡西伊豆町宇久須3609-1"
           }
         },
         "desc": {
@@ -1063,9 +908,7 @@ const TOUR_DATA = {
         "badgeType": "red",
         "isHighlight": true,
         "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21033.95040170941!2d130.30248879307334!3d31.280723507399152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353de7a0e65d7f99%3A0x8c455d9bda021050!2z6Jap5pGp6YWS6YCgIOiKsea4oeW3neiSuOa6nOaJgCDmmI7msrvolLU!5e0!3m2!1sja!2sjp!4v1788774796987!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21033.95040170941!2d130.30248879307334!3d31.280723507399152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353de7a0e65d7f99%3A0x8c455d9bda021050!2z6Jap5pGp6YWS6YCgIOiKsea4oeW3neiSuOa6nOaJgCDmmI7msrvolLU!5e0!3m2!1sja!2sjp!4v1788774796987!5m2!1sja!2sjp"
       },
       {
         "time": "11:30",
@@ -1076,15 +919,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Nishi-Izu Skyline",
             "zh": "西伊豆天空之路"
-          }
-        },
-        "place": {
-          "ja": "ランチ",
-          "en": "lunch",
-          "zh": "午餐",
-          "_auto": {
-            "en": "lunch",
-            "zh": "午餐"
           }
         },
         "desc": {
@@ -1098,20 +932,18 @@ const TOUR_DATA = {
         },
         "icon": "fa-solid fa-utensils",
         "badge": {
-          "ja": "昼食",
-          "en": "Mountain Pass",
-          "zh": "山道",
+          "ja": "ランチ",
+          "en": "lunch",
+          "zh": "午餐",
           "_auto": {
-            "en": "Mountain Pass",
-            "zh": "山道"
+            "en": "lunch",
+            "zh": "午餐"
           }
         },
         "badgeType": "",
-        "isHighlight": false,
+        "isHighlight": true,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57762.49725355855!2d130.34249295229245!3d31.340789180100384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e74c3be68bddd%3A0x813e006a68c42052!2z44GG44Gq44GO5bCC6ZaA5bqXIOS4h-OBruOBmw!5e0!3m2!1sja!2sjp!4v1788774920139!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57762.49725355855!2d130.34249295229245!3d31.340789180100384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e74c3be68bddd%3A0x813e006a68c42052!2z44GG44Gq44GO5bCC6ZaA5bqXIOS4h-OBruOBmw!5e0!3m2!1sja!2sjp!4v1788774920139!5m2!1sja!2sjp"
       },
       {
         "time": "14:00",
@@ -1122,15 +954,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Daruma-yama Highland Observatory",
             "zh": "達摩山高原展望台"
-          }
-        },
-        "place": {
-          "ja": "観光",
-          "en": "Osawa, Izu City, Shizuoka",
-          "zh": "靜岡縣伊豆市大澤",
-          "_auto": {
-            "en": "Osawa, Izu City, Shizuoka",
-            "zh": "靜岡縣伊豆市大澤"
           }
         },
         "desc": {
@@ -1155,9 +978,7 @@ const TOUR_DATA = {
         "badgeType": "blue",
         "isHighlight": true,
         "isRestStop": true,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32332.91911280419!2d130.5313615219885!3d31.58715193115059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5e5eeede7ee1%3A0x596ea6c552fa083f!2z5LuZ5beM5ZyS!5e0!3m2!1sja!2sjp!4v1788774992537!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32332.91911280419!2d130.5313615219885!3d31.58715193115059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e5e5eeede7ee1%3A0x596ea6c552fa083f!2z5LuZ5beM5ZyS!5e0!3m2!1sja!2sjp!4v1788774992537!5m2!1sja!2sjp"
       },
       {
         "time": "16:00",
@@ -1168,15 +989,6 @@ const TOUR_DATA = {
           "_auto": {
             "en": "Uogashi Maruten Minato-ten",
             "zh": "魚河岸丸天 港店"
-          }
-        },
-        "place": {
-          "ja": "ホテル",
-          "en": "100-1 Sembonkocho, Numazu City, Shizuoka",
-          "zh": "靜岡縣沼津市千本港町100-1",
-          "_auto": {
-            "en": "100-1 Sembonkocho, Numazu City, Shizuoka",
-            "zh": "靜岡縣沼津市千本港町100-1"
           }
         },
         "desc": {
@@ -1199,11 +1011,9 @@ const TOUR_DATA = {
           }
         },
         "badgeType": "",
-        "isHighlight": false,
+        "isHighlight": true,
         "isRestStop": false,
-        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6605.373260574025!2d130.5569442379516!3d31.56293527907609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-!5e0!3m2!1sja!2sjp!4v1788775052005!5m2!1sja!2sjp\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"",
-        "elevation": null,
-        "distanceFromPrev": null
+        "streetViewUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6605.373260574025!2d130.5569442379516!3d31.56293527907609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-!5e0!3m2!1sja!2sjp!4v1788775052005!5m2!1sja!2sjp"
       }
     ]
   },
@@ -1618,10 +1428,10 @@ const TOUR_DATA = {
       "content": {
         "ja": "朝晩と日中の寒暖差が大きい可能性がございます。調整しやすい服装でお越しください。\n10月12日～14日 鹿児島エリアの最高気温：22℃ /最低気温：15℃ ※予報9/26現在\nライディング中は天候にもよりますが、走行中実際の気温より体感温度が低くなります。重ね着で温度調整できる服装をお勧めいたします。",
         "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
-        "zh": "早晚與日間溫差可能較大。尤其是箱根、伊豆地區海拔較高處氣溫偏低，建議穿著可隨時調整的服裝。\n4月10日至12日伊豆地區預測：最高氣溫16℃／最低氣溫7℃（3/25預測時點）\n騎乘時依天氣狀況，實際體感溫度可能比氣溫更低，建議以洋蔥式穿搭調節體溫。",
+        "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 22°C/最低溫度： 15°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。",
         "_auto": {
           "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
-          "zh": "早晚與日間溫差可能較大。尤其是箱根、伊豆地區海拔較高處氣溫偏低，建議穿著可隨時調整的服裝。\n4月10日至12日伊豆地區預測：最高氣溫16℃／最低氣溫7℃（3/25預測時點）\n騎乘時依天氣狀況，實際體感溫度可能比氣溫更低，建議以洋蔥式穿搭調節體溫。"
+          "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 22°C/最低溫度： 15°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。"
         }
       }
     },
@@ -2505,9 +2315,44 @@ function resolveLang(node, lang) {
   return node;
 }
 
+// ── ブラウザ保存データの名前空間分離 ──────────────────────────────
+// このしおりを複製して複数ツアー分を同じドメイン配下（例：username.github.io/ツアーA/、
+// username.github.io/ツアーB/）で公開した場合、localStorageはドメイン単位でしか区別されず
+// URLのパスでは区別されないため、何も対策しないと別ツアーの一時保存データと混ざってしまう。
+// そのため、保存キーの先頭に「そのページが置かれているフォルダのパス」を付与して区別する。
+function tourStorageNS() {
+  try { return location.pathname.replace(/\/[^\/]*$/, ''); } catch (e) { return ''; }
+}
+function tourStorageGet(baseKey) {
+  try {
+    var nsKey = tourStorageNS() + '::' + baseKey;
+    var v = localStorage.getItem(nsKey);
+    if (v !== null) return v;
+    // 名前空間分離前の旧データが残っていれば、このツアー用として一度だけ引き継いでから旧キーを削除する。
+    // 旧キーは全ツアーで共有されてしまうため、読み取るだけで残したままにすると
+    // 別のツアーがあとから同じ旧データを引き継いでしまい、結局ツアー間で混ざる原因になる。
+    var legacy = localStorage.getItem(baseKey);
+    if (legacy !== null) {
+      localStorage.setItem(nsKey, legacy);
+      localStorage.removeItem(baseKey);
+      return legacy;
+    }
+    return null;
+  } catch (e) { return null; }
+}
+function tourStorageSet(baseKey, value) {
+  try { localStorage.setItem(tourStorageNS() + '::' + baseKey, value); } catch (e) {}
+}
+function tourStorageRemove(baseKey) {
+  try {
+    localStorage.removeItem(tourStorageNS() + '::' + baseKey);
+    localStorage.removeItem(baseKey); // 旧キーが残っていれば併せて削除
+  } catch (e) {}
+}
+
 function getCurrentLang() {
   try {
-    var l = localStorage.getItem('TOUR_LANG');
+    var l = tourStorageGet('TOUR_LANG');
     if (l === 'en' || l === 'zh') return l;
   } catch (e) {}
   return 'ja';
@@ -2515,7 +2360,7 @@ function getCurrentLang() {
 
 function getRawData() {
   try {
-    var override = localStorage.getItem('TOUR_DATA_RAW_OVERRIDE');
+    var override = tourStorageGet('TOUR_DATA_RAW_OVERRIDE');
     if (override) return JSON.parse(override);
   } catch (e) {}
   return TOUR_DATA;

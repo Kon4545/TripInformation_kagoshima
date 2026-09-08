@@ -734,7 +734,6 @@ body.ticket-modal-lock { overflow: hidden; }
 /* ── 休憩ポイント（isRestStop） ─────────────────────────────── */
 .tl-item.reststop::before { background: #1B4B8F; border-color: #1B4B8F; box-shadow: 0 0 0 3px rgba(27,75,143,.15); }
 .tl-item.reststop .tl-card { border-left: 3px solid #1B4B8F; }
-.tl-reststop-tag { display: inline-flex; align-items: center; gap: 4px; font-size: .7rem; font-weight: 700; color: #1B4B8F; background: #DBEAFE; padding: 2px 9px; border-radius: 99px; }
 /* ── ストリートビュー プレビュー ─────────────────────────────── */
 .tl-streetview-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; background: #EFF3FA; color: #2C3E6B; border: 1px solid #C7D3E8; border-radius: 8px; font-size: .78rem; font-weight: 700; cursor: pointer; transition: background var(--t); }
 .tl-streetview-btn:hover { background: #E1E9F7; }

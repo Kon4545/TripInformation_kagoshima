@@ -118,15 +118,10 @@ const UI_DICT = {
     'route.tableTitle': '全体行程表',
     'route.detailTitle': '詳細行程',
     'route.detailTimeline': '行程詳細',
-    'route.restStop': '休憩ポイント',
     'route.streetViewPreview': 'プレビューを見る',
     'route.streetViewClose': 'プレビューを閉じる',
     'route.detailMap': '訪問スポット マップ',
     'route.spots': 'スポット',
-    'route.elevationTitle': '距離・標高プロファイル',
-    'route.totalDistance': '総走行距離',
-    'route.totalAscent': '獲得標高',
-    'route.maxElevation': '最高地点',
     'highlights.title': 'ツアーハイライト',
     'hotels.title': '宿泊施設情報',
     'hotel.checkin': 'チェックイン：',
@@ -292,15 +287,10 @@ const UI_DICT = {
     'route.tableTitle': 'Full Itinerary Table',
     'route.detailTitle': 'Detailed Itinerary',
     'route.detailTimeline': 'Detailed Timeline',
-    'route.restStop': 'Rest Stop',
     'route.streetViewPreview': 'Preview',
     'route.streetViewClose': 'Close Preview',
     'route.detailMap': 'Visited Spots Map',
     'route.spots': 'spots',
-    'route.elevationTitle': 'Distance & elevation profile',
-    'route.totalDistance': 'Total distance',
-    'route.totalAscent': 'Total ascent',
-    'route.maxElevation': 'Highest point',
     'highlights.title': 'Tour Highlights',
     'hotels.title': 'Accommodation Information',
     'hotel.checkin': 'Check-in: ',
@@ -466,15 +456,10 @@ const UI_DICT = {
     'route.tableTitle': '全程行程表',
     'route.detailTitle': '詳細行程',
     'route.detailTimeline': '詳細時間表',
-    'route.restStop': '休息點',
     'route.streetViewPreview': '查看預覽',
     'route.streetViewClose': '關閉預覽',
     'route.detailMap': '景點地圖',
     'route.spots': '個景點',
-    'route.elevationTitle': '距離與海拔剖面',
-    'route.totalDistance': '總騎乘距離',
-    'route.totalAscent': '總爬升',
-    'route.maxElevation': '最高點',
     'highlights.title': '行程精彩亮點',
     'hotels.title': '住宿資訊',
     'hotel.checkin': '入住時間：',
@@ -529,14 +514,17 @@ const UI_DICT = {
 
 function getCurrentLang(){
   try {
-    const l = localStorage.getItem('TOUR_LANG');
+    const l = (typeof tourStorageGet === 'function') ? tourStorageGet('TOUR_LANG') : localStorage.getItem('TOUR_LANG');
     if (l === 'en' || l === 'zh') return l;
   } catch(e){}
   return 'ja';
 }
 
 function setLang(lang){
-  try { localStorage.setItem('TOUR_LANG', lang); } catch(e){}
+  try {
+    if (typeof tourStorageSet === 'function') tourStorageSet('TOUR_LANG', lang);
+    else localStorage.setItem('TOUR_LANG', lang);
+  } catch(e){}
   location.reload();
 }
 
