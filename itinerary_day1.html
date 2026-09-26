@@ -36,7 +36,7 @@
 </header>
 
 <div class="page-banner" id="pageBanner">
-  <h1><i class="fa-solid fa-torii-gate"></i> Day 1 <span data-i18n="route.detailTitle">詳細行程</span></h1>
+  <h1><i id="dayHeadIcon" class="fa-solid fa-torii-gate"></i> Day 1 <span data-i18n="route.detailTitle">詳細行程</span></h1>
   <p id="bannerSub">—</p>
 </div>
 
@@ -79,6 +79,7 @@ if (!d.postTour || !d.postTour.enabled) {
   });
 }
 const day = d.day1;
+if (day && day.icon) document.getElementById('dayHeadIcon').className = day.icon;
 const BADGE = {red:'badge-red',blue:'badge-blue',green:'badge-green',gold:'badge-gold'};
 const DAY_NUM = 1;
 // ツアーによって日数が異なるため、実際に存在する day1, day2... の数を数える

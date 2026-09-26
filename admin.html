@@ -484,6 +484,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
         <div class="form-grid" style="margin-bottom:20px">
           <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_day1Date" class="form-input"></div>
           <div class="form-group"><label class="form-label">テーマ</label><input id="f_day1Theme" class="form-input"></div>
+          <div class="form-group"><label class="form-label">アイコン（詳細行程の見出しに表示）</label><span id="f_day1Icon_container"></span></div>
           <div class="form-group map-url-row" style="grid-column:1/-1">
             <label class="form-label">Google Maps 埋め込みURL</label>
             <div style="display:flex;gap:8px;align-items:stretch">
@@ -504,6 +505,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
         <div class="form-grid" style="margin-bottom:20px">
           <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_day2Date" class="form-input"></div>
           <div class="form-group"><label class="form-label">テーマ</label><input id="f_day2Theme" class="form-input"></div>
+          <div class="form-group"><label class="form-label">アイコン（詳細行程の見出しに表示）</label><span id="f_day2Icon_container"></span></div>
           <div class="form-group map-url-row" style="grid-column:1/-1">
             <label class="form-label">Google Maps 埋め込みURL</label>
             <div style="display:flex;gap:8px;align-items:stretch">
@@ -601,6 +603,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
       <!-- ── グッズ ── -->
       <div id="tab-goods" class="tab-panel">
         <div class="panel-title"><i class="fa-solid fa-bag-shopping"></i> オリジナルグッズ</div>
+        <div class="form-group"><label class="form-label">案内文（見出しの下に表示・任意）</label><textarea id="f_goodsNote" class="form-textarea" style="min-height:60px" placeholder="例：ご購入ご希望の方は事前にメールにてお申し出ください。"></textarea></div>
         <div id="goodsList"></div>
         <button class="btn-add" onclick="addGoodsItem()"><i class="fa-solid fa-plus"></i> グッズ追加</button>
       </div>
@@ -1173,11 +1176,13 @@ function initForms(){
   // Day1
   set('f_day1Date',  extractISOFromJaDate(raw.day1 && raw.day1.date && raw.day1.date.ja));
   set('f_day1Theme', d.day1.theme);
+  setDayIcon(1, d.day1.icon);
   set('f_day1Map',   d.day1.mapEmbed);
   buildSchedItems('day1Items', d.day1.items, 'day1');
   // Day2
   set('f_day2Date',  extractISOFromJaDate(raw.day2 && raw.day2.date && raw.day2.date.ja));
   set('f_day2Theme', d.day2.theme);
+  setDayIcon(2, d.day2.icon);
   set('f_day2Map',   d.day2.mapEmbed);
   buildSchedItems('day2Items', d.day2.items, 'day2');
   // Day3以降（データが存在する分だけ復元。Day3も含めて追加・削除できる）
@@ -1191,6 +1196,7 @@ function initForms(){
     addDayPanelDOM(n);
     set('f_day' + n + 'Date',  extractISOFromJaDate(rawDayData && rawDayData.date && rawDayData.date.ja));
     set('f_day' + n + 'Theme', dayData.theme);
+    setDayIcon(n, dayData.icon);
     set('f_day' + n + 'Map',   dayData.mapEmbed);
     buildSchedItems('day' + n + 'Items', dayData.items || [], 'day' + n);
   }
@@ -1219,6 +1225,7 @@ function initForms(){
   set('f_emgAlert',   d.emergency.alert || '');
   buildEmgSteps(d.emergency.steps);
   // Goods
+  set('f_goodsNote', d.goodsNote || '');
   buildGoods(d.goods);
   // Company
   set('f_coName',     d.company.name);
@@ -1403,6 +1410,17 @@ function getSchedItems(containerId){
 const MIN_TOUR_DAYS = 2;
 const MAX_TOUR_DAYS = 7;
 const EXTRA_DAY_ICONS = {3:'fa-solid fa-moon', 4:'fa-solid fa-cloud-sun', 5:'fa-solid fa-mountain-sun', 6:'fa-solid fa-water', 7:'fa-solid fa-campground'};
+// 詳細行程（route.html）の日付見出しに使うアイコン。未設定の日はこの既定値を使う（route.html の DEFAULT_DAY_ICONS と同じ並び）。
+const DEFAULT_DAY_ICONS = ['fa-solid fa-torii-gate', 'fa-solid fa-utensils', 'fa-solid fa-paw', 'fa-solid fa-cloud-sun', 'fa-solid fa-mountain-sun', 'fa-solid fa-water', 'fa-solid fa-campground'];
+function defaultDayIcon(n){ return DEFAULT_DAY_ICONS[(n - 1) % DEFAULT_DAY_ICONS.length]; }
+function setDayIcon(n, val){
+  const c = document.getElementById('f_day' + n + 'Icon_container');
+  if (c) c.innerHTML = iconFieldHtmlById('f_day' + n + 'Icon', val || defaultDayIcon(n));
+}
+function getDayIcon(n){
+  const el = document.getElementById('f_day' + n + 'Icon');
+  return (el && el.value) || defaultDayIcon(n);
+}
 
 function extraDayCount(){ return document.querySelectorAll('#extraDayPanels .tab-panel').length; }
 
@@ -1430,6 +1448,7 @@ function addDayPanelDOM(n){
     <div class="form-grid" style="margin-bottom:20px">
       <div class="form-group"><label class="form-label">日付</label><input type="date" id="f_${key}Date" class="form-input"></div>
       <div class="form-group"><label class="form-label">テーマ</label><input id="f_${key}Theme" class="form-input"></div>
+      <div class="form-group"><label class="form-label">アイコン（詳細行程の見出しに表示）</label><span id="f_${key}Icon_container"></span></div>
       <div class="form-group map-url-row" style="grid-column:1/-1">
         <label class="form-label">Google Maps 埋め込みURL</label>
         <div style="display:flex;gap:8px;align-items:stretch">
@@ -1443,6 +1462,7 @@ function addDayPanelDOM(n){
     <div id="${key}Items"></div>
     <button class="btn-add" onclick="addSchedItem('${key}Items','${key}')"><i class="fa-solid fa-plus"></i> アイテム追加</button>`;
   document.getElementById('extraDayPanels').appendChild(panel);
+  setDayIcon(n);
 
   const addBtn = document.getElementById('addDayNavBtn');
   if (addBtn) addBtn.style.display = (MIN_TOUR_DAYS + 1 + extraDayCount() > MAX_TOUR_DAYS) ? 'none' : '';
@@ -2267,15 +2287,15 @@ function collectData(){
   d.includes = getSimpleList('includesList');
   d.excludes = getSimpleList('excludesList');
   const _day1DateIso = g('f_day1Date');
-  d.day1 = { date:_day1DateIso ? formatDateAllLangs(_day1DateIso) : d.day1.date, theme:g('f_day1Theme'), mapEmbed:sanitizeMapUrl(g('f_day1Map')), items:getSchedItems('day1Items') };
+  d.day1 = { date:_day1DateIso ? formatDateAllLangs(_day1DateIso) : d.day1.date, theme:g('f_day1Theme'), icon:getDayIcon(1), mapEmbed:sanitizeMapUrl(g('f_day1Map')), items:getSchedItems('day1Items') };
   const _day2DateIso = g('f_day2Date');
-  d.day2 = { date:_day2DateIso ? formatDateAllLangs(_day2DateIso) : d.day2.date, theme:g('f_day2Theme'), mapEmbed:sanitizeMapUrl(g('f_day2Map')), items:getSchedItems('day2Items') };
+  d.day2 = { date:_day2DateIso ? formatDateAllLangs(_day2DateIso) : d.day2.date, theme:g('f_day2Theme'), icon:getDayIcon(2), mapEmbed:sanitizeMapUrl(g('f_day2Map')), items:getSchedItems('day2Items') };
   for (let n = MIN_TOUR_DAYS + 1; n <= MAX_TOUR_DAYS; n++) {
     const key = 'day' + n;
     if (!document.getElementById('tab-' + key)) { delete d[key]; continue; }
     const _dayNDateIso = g('f_'+key+'Date');
     const _dayNDateFallback = d[key] ? d[key].date : '';
-    d[key] = { date:_dayNDateIso ? formatDateAllLangs(_dayNDateIso) : _dayNDateFallback, theme:g('f_'+key+'Theme'), mapEmbed:sanitizeMapUrl(g('f_'+key+'Map')), items:getSchedItems(key+'Items') };
+    d[key] = { date:_dayNDateIso ? formatDateAllLangs(_dayNDateIso) : _dayNDateFallback, theme:g('f_'+key+'Theme'), icon:getDayIcon(n), mapEmbed:sanitizeMapUrl(g('f_'+key+'Map')), items:getSchedItems(key+'Items') };
   }
   const hotelsArr = getHotels();
   d.hotels = hotelsArr;
@@ -2289,6 +2309,7 @@ function collectData(){
   d.tips = getTips();
   d.emergency = { companyPhone:g('f_emgPhone'), companyHours:g('f_emgHours'), companyAddress:g('f_emgAddress'), companyEmail:g('f_emgEmail'), alert:g('f_emgAlert'), steps:getEmgSteps(), others:getEmgOthers() };
   d.goods = getGoods();
+  d.goodsNote = g('f_goodsNote');
   d.company = { name:g('f_coName'), nameEn:g('f_coNameEn'), address:g('f_coAddress'), phone:g('f_coPhone'), fax:g('f_coFax'), hours:g('f_coHours'), email:g('f_coEmail'), registration:g('f_coReg'), association:g('f_coAssoc') };
   d.survey = { url:g('pt_surveyUrl'), title:g('pt_surveyTitle'), desc:g('pt_surveyDesc'), mapReviewUrl:g('pt_mapReviewUrl') };
   d.postTour = {

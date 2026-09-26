@@ -223,8 +223,10 @@ ul { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   .hero-bg-layer { animation: none; }
 }
-/* 背景画像設定時：コンテンツを前面に */
-.hero.has-bg-img > * { position: relative; z-index: 3; }
+/* 背景画像設定時：コンテンツを前面に（背景レイヤー自身は対象外にしないと、
+   position:absolute が position:relative に上書きされて高さ0に潰れ、
+   背景画像・オーバーレイが表示されなくなる） */
+.hero.has-bg-img > *:not(.hero-bg-parallax):not(.hero-bg-overlay) { position: relative; z-index: 3; }
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;

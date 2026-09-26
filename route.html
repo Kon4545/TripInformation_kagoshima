@@ -230,7 +230,7 @@ document.getElementById('dayPanels').innerHTML = DAY_KEYS.map((key, idx) => {
   const num = idx + 1;
   const day = d[key];
   const gradient = DAY_GRADIENTS[idx % DAY_GRADIENTS.length];
-  const icon = DAY_ICONS[idx % DAY_ICONS.length];
+  const icon = day.icon || DAY_ICONS[idx % DAY_ICONS.length];
   return `<div id="dayPanel${num}" style="${idx===0?'':'display:none'}">
     <div class="day-strip" style="background:${gradient}">
       <h2><i class="${icon}"></i> Day ${num} — ${esc(day.theme)}</h2>

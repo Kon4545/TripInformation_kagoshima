@@ -484,6 +484,7 @@
       <p class="section-eyebrow">ORIGINAL GOODS</p>
       <h2 class="section-title" data-i18n="goods.title">オリジナルグッズ</h2>
       <p class="section-subtitle" data-i18n="goods.subtitle">旅の記念にMOTO TOURS JAPANオリジナルグッズはいかがでしょうか</p>
+      <p class="section-subtitle" id="goodsNoteText" style="display:none"></p>
     </div>
     <div class="goods-grid" id="goodsGrid"></div>
   </div>
@@ -597,6 +598,8 @@ function badgeHtml(text, type) {
 ───────────────────────────────────────────── */
 function renderGoods() {
   var d = getData();
+  var noteEl = document.getElementById('goodsNoteText');
+  if (d.goodsNote && noteEl) { noteEl.textContent = d.goodsNote; noteEl.style.display = ''; }
   if (!d.goods || !d.goods.length) return;
 
   var html = '';

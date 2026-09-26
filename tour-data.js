@@ -1,6 +1,6 @@
 // ================================================================
 //  MOTO TOURS JAPAN ── ツアーデータ設定ファイル  tour-data.js
-//  admin.html から生成  2026/9/9 10:04:43
+//  admin.html から生成  2026/9/27 5:21:46
 //  多言語対応: ja / en / zh（繁體中文）
 // ================================================================
 // ※ このファイルはテキストエディタ（メモ帳、VS Code 等）で開いてください。
@@ -183,16 +183,16 @@ const TOUR_DATA = {
       "en": "Tour Guide / MOTO TOURS JAPAN Attendant Staff",
       "zh": "隨團領隊 / MOTO TOURS JAPAN 隨團人員"
     },
-    "phone": "050-1742-3855",
-    "email": "inquiry@mototoursjapan.com",
-    "lineId": "@638nrfza",
+    "phone": "090-9825-3632",
+    "email": "",
+    "lineId": "",
     "greeting": {
-      "ja": "お客様へ\n\nこの度は、「HondaGO TOUR in 鹿児島」にご参加いただき誠にありがとうございます。\n\nHondaGOツアーは、女性の公道デビューを応援するコンセプトでスタートし、これまで大変ご好評を頂いてまいりました。\n\n\n2026年を締めくくるツアーとして、九州最南端の「鹿児島県」にてHondaGO TOUR を開催いたします。\n\n桜島の力強い自然のエネルギーや薩摩半島独自の文化が根付く地を舞台に、五感を思い切り開放しこの地で出会う旅の仲間たちと共に、走る事の楽しさを存分に味わっていただければ幸いです。\n安全第一に、バイク旅をお楽しみください。\n　\nMOTO TOURS JAPAN　スタッフ一同",
-      "en": "Dear Guest,\n\nThank you very much for booking the \"HondaGO TOUR in Izu & Hakone.\"\n\nOn this trip, you will ride scenic routes with views of Mt. Fuji, a symbol of Japan beloved by riders worldwide, through the mountain roads of Hakone and Izu.\n\nWe hope you will fully open your senses and savor the joy of riding with fellow travelers, the warmth of the people you meet, and the gifts of nature along the way.\nPlease enjoy your motorcycle journey with safety as the top priority.\n\nMOTO TOURS JAPAN\nThe Staff Team",
-      "zh": "親愛的貴賓：\n\n誠摯感謝您報名參加「HondaGO TOUR 伊豆箱根之旅」。\n\n本次旅程將沿著可遠眺世界各地騎士喜愛的日本象徵「富士山」的絕美路線，穿梭於箱根、伊豆的山道之間。\n\n衷心期盼您能敞開五感，盡情享受與旅伴同行的樂趣、人情的溫暖，以及大自然的恩賜。\n請以安全為第一優先，享受這趟摩托車之旅。\n\nMOTO TOURS JAPAN\n全體工作人員敬上",
+      "ja": "お客様へ\n\nこの度は、「HondaGO TOUR in 鹿児島」にご参加いただき誠にありがとうございます。\n\nHondaGOツアーは、女性の公道デビューを応援するコンセプトでスタートし、これまで大変ご好評を頂いてまいりました。\n\n\n九州最南端の「鹿児島県」にてHondaGO TOUR を開催いたします。\n\n桜島の力強い自然のエネルギーや薩摩半島独自の文化が根付く地を舞台に、五感を思い切り開放しこの地で出会う旅の仲間たちと共に、走る事の楽しさを存分に味わっていただければ幸いです。\n安全第一に、バイク旅をお楽しみください。\n　\nMOTO TOURS JAPAN　スタッフ一同",
+      "en": "Dear Customer,\n\nThank you for participating in the HondaGO tour in Kagoshima.\n\nThe HondaGO tour started with the concept of supporting women's public debut, and it has been very well received so far.We will hold a HondaGO tour in Kagoshima Prefecture, the southernmost part of Kyushu.\n\nIt would be great if you could experience the joy of running with the traveling companions you meet here, boldly opening up your five senses on the stage where the powerful natural energy of Sakurajima and the unique culture of the Satsuma Peninsula take root.Safety first, enjoy your motorcycle trip.\n　\nAll Moto tours Japan staff",
+      "zh": "尊敬的客戶：\n\n感謝您參加鹿兒島的HondaGO之旅。\n\nHondaGO巡迴賽始於支持女性公開亮相的概念，到目前為止一直非常受歡迎。我們將在九州最南端的鹿兒島縣舉辦HondaGO之旅。\n\n如果您能與在這裡遇到的旅伴一起體驗跑步的樂趣，在櫻島強大的自然能量和薩摩半島獨特的文化扎根的舞臺上大膽地打開您的五感，那將非常棒。安全第一，祝您機車之旅愉快。\n　\n所有Moto Tours日本員工",
       "_auto": {
-        "en": "Dear Guest,\n\nThank you very much for booking the \"HondaGO TOUR in Izu & Hakone.\"\n\nOn this trip, you will ride scenic routes with views of Mt. Fuji, a symbol of Japan beloved by riders worldwide, through the mountain roads of Hakone and Izu.\n\nWe hope you will fully open your senses and savor the joy of riding with fellow travelers, the warmth of the people you meet, and the gifts of nature along the way.\nPlease enjoy your motorcycle journey with safety as the top priority.\n\nMOTO TOURS JAPAN\nThe Staff Team",
-        "zh": "親愛的貴賓：\n\n誠摯感謝您報名參加「HondaGO TOUR 伊豆箱根之旅」。\n\n本次旅程將沿著可遠眺世界各地騎士喜愛的日本象徵「富士山」的絕美路線，穿梭於箱根、伊豆的山道之間。\n\n衷心期盼您能敞開五感，盡情享受與旅伴同行的樂趣、人情的溫暖，以及大自然的恩賜。\n請以安全為第一優先，享受這趟摩托車之旅。\n\nMOTO TOURS JAPAN\n全體工作人員敬上"
+        "en": "Dear Customer,\n\nThank you for participating in the HondaGO tour in Kagoshima.\n\nThe HondaGO tour started with the concept of supporting women's public debut, and it has been very well received so far.We will hold a HondaGO tour in Kagoshima Prefecture, the southernmost part of Kyushu.\n\nIt would be great if you could experience the joy of running with the traveling companions you meet here, boldly opening up your five senses on the stage where the powerful natural energy of Sakurajima and the unique culture of the Satsuma Peninsula take root.Safety first, enjoy your motorcycle trip.\n　\nAll Moto tours Japan staff",
+        "zh": "尊敬的客戶：\n\n感謝您參加鹿兒島的HondaGO之旅。\n\nHondaGO巡迴賽始於支持女性公開亮相的概念，到目前為止一直非常受歡迎。我們將在九州最南端的鹿兒島縣舉辦HondaGO之旅。\n\n如果您能與在這裡遇到的旅伴一起體驗跑步的樂趣，在櫻島強大的自然能量和薩摩半島獨特的文化扎根的舞臺上大膽地打開您的五感，那將非常棒。安全第一，祝您機車之旅愉快。\n　\n所有Moto Tours日本員工"
       }
     }
   },
@@ -204,16 +204,16 @@ const TOUR_DATA = {
         "en": "Tour Guide / MOTO TOURS JAPAN Attendant Staff",
         "zh": "隨團領隊 / MOTO TOURS JAPAN 隨團人員"
       },
-      "phone": "050-1742-3855",
-      "email": "inquiry@mototoursjapan.com",
-      "lineId": "@638nrfza",
+      "phone": "090-9825-3632",
+      "email": "",
+      "lineId": "",
       "greeting": {
-        "ja": "お客様へ\n\nこの度は、「HondaGO TOUR in 鹿児島」にご参加いただき誠にありがとうございます。\n\nHondaGOツアーは、女性の公道デビューを応援するコンセプトでスタートし、これまで大変ご好評を頂いてまいりました。\n\n\n2026年を締めくくるツアーとして、九州最南端の「鹿児島県」にてHondaGO TOUR を開催いたします。\n\n桜島の力強い自然のエネルギーや薩摩半島独自の文化が根付く地を舞台に、五感を思い切り開放しこの地で出会う旅の仲間たちと共に、走る事の楽しさを存分に味わっていただければ幸いです。\n安全第一に、バイク旅をお楽しみください。\n　\nMOTO TOURS JAPAN　スタッフ一同",
-        "en": "Dear Guest,\n\nThank you very much for booking the \"HondaGO TOUR in Izu & Hakone.\"\n\nOn this trip, you will ride scenic routes with views of Mt. Fuji, a symbol of Japan beloved by riders worldwide, through the mountain roads of Hakone and Izu.\n\nWe hope you will fully open your senses and savor the joy of riding with fellow travelers, the warmth of the people you meet, and the gifts of nature along the way.\nPlease enjoy your motorcycle journey with safety as the top priority.\n\nMOTO TOURS JAPAN\nThe Staff Team",
-        "zh": "親愛的貴賓：\n\n誠摯感謝您報名參加「HondaGO TOUR 伊豆箱根之旅」。\n\n本次旅程將沿著可遠眺世界各地騎士喜愛的日本象徵「富士山」的絕美路線，穿梭於箱根、伊豆的山道之間。\n\n衷心期盼您能敞開五感，盡情享受與旅伴同行的樂趣、人情的溫暖，以及大自然的恩賜。\n請以安全為第一優先，享受這趟摩托車之旅。\n\nMOTO TOURS JAPAN\n全體工作人員敬上",
+        "ja": "お客様へ\n\nこの度は、「HondaGO TOUR in 鹿児島」にご参加いただき誠にありがとうございます。\n\nHondaGOツアーは、女性の公道デビューを応援するコンセプトでスタートし、これまで大変ご好評を頂いてまいりました。\n\n\n九州最南端の「鹿児島県」にてHondaGO TOUR を開催いたします。\n\n桜島の力強い自然のエネルギーや薩摩半島独自の文化が根付く地を舞台に、五感を思い切り開放しこの地で出会う旅の仲間たちと共に、走る事の楽しさを存分に味わっていただければ幸いです。\n安全第一に、バイク旅をお楽しみください。\n　\nMOTO TOURS JAPAN　スタッフ一同",
+        "en": "Dear Customer,\n\nThank you for participating in the HondaGO tour in Kagoshima.\n\nThe HondaGO tour started with the concept of supporting women's public debut, and it has been very well received so far.We will hold a HondaGO tour in Kagoshima Prefecture, the southernmost part of Kyushu.\n\nIt would be great if you could experience the joy of running with the traveling companions you meet here, boldly opening up your five senses on the stage where the powerful natural energy of Sakurajima and the unique culture of the Satsuma Peninsula take root.Safety first, enjoy your motorcycle trip.\n　\nAll Moto tours Japan staff",
+        "zh": "尊敬的客戶：\n\n感謝您參加鹿兒島的HondaGO之旅。\n\nHondaGO巡迴賽始於支持女性公開亮相的概念，到目前為止一直非常受歡迎。我們將在九州最南端的鹿兒島縣舉辦HondaGO之旅。\n\n如果您能與在這裡遇到的旅伴一起體驗跑步的樂趣，在櫻島強大的自然能量和薩摩半島獨特的文化扎根的舞臺上大膽地打開您的五感，那將非常棒。安全第一，祝您機車之旅愉快。\n　\n所有Moto Tours日本員工",
         "_auto": {
-          "en": "Dear Guest,\n\nThank you very much for booking the \"HondaGO TOUR in Izu & Hakone.\"\n\nOn this trip, you will ride scenic routes with views of Mt. Fuji, a symbol of Japan beloved by riders worldwide, through the mountain roads of Hakone and Izu.\n\nWe hope you will fully open your senses and savor the joy of riding with fellow travelers, the warmth of the people you meet, and the gifts of nature along the way.\nPlease enjoy your motorcycle journey with safety as the top priority.\n\nMOTO TOURS JAPAN\nThe Staff Team",
-          "zh": "親愛的貴賓：\n\n誠摯感謝您報名參加「HondaGO TOUR 伊豆箱根之旅」。\n\n本次旅程將沿著可遠眺世界各地騎士喜愛的日本象徵「富士山」的絕美路線，穿梭於箱根、伊豆的山道之間。\n\n衷心期盼您能敞開五感，盡情享受與旅伴同行的樂趣、人情的溫暖，以及大自然的恩賜。\n請以安全為第一優先，享受這趟摩托車之旅。\n\nMOTO TOURS JAPAN\n全體工作人員敬上"
+          "en": "Dear Customer,\n\nThank you for participating in the HondaGO tour in Kagoshima.\n\nThe HondaGO tour started with the concept of supporting women's public debut, and it has been very well received so far.We will hold a HondaGO tour in Kagoshima Prefecture, the southernmost part of Kyushu.\n\nIt would be great if you could experience the joy of running with the traveling companions you meet here, boldly opening up your five senses on the stage where the powerful natural energy of Sakurajima and the unique culture of the Satsuma Peninsula take root.Safety first, enjoy your motorcycle trip.\n　\nAll Moto tours Japan staff",
+          "zh": "尊敬的客戶：\n\n感謝您參加鹿兒島的HondaGO之旅。\n\nHondaGO巡迴賽始於支持女性公開亮相的概念，到目前為止一直非常受歡迎。我們將在九州最南端的鹿兒島縣舉辦HondaGO之旅。\n\n如果您能與在這裡遇到的旅伴一起體驗跑步的樂趣，在櫻島強大的自然能量和薩摩半島獨特的文化扎根的舞臺上大膽地打開您的五感，那將非常棒。安全第一，祝您機車之旅愉快。\n　\n所有Moto Tours日本員工"
         }
       }
     },
@@ -237,7 +237,7 @@ const TOUR_DATA = {
         }
       },
       "phone": "050-1742-3855",
-      "email": "inquiry@mototoursjapan.com",
+      "email": "",
       "lineId": "",
       "greeting": {
         "ja": "",
@@ -264,8 +264,8 @@ const TOUR_DATA = {
           "zh": "Moto Tours日本服務員"
         }
       },
-      "phone": "050-1742-3855",
-      "email": "inquiry@mototoursjapan.com",
+      "phone": "080-3722-3884",
+      "email": "",
       "lineId": "",
       "greeting": {
         "ja": "",
@@ -377,6 +377,7 @@ const TOUR_DATA = {
         "zh": "馳騁箱根群峰"
       }
     },
+    "icon": "fa-solid fa-motorcycle",
     "mapEmbed": "https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d108682.66598841295!2d130.6967377920576!3d31.652099562737114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e590079bd7c7d%3A0x5e985479736522b5!2z44Gq44GO44GV5YWs5ZyS44GC44GE44KJ6aeQ6LuK5aC044CB44CSODk5LTU2NTEg6bm_5YWQ5bO255yM5ae26Imv5biC6ISH5YWD77yR77yU77yZ77yX4oiS77yS!3m2!1d31.7033703!2d130.6183423!4m5!1s0x353ee565d8f97dc3%3A0x619731b86cfa7eb5!2z44Kq44O844Ks44OL44OD44Kv44Os44K544OI44Op44OzSkFT6KqN6Ki85bqX772cIOm7kumFouOBrumDtyDmobflv5fnlLDjgIHjgJI4OTktNDUwMSDpub_lhZDls7bnnIzpnKfls7bluILnpo_lsbHnlLrnpo_lsbHvvJPvvJHvvJHiiJLvvJI!3m2!1d31.6485193!2d130.8224189!4m5!1s0x353e5f860593bd7b%3A0xbe26e8a396967d7b!2z5rmv5LmL5bmz5bGV5pyb5omA44CB44CSODkxLTE0MTgg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO25bCP5rGg55S677yR77yQ77yS77yV!3m2!1d31.591480699999998!2d130.6299912!4m5!1s0x353e5fdee9f1980d%3A0xb7e0b302b59edc4f!2z44CM5Y-r44Gz44Gu6IKW5YOP44CN5aSn5oiQ5rWp44CB44CSODkxLTE0MjAg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5qGc5bO26LWk5rC055S677yT77yW77yS77yZ4oiS77yT!3m2!1d31.5778057!2d130.60274099999998!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!5e0!3m2!1sja!2sjp!4v1788773409450!5m2!1sja!2sjp",
     "items": [
       {
@@ -590,6 +591,7 @@ const TOUR_DATA = {
         "zh": "伊豆天空之路、七瀑迴環橋等豐富騎乘體驗"
       }
     },
+    "icon": "fa-solid fa-motorcycle",
     "mapEmbed": "https://www.google.com/maps/embed?pb=!1m74!1m12!1m3!1d5468.751442238279!2d130.63613483806566!3d31.21822603605749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m59!3e0!4m5!1s0x353e60c806f31aa9%3A0xb55af4eb99df2e19!2z6bm_5YWQ5bO244K144Oz44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yY4oiS77yR77yQ!3m2!1d31.568266599999998!2d130.5633296!4m5!1s0x353e7af332e79629%3A0xf25154dbbcafba14!2z5oyH5a6_44K544Kr44Kk44Op44Kk44Oz44CB6bm_5YWQ5bO255yM!3m2!1d31.4151253!2d130.4974131!4m5!1s0x353e77ac5b000497%3A0xae858072920b8b52!2z55-l6Kan54m55pS75bmz5ZKM5Lya6aSo44CB44CSODk3LTAzMDIg6bm_5YWQ5bO255yM5Y2X5Lmd5bee5biC55-l6Kan55S66YOh77yR77yX77yY77yY77yR!3m2!1d31.3636111!2d130.43430279999998!4m5!1s0x353e7fe5baaa080d%3A0xf2be52a54be564b9!2z44CSODkxLTAzMTEg6bm_5YWQ5bO255yM5oyH5a6_5biC6KW_5pa577yU77yT77yZ77yT4oiS77yR!3m2!1d31.2715529!2d130.6264345!4m5!1s0x353dd5638dd6f0b7%3A0xb75a69602d60676!2z6buE6YeR44Gu6bOl5bGF44CB44CSODkxLTAzMTIg6bm_5YWQ5bO255yM5oyH5a6_5biC5rGg55Sw77yT77yR77yU77yW4oiS77yY!3m2!1d31.2492193!2d130.5640828!4m5!1s0x353dd17ea6bc44db%3A0x61b0da171cb5350e!2z6ZaL6IGe5bGx6bqT6Ieq54S25YWs5ZyS77yI44OI44Kr44Op6aas54mn5aC077yJ44CB44CSODkxLTA2MDIg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5bed5bC777yW77yX77yU77yT!3m2!1d31.1782851!2d130.55227929999998!4m5!1s0x353dd1462caab6b5%3A0xc86e28c3d6ede2a9!2z5bmz44OQ44Ko44CB44CSODkxLTA2MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC6ZaL6IGe5Y2B55S6!3m2!1d31.1655752!2d130.519393!4m3!3m2!1d31.201162099999998!2d130.5218495!4m5!1s0x353dd39257ed7979%3A0x85af626926de99f!2z6KW_5aSn5bGx6aeF44CB44CSODkxLTA1MTQg6bm_5YWQ5bO255yM5oyH5a6_5biC5bGx5bed5aSn5bGx!3m2!1d31.1903059!2d130.5765123!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!5e0!3m2!1sja!2sjp!4v1788774023090!5m2!1sja!2sjp",
     "items": [
       {
@@ -842,6 +844,7 @@ const TOUR_DATA = {
         "zh": "馳騁西伊豆天空之路，品味駿河灣海鮮"
       }
     },
+    "icon": "fa-solid fa-motorcycle",
     "mapEmbed": "https://www.google.com/maps/embed?pb=!1m58!1m12!1m3!1d8008.75029191679!2d130.55540033294756!3d31.554202424196607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m43!3e0!4m5!1s0x353c2adc75e9e2cb%3A0xd4897bbe6463bc26!2z5oyH5a6_44Ot44Kk44Ok44Or44Ob44OG44Or44CB44CSODkxLTA0MDMg6bm_5YWQ5bO255yM5oyH5a6_5biC5Y2B5LqM55S677yU77yS77yT77yS4oiS77yR!3m2!1d31.217971!2d130.6500134!4m5!1s0x353de7a165a95087%3A0xd5dbb841d672fa4a!2z5p6V5bSO5biC44GL44Gk44GK5YWs56S-IE1ha3VyYXpha2ktc2hpIEthdHN1byBLb3NoYeOAgeOAkjg5OC0wMDI1IOm5v-WFkOWztuecjOaeleW0juW4gueri-elnuacrOeUuu-8k--8lO-8lw!3m2!1d31.269188999999997!2d130.285078!4m5!1s0x353de7a0e65d7f99%3A0x8c455d9bda021050!2z6Jap5pGp6YWS6YCgIOiKsea4oeW3neiSuOa6nOaJgCDmmI7msrvolLXjgIHjgJI4OTgtMDAyNSDpub_lhZDls7bnnIzmnpXltI7luILnq4vnpZ7mnKznlLrvvJLvvJY!3m2!1d31.271608299999997!2d130.28493749999998!4m5!1s0x353e74c3be68bddd%3A0x813e006a68c42052!2z44GG44Gq44GO5bCC6ZaA5bqXIOS4h-OBruOBm-OAgeOAkjg5Ny0wMDAxIOm5v-WFkOWztuecjOWNl-OBleOBpOOBvuW4guWKoOS4lueUsOadkeWOn--8lOS4geebru-8ke-8kOKIku-8mQ!3m2!1d31.4173473!2d130.3322495!4m5!1s0x353e5e5eeede7ee1%3A0x596ea6c552fa083f!2z5LuZ5beM5ZyS44CB44CSODkyLTA4NzEg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5ZCJ6YeO55S677yZ77yX77yQ77yQ4oiS77yR!3m2!1d31.6174149!2d130.5771969!4m5!1s0x353e60c854ba5487%3A0xd6d4b35668fe339b!2z44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yR5LiB55uu77yV4oiS77yS77yZIO-8pe-8ru-8pe-8r--8s-OCu-ODq-ODleS4juasoemDju-8s--8sw!3m2!1d31.567544299999998!2d130.5610814!4m5!1s0x353e60cf82fbab21%3A0x2b16f58a98a9b179!2z44Ob44OG44Or44Km44Kn44Or44OT44Ol44O844GL44GU44GX44G-44CB44CSODkwLTAwNjIg6bm_5YWQ5bO255yM6bm_5YWQ5bO25biC5LiO5qyh6YOO77yS5LiB55uu77yU4oiS77yS77yV!3m2!1d31.561762899999998!2d130.5630913!5e0!3m2!1sja!2sjp!4v1788774653882!5m2!1sja!2sjp",
     "items": [
       {
@@ -1294,12 +1297,12 @@ const TOUR_DATA = {
           }
         },
         {
-          "ja": "健康保険証",
-          "en": "Comfortable walking shoes",
-          "zh": "便於行走的鞋子",
+          "ja": "マイナ保険証または資格確認書",
+          "en": "Minor insurance card or certificate of eligibility",
+          "zh": "未成年人保險卡或資格證明",
           "_auto": {
-            "en": "Comfortable walking shoes",
-            "zh": "便於行走的鞋子"
+            "en": "Minor insurance card or certificate of eligibility",
+            "zh": "未成年人保險卡或資格證明"
           }
         },
         {
@@ -1426,12 +1429,12 @@ const TOUR_DATA = {
       "icon": "fa-solid fa-cloud-sun",
       "iconColor": "#ed1b23",
       "content": {
-        "ja": "朝晩と日中の寒暖差が大きい可能性がございます。調整しやすい服装でお越しください。\n10月12日～14日 鹿児島エリアの最高気温：22℃ /最低気温：15℃ ※予報9/26現在\nライディング中は天候にもよりますが、走行中実際の気温より体感温度が低くなります。重ね着で温度調整できる服装をお勧めいたします。",
-        "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
-        "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 22°C/最低溫度： 15°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。",
+        "ja": "朝晩と日中の寒暖差が大きい可能性がございます。調整しやすい服装でお越しください。\n10月12日～14日 鹿児島エリアの最高気温：28℃ /最低気温：20℃ ※予報9/26現在\nライディング中は天候にもよりますが、走行中実際の気温より体感温度が低くなります。重ね着で温度調整できる服装をお勧めいたします。",
+        "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in the Kagoshima area: 28°C/Lowest temperature: 20°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
+        "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 28°C/最低溫度： 20°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。",
         "_auto": {
-          "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in Kagoshima area: 22°C/Lowest temperature: 15°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
-          "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 22°C/最低溫度： 15°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。"
+          "en": "There is a possibility that the temperature difference between morning and evening and during the day is large.Please wear clothes that are easy to adjust.\nOctober 12-14 Highest temperature in the Kagoshima area: 28°C/Lowest temperature: 20°C * Forecast as of September 26\nIt depends on the weather while riding, but it will feel cooler than the actual temperature while driving.It is recommended to wear clothes that can be adjusted by layering.",
+          "zh": "早上和晚上以及白天之間的溫度差異可能很大。請穿著易於調整的衣服。\n10月12日至14日鹿兒島地區最高溫度： 28°C/最低溫度： 20°C *截至9月26日的預測\n這取決於騎車時的天氣，但駕駛時會感覺比實際溫度更涼爽。建議穿著可分層調整的衣服。"
         }
       }
     },
@@ -2277,7 +2280,16 @@ const TOUR_DATA = {
       },
       "image": "https://cdn.rental819.com/static/public/master_bike_color/old/1094-2025-13.jpg?updated_on=20250314181248"
     }
-  ]
+  ],
+  "goodsNote": {
+    "ja": "購入ご希望の方は事前にメールにてお申し出ください。\n",
+    "en": "If you wish to purchase, please let us know by email in advance.",
+    "zh": "如果您想購買，請提前透過電子郵件通知我們。",
+    "_auto": {
+      "en": "If you wish to purchase, please let us know by email in advance.",
+      "zh": "如果您想購買，請提前透過電子郵件通知我們。"
+    }
+  }
 };
 
 // ── i18n resolver ──────────────────────────────────────────────
