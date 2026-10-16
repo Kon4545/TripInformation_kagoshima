@@ -1,6 +1,6 @@
 // ================================================================
 //  MOTO TOURS JAPAN ── ツアーデータ設定ファイル  tour-data.js
-//  admin.html から生成  2026/9/27 5:21:46
+//  admin.html から生成  2026/10/16 18:27:47
 //  多言語対応: ja / en / zh（繁體中文）
 // ================================================================
 // ※ このファイルはテキストエディタ（メモ帳、VS Code 等）で開いてください。
@@ -1928,8 +1928,14 @@ const TOUR_DATA = {
     }
   ],
   "postTour": {
-    "enabled": false,
-    "albumUrl": "",
+    "enabled": true,
+    "albumUrl": "https://photos.app.goo.gl/fjoAZxx9bBhiDeju7",
+    "albumExpiry": "2026-12-28",
+    "albumExpiryLabel": {
+      "ja": "",
+      "en": "",
+      "zh": ""
+    },
     "photos": [],
     "videos": [
       {
@@ -1943,7 +1949,7 @@ const TOUR_DATA = {
           }
         },
         "url": "https://youtu.be/4XJDbIKD7Rc?si=pulwUicIuZfSByrt",
-        "embedCode": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4XJDbIKD7Rc?si=q-xIfQKcQV0RjrTQ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "embedCode": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lYykEcV32Q4?si=LOEcz4ogtfExGQTP\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
       }
     ],
     "nextTours": []

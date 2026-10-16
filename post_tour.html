@@ -256,6 +256,7 @@
       <p style="margin-top:12px;font-size:.8rem;color:var(--text-sub)">
         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem"></i>&ensp;<span data-i18n="photos.albumNote">Googleドライブ / Googleフォトのアルバムが別タブで開きます</span>
       </p>
+      <div id="albumExpiryText" style="display:none;margin:16px auto 0;max-width:460px;padding:12px 18px;background:#FFF4E5;border:2px solid #E8A33D;border-radius:12px;color:#7A4A00;font-size:.92rem;font-weight:700;line-height:1.6"></div>
     </div>
     <div class="pt-photo-grid" id="photoGrid"></div>
   </div>
@@ -382,6 +383,18 @@ function render(){
       const btn  = document.getElementById('albumLinkBtn');
       wrap.style.display = '';
       btn.href = albumUrl;
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(pt.albumExpiry || '');
+      if(m){
+        const y = +m[1], mo = +m[2], da = +m[3];
+        const lang = getCurrentLang();
+        const dateStr = lang === 'en'
+          ? new Date(y, mo-1, da).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'})
+          : `${y}年${mo}月${da}日`;
+        const el = document.getElementById('albumExpiryText');
+        const label = pt.albumExpiryLabel || t('photos.albumExpiryLabel');
+        el.innerHTML = '<i class="fa-solid fa-clock" style="margin-right:8px"></i>' + esc(label) + '　<span style="display:inline-block;padding:2px 12px;background:#C62828;color:#fff;border-radius:99px;font-size:1rem">' + esc(dateStr) + '</span> ' + esc(t('photos.albumExpirySuffix'));
+        el.style.display = '';
+      }
     }
     // 個別写真グリッド
     if(photos.length){

@@ -687,6 +687,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
             <label class="form-label"><i class="fa-brands fa-google-drive" style="color:#1a73e8"></i>&ensp;アルバムURL</label>
             <input id="pt_albumUrl" class="form-input" placeholder="https://drive.google.com/drive/folders/... または https://photos.app.goo.gl/...">
           </div>
+          <div class="form-group" style="margin-top:12px;margin-bottom:0">
+            <label class="form-label"><i class="fa-solid fa-calendar-check" style="color:#ed1b23"></i>&ensp;リンクの有効期限（任意）</label>
+            <input type="date" id="pt_albumExpiry" class="form-input" style="max-width:220px">
+            <div style="font-size:.72rem;color:#8A8478;margin-top:4px">設定すると、目立つ枠で「有効期限の文言 ＋ 日付 ＋ まで」がお客様に表示されます。空欄なら表示しません。</div>
+            <label class="form-label" style="margin-top:12px">有効期限の文言（日付の前に表示）</label>
+            <input id="pt_albumExpiryLabel" class="form-input" placeholder="空欄の場合：このリンクの有効期限">
+            <div style="font-size:.72rem;color:#8A8478;margin-top:4px">例：「写真の保存はこの日までにお願いします：」。日本語タブで保存すると英語・繁體中文にも自動翻訳されます。</div>
+          </div>
         </div>
         <div style="font-size:.78rem;color:#5A5650;margin-bottom:14px;line-height:1.7">
           追加で個別の写真も掲載できます（任意）。images フォルダにアップロードした写真のパス、または外部の画像URLを入力してください。
@@ -1248,6 +1256,8 @@ function initForms(){
   set('pt_surveyDesc',     (d.survey||{}).desc);
   set('pt_mapReviewUrl',   (d.survey||{}).mapReviewUrl || '');
   set('pt_albumUrl', pt.albumUrl || '');
+  set('pt_albumExpiry', pt.albumExpiry || '');
+  set('pt_albumExpiryLabel', pt.albumExpiryLabel || '');
   buildPtPhotos(pt.photos   || []);
   buildPtVideos(pt.videos   || []);
   buildPtNextTours(pt.nextTours || []);
@@ -2315,6 +2325,8 @@ function collectData(){
   d.postTour = {
     enabled:   document.getElementById('pt_enabled')?.checked || false,
     albumUrl:  g('pt_albumUrl'),
+    albumExpiry: g('pt_albumExpiry'),
+    albumExpiryLabel: g('pt_albumExpiryLabel'),
     photos:    getPtPhotos(),
     videos:    getPtVideos(),
     nextTours: getPtNextTours()
@@ -2332,7 +2344,7 @@ const ADMIN_SHARED_FIELD_NAMES = {
   phone:1, email:1, fax:1, image:1, heroBgImage:1, heroVideoUrl:1,
   badgeType:1, tagType:1, time:1, checkin:1, checkout:1, price:1,
   platform:1, handle:1, buyUrl:1, lineId:1, enabled:1, isHighlight:1, isRestStop:1, streetViewUrl:1,
-  embedCode:1, src:1, nameEn:1, albumUrl:1, mapReviewUrl:1,
+  embedCode:1, src:1, nameEn:1, albumUrl:1, albumExpiry:1, mapReviewUrl:1,
   meetDateISO:1, tourEndDateISO:1, meetLat:1, meetLng:1,
   label:1,
   meetIcon:1, meetIconColor:1, dateIcon:1, dateIconColor:1, endIcon:1, endIconColor:1,
