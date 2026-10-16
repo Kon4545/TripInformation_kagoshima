@@ -253,7 +253,7 @@
       <a id="albumLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="pt-album-btn">
         <i class="fa-brands fa-google-drive"></i>&ensp;<span data-i18n="photos.albumBtn">写真アルバムを見る</span>
       </a>
-      <p style="margin-top:12px;font-size:.8rem;color:var(--text-sub)">
+      <p id="albumNoteLine" style="margin-top:12px;font-size:.8rem;color:var(--text-sub)">
         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem"></i>&ensp;<span data-i18n="photos.albumNote">Googleドライブ / Googleフォトのアルバムが別タブで開きます</span>
       </p>
       <div id="albumExpiryText" style="display:none;margin:16px auto 0;max-width:460px;padding:12px 18px;background:#FFF4E5;border:2px solid #E8A33D;border-radius:12px;color:#7A4A00;font-size:.92rem;font-weight:700;line-height:1.6"></div>
@@ -384,7 +384,15 @@ function render(){
       wrap.style.display = '';
       btn.href = albumUrl;
       const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(pt.albumExpiry || '');
-      if(m){
+      const expired = m && new Date() >= new Date(+m[1], +m[2]-1, +m[3] + 1);
+      if(expired){
+        document.getElementById('albumLinkBtn').style.display = 'none';
+        document.getElementById('albumNoteLine').style.display = 'none';
+        const el = document.getElementById('albumExpiryText');
+        el.style.background = '#F3F3F3'; el.style.borderColor = '#B0B0B0'; el.style.color = '#555';
+        el.innerHTML = '<i class="fa-solid fa-circle-xmark" style="margin-right:8px"></i>' + esc(pt.albumExpiredText || t('photos.albumExpired'));
+        el.style.display = '';
+      } else if(m){
         const y = +m[1], mo = +m[2], da = +m[3];
         const lang = getCurrentLang();
         const dateStr = lang === 'en'

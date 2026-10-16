@@ -693,6 +693,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:#9e1016;color:#1A1A2E;min-
             <div style="font-size:.72rem;color:#8A8478;margin-top:4px">設定すると、目立つ枠で「有効期限の文言 ＋ 日付 ＋ まで」がお客様に表示されます。空欄なら表示しません。</div>
             <label class="form-label" style="margin-top:12px">有効期限の文言（日付の前に表示）</label>
             <input id="pt_albumExpiryLabel" class="form-input" placeholder="空欄の場合：このリンクの有効期限">
+            <label class="form-label" style="margin-top:12px">期限切れ後に表示する文言</label>
+            <input id="pt_albumExpiredText" class="form-input" placeholder="空欄の場合：このリンクの有効期限は終了しました。">
+            <div style="font-size:.72rem;color:#8A8478;margin-top:4px">期限日の翌日からアルバムのボタンが自動で消え、この文言が表示されます。</div>
             <div style="font-size:.72rem;color:#8A8478;margin-top:4px">例：「写真の保存はこの日までにお願いします：」。日本語タブで保存すると英語・繁體中文にも自動翻訳されます。</div>
           </div>
         </div>
@@ -1258,6 +1261,7 @@ function initForms(){
   set('pt_albumUrl', pt.albumUrl || '');
   set('pt_albumExpiry', pt.albumExpiry || '');
   set('pt_albumExpiryLabel', pt.albumExpiryLabel || '');
+  set('pt_albumExpiredText', pt.albumExpiredText || '');
   buildPtPhotos(pt.photos   || []);
   buildPtVideos(pt.videos   || []);
   buildPtNextTours(pt.nextTours || []);
@@ -2327,6 +2331,7 @@ function collectData(){
     albumUrl:  g('pt_albumUrl'),
     albumExpiry: g('pt_albumExpiry'),
     albumExpiryLabel: g('pt_albumExpiryLabel'),
+    albumExpiredText: g('pt_albumExpiredText'),
     photos:    getPtPhotos(),
     videos:    getPtVideos(),
     nextTours: getPtNextTours()
