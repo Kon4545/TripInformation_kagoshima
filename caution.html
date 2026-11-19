@@ -524,6 +524,7 @@
 ═════════════════════════════════════════════════ -->
 <script src="pwa.js"></script>
 <script src="i18n.js"></script>
+<script src="anim.js" defer></script>
 <script src="tour-data.js"></script>
 <script>
 applyI18nStaticText();
@@ -865,7 +866,26 @@ function toggleFaq(idx) {
   var chev = document.getElementById('faqChev' + idx);
   var btn = chev.closest('button');
   var open = answer.style.display !== 'none';
-  answer.style.display = open ? 'none' : 'block';
+  answer.style.overflow = 'hidden';
+  answer.style.boxSizing = 'border-box';
+  answer.style.transition = 'height .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease';
+  clearTimeout(answer._t);
+  if (open) {
+    answer.style.height = answer.scrollHeight + 'px';
+    answer.style.opacity = '1';
+    void answer.offsetHeight;
+    answer.style.height = '0px';
+    answer.style.opacity = '0';
+    answer._t = setTimeout(function () { answer.style.display = 'none'; }, 360);
+  } else {
+    answer.style.display = 'block';
+    answer.style.height = '0px';
+    answer.style.opacity = '0';
+    void answer.offsetHeight;
+    answer.style.height = answer.scrollHeight + 'px';
+    answer.style.opacity = '1';
+    answer._t = setTimeout(function () { answer.style.height = 'auto'; }, 360);
+  }
   chev.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
   btn.setAttribute('aria-expanded', String(!open));
 }
