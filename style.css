@@ -1054,3 +1054,155 @@ body.ticket-modal-lock { overflow: hidden; }
   .spot-grid { grid-template-columns: 1fr; }
   .emg-card .phone { font-size: 1.5rem; }
 }
+
+/* ════════════════════════════════════════════════
+   楽しいアニメーション（anim.js と連動）
+   ・reveal は translate/scale 個別プロパティを使い、hover の transform と衝突しないようにする
+   ・動きを減らす設定の端末では全て無効化
+═════════════════════════════════════════════════ */
+@keyframes animFadeUp   { from { opacity: 0; translate: 0 26px; } to { opacity: 1; translate: 0 0; } }
+@keyframes animPopIn    { 0% { opacity: 0; scale: .6; } 70% { opacity: 1; scale: 1.08; } 100% { opacity: 1; scale: 1; } }
+@keyframes animFloat    { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+@keyframes animWiggle   { 0%,100% { rotate: 0deg; } 20% { rotate: -14deg; } 40% { rotate: 12deg; } 60% { rotate: -8deg; } 80% { rotate: 6deg; } }
+@keyframes animShine    { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+@keyframes animRipple   { to { transform: scale(4); opacity: 0; } }
+@keyframes animSpark    { to { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; } }
+@keyframes animConfetti { 0% { transform: translate3d(0,0,0) rotate(0); opacity: 1; } 100% { transform: translate3d(var(--cx), 105vh, 0) rotate(var(--cr)); opacity: .9; } }
+@keyframes animRide     { 0%,100% { transform: translateX(-50%) translateY(0) rotate(-3deg); } 50% { transform: translateX(-50%) translateY(-2px) rotate(3deg); } }
+@keyframes animDotPulse { 0% { box-shadow: 0 0 0 0 rgba(237,27,35,.45); } 100% { box-shadow: 0 0 0 12px rgba(237,27,35,0); } }
+@keyframes animPageIn   { from { opacity: 0; } to { opacity: 1; } }
+
+/* ページ表示時のふわっと登場 */
+body { animation: animPageIn .5s ease both; }
+
+/* スクロール進捗バー（バイクが進む） */
+.anim-progress { position: fixed; top: 0; left: 0; height: 4px; width: 100%; z-index: 9999; pointer-events: none; }
+.anim-progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, #ed1b23, #ff8a3d, #ffd23f); border-radius: 0 4px 4px 0; transition: width .08s linear; }
+.anim-progress-rider { position: absolute; top: 5px; left: 0; font-size: 18px; color: #9e1016; animation: animRide .5s ease-in-out infinite; transition: left .08s linear; }
+
+/* スクロール連動の登場 */
+.anim-pre { opacity: 0; translate: 0 34px; transition: opacity .7s ease, translate .7s cubic-bezier(.2,.8,.2,1), scale .7s cubic-bezier(.2,.8,.2,1); transition-delay: var(--anim-delay, 0ms); }
+.anim-pre.anim-left  { translate: -40px 0; }
+.anim-pre.anim-right { translate: 40px 0; }
+.anim-pre.anim-zoom  { translate: 0 0; scale: .85; }
+.anim-pre.anim-in { opacity: 1; translate: 0 0; scale: 1; }
+
+/* ヒーローの段階的な登場 */
+.hero.anim-hero > .hero-eyebrow,
+.hero.anim-hero > .hero-sub,
+.hero.anim-hero > .hero-chips,
+.hero.anim-hero > #countdownBadge { animation: animFadeUp .8s cubic-bezier(.2,.8,.2,1) both; }
+.hero.anim-hero > .hero-eyebrow { animation-delay: .1s; }
+.hero.anim-hero > .hero-sub { animation-delay: .45s; }
+.hero.anim-hero > .hero-chips { animation-delay: .65s; }
+.hero.anim-hero > #countdownBadge { animation-delay: .85s; }
+.hero-chip { animation: animFloat 4s ease-in-out infinite; }
+.hero-chip:nth-child(2) { animation-delay: .6s; }
+.hero-chip:nth-child(3) { animation-delay: 1.2s; }
+.hero-eyebrow i { display: inline-block; animation: animWiggle 3.5s ease-in-out infinite; }
+.hero.anim-hero > h1 { animation: animFadeUp .8s cubic-bezier(.2,.8,.2,1) .25s both; }
+
+/* ホバーで楽しく反応 */
+.card, .hl-card, .hotel-card, .goods-card, .quick-link-card, .info-card, .sns-card, .spot-card,
+.emg-card, .guide-contact-card, .pt-photo-card, .pt-video-card, .pt-nexttour-card {
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+}
+@media (hover: hover) {
+  .card:hover, .hl-card:hover, .hotel-card:hover, .goods-card:hover, .quick-link-card:hover, .info-card:hover,
+  .sns-card:hover, .spot-card:hover, .emg-card:hover, .guide-contact-card:hover, .pt-photo-card:hover,
+  .pt-video-card:hover, .pt-nexttour-card:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 16px 34px rgba(158,16,22,.18); }
+  .info-card:hover .info-card-icon, .sns-card:hover .sns-icon, .emg-card:hover i,
+  .quick-link-card:hover i, .spot-card:hover .spot-num { animation: animWiggle .7s ease; }
+  .btn-nav:hover, .pt-album-btn:hover, .hotel-official-btn:hover, .tl-streetview-btn:hover, .pt-nexttour-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+  .tl-item:hover .tl-time { transform: scale(1.08); }
+  .tl-item:hover .tl-card { transform: translateX(6px); box-shadow: 0 10px 24px rgba(0,0,0,.1); }
+  .cl-item:hover { transform: translateX(5px); }
+  .site-logo:hover, .header-logo-img:hover { transform: rotate(-4deg) scale(1.06); }
+}
+.goods-img, .hl-card-img, .quick-link-img, .hotel-card-img { transition: transform .5s ease; }
+.goods-card:hover .goods-img, .hl-card:hover .hl-card-img, .quick-link-card:hover .quick-link-img,
+.hotel-card:hover .hotel-card-img { transform: scale(1.06); }
+.nav-menu a { position: relative; }
+.nav-menu a::after { content: ''; position: absolute; left: 50%; bottom: 2px; width: 0; height: 2px; background: currentColor; transition: width .25s ease, left .25s ease; }
+.nav-menu a:hover::after { width: 70%; left: 15%; }
+.site-logo, .header-logo-img { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+
+/* ボタン：押し込み＋波紋 */
+.btn-nav, .pt-album-btn, .hotel-official-btn, .tl-streetview-btn, .lang-switch-btn, .pt-nexttour-btn, .print-save-btn {
+  position: relative; overflow: hidden; transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease;
+}
+.btn-nav:active, .pt-album-btn:active, .hotel-official-btn:active, .tl-streetview-btn:active, .lang-switch-btn:active { transform: scale(.94); }
+.anim-ripple { position: absolute; border-radius: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; background: rgba(255,255,255,.55); pointer-events: none; animation: animRipple .6s ease-out forwards; }
+
+/* タイムライン：到着した点がポンと弾む */
+.tl-item.anim-in::before { animation: animDotPulse 1.6s ease-out .6s 2; }
+.tl-time { transition: transform .3s ease; }
+.tl-item .tl-card { transition: transform .3s ease, box-shadow .3s ease; }
+
+/* チケット・チェックリスト */
+.ticket-stamp { animation: animPopIn .7s cubic-bezier(.2,.8,.2,1) .4s both; }
+.cl-item { transition: transform .2s ease, background .2s ease; }
+.ring-fill { transition: stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1); }
+
+/* クリック時の火花・紙吹雪・トップへ戻る */
+.anim-spark { position: fixed; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; pointer-events: none; z-index: 9998; animation: animSpark .65s ease-out forwards; }
+.anim-confetti { position: fixed; top: -14px; width: 10px; height: 16px; z-index: 9998; pointer-events: none; animation: animConfetti var(--cd, 2.8s) ease-in forwards; }
+.anim-top { position: fixed; right: 18px; bottom: 22px; width: 48px; height: 48px; border: none; border-radius: 50%; background: linear-gradient(135deg, #ed1b23, #9e1016); color: #fff; font-size: 1.1rem; cursor: pointer; z-index: 900; box-shadow: 0 8px 20px rgba(158,16,22,.4); opacity: 0; translate: 0 30px; pointer-events: none; transition: opacity .3s ease, translate .3s cubic-bezier(.2,.8,.2,1), transform .2s ease; }
+.anim-top.show { opacity: 1; translate: 0 0; pointer-events: auto; }
+.anim-top:hover { transform: scale(1.12); }
+.anim-top:active { transform: scale(.92); }
+
+@media (prefers-reduced-motion: reduce) {
+  body, .hero.anim-hero > *, .hero-chip, .hero-eyebrow i, .tl-item.anim-in::before, .ticket-stamp { animation: none !important; }
+  .anim-pre { opacity: 1 !important; translate: 0 0 !important; scale: 1 !important; transition: none !important; }
+  .anim-progress-rider { animation: none; }
+}
+
+/* ════════════ アニメーション第2弾 ════════════ */
+@keyframes animCharBounce { 0% { opacity: 0; translate: 0 40px; rotate: -12deg; scale: .5; } 55% { opacity: 1; translate: 0 -12px; rotate: 4deg; scale: 1.12; } 100% { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; } }
+@keyframes animRidePass { 0% { left: -20%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 115%; opacity: 0; } }
+@keyframes animDecoRise { 0% { translate: 0 20px; opacity: 0; } 15% { opacity: var(--do, .5); } 85% { opacity: var(--do, .5); } 100% { translate: var(--dx, 30px) -420px; opacity: 0; rotate: 360deg; } }
+@keyframes animCheckPop { 0% { scale: 1; } 40% { scale: 1.5; rotate: -10deg; } 70% { scale: .9; } 100% { scale: 1; rotate: 0deg; } }
+@keyframes animCheckDraw { from { scale: 0; rotate: -90deg; } to { scale: 1; rotate: 0deg; } }
+@keyframes animLangIn { from { opacity: 0; filter: blur(8px); translate: 0 10px; } to { opacity: 1; filter: blur(0); translate: 0 0; } }
+@keyframes animPageOut { to { opacity: 0; translate: 0 -14px; filter: blur(4px); } }
+@keyframes animAccOpen { from { opacity: 0; translate: 0 -10px; } to { opacity: 1; translate: 0 0; } }
+@keyframes animStarFly { to { transform: translate(var(--sx), var(--sy)) rotate(260deg) scale(.2); opacity: 0; } }
+
+/* 1. バイクが走り抜ける */
+.anim-rider-pass { position: absolute; left: -20%; bottom: 14%; z-index: 3; pointer-events: none; font-size: 2.2rem; color: rgba(255,255,255,.95); animation: animRidePass 3.2s cubic-bezier(.5,.1,.5,.9) 1.2s both; filter: drop-shadow(0 4px 6px rgba(0,0,0,.3)); }
+.anim-rider-pass::before { content: ''; position: absolute; right: 100%; top: 50%; width: 140px; height: 4px; margin-right: 6px; border-radius: 4px; background: linear-gradient(to left, rgba(255,255,255,.7), rgba(255,255,255,0)); }
+
+/* 3. タイトルの文字跳ね */
+.anim-word { display: inline-block; white-space: nowrap; }
+.anim-char { display: inline-block; white-space: pre; animation: animCharBounce .8s cubic-bezier(.2,.9,.3,1.2) both; animation-delay: calc(var(--ci, 0) * 60ms + .3s); }
+.hero.anim-hero > h1.anim-split { animation: none; }
+
+/* 4. ふわふわ装飾 */
+.anim-deco { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.anim-deco i { position: absolute; bottom: -30px; color: #fff; opacity: 0; animation: animDecoRise var(--dd, 12s) linear var(--dl, 0s) infinite; font-size: var(--ds, 16px); }
+
+/* 5. タイムラインの線が伸びる */
+.timeline.anim-line::before { transform: scaleY(0); transform-origin: top; transition: transform 1.6s cubic-bezier(.3,.7,.2,1); }
+.timeline.anim-line.anim-line-in::before { transform: scaleY(1); }
+
+/* 6. チェックの演出 */
+.cl-item.anim-just-checked .cl-check { animation: animCheckPop .5s cubic-bezier(.2,.9,.3,1.3); }
+.cl-item.anim-just-checked .cl-check i { animation: animCheckDraw .4s cubic-bezier(.2,.9,.3,1.3) .08s both; }
+.anim-star { position: fixed; z-index: 9998; pointer-events: none; color: #ffb703; font-size: 14px; margin: -7px 0 0 -7px; animation: animStarFly .8s ease-out forwards; }
+
+/* 7. ページ移動 */
+body.anim-leave { animation: animPageOut .28s ease-in forwards; pointer-events: none; }
+
+/* 8. アコーディオン */
+.acc-body.open { animation: animAccOpen .35s ease; }
+.faq-chev { transition: transform .45s cubic-bezier(.2,.9,.3,1.4) !important; }
+
+/* 9. 言語切替 */
+body.anim-lang-out main, body.anim-lang-out .hero, body.anim-lang-out .page-banner { transition: opacity .2s ease, filter .2s ease; opacity: 0; filter: blur(6px); }
+body.anim-lang-in main > *, body.anim-lang-in .hero > *:not(.hero-bg-parallax):not(.hero-bg-overlay), body.anim-lang-in .page-banner > * { animation: animLangIn .5s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rider-pass, .anim-deco, .anim-char, .cl-item.anim-just-checked .cl-check, .cl-item.anim-just-checked .cl-check i, .acc-body.open, body.anim-lang-in main > *, body.anim-leave { animation: none !important; }
+  .timeline.anim-line::before { transform: none; transition: none; }
+}
